@@ -1,0 +1,47 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project Overview
+
+BOONUS (Boundary Ocean Observing Network of the United States) assembles and analyzes
+observations from the sustained network of boundary-current and coastal observations of
+which the California Underwater Glider Network (CUGN) is one component. We will generate
+the data products, metrics, and diagnostics to share with the community.
+
+Repository layout:
+
+- `claude_prompts/` — prompts and task definitions that drive this work. Read the
+  relevant prompt doc (starting with `start_up.md`) before acting, and execute only
+  the numbered task you were pointed at.
+
+## Repository Location
+
+This repository lives at `/home/xavier/Projects/BOONUS` — **not** in
+`/home/xavier/Oceanography/python`, where its sibling science repositories (`cugn`,
+`cugn-climatology`, `IOPtics`, `EPFT-UP`, `PAB`, …) are kept. When looking to those
+repositories for conventions or code, use their absolute paths; they are not siblings
+of this directory.
+
+## Working Conventions
+
+- **Git:** The user (J. Xavier Prochaska) will perform all git commands (add, commit,
+  push, etc.). Do not run git commands that change repository state unless explicitly
+  asked. Read-only git commands (e.g. `git status`, `git diff`, `git log`) are fine.
+- **Calculations:** If you do any calculation, generate it as a Python script and write
+  it to disk so that it can be added to the repository. Do not perform one-off
+  calculations only in memory or in the chat.
+- **Python environment:** If you need to run Python, use the `ocean14` conda environment
+  (e.g. `conda run -n ocean14 python script.py`).
+- **Logging:** Record completed work under the `## Logs` section of the prompt doc that
+  drove it, dated, including what was learned about the repository.
+
+## Related Repositories
+
+- **cugn:** The main CUGN analysis package lives on this computer at
+  `/home/xavier/Oceanography/python/cugn`. Refer to it for glider data handling,
+  existing analysis code, and project conventions.
+- **cugn-climatology:** CUGN climatologies at
+  `/home/xavier/Oceanography/python/cugn-climatology`.
+- **IOPtics:** `/home/xavier/Oceanography/python/IOPtics` is the upstream source for
+  this project's `.claude/skills/` and `.claude/settings.json`.
