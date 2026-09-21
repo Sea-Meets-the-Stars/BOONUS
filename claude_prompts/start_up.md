@@ -2,10 +2,10 @@
 
 ## Goals
 
-This repository will be used to assemble and analyze observations from the Boundary
+This repository will be used to define and promote the Boundary
 Ocean Observing Network of the United States (BOONUS), the sustained network of
 boundary-current and coastal observations of which the California Underwater Glider
-Network (CUGN) is one component.  We will generate the data products, metrics, and
+Network (CUGN) is one component.  We will generate data products, metrics, and
 diagnostics to share with the community.
 
 ## Prompts
@@ -15,6 +15,7 @@ diagnostics to share with the community.
 3. Read this file.  Execute the 1st task under "Claude/Settings"
 4. Read this file.  Execute the 1st task under "Basic start up"
 
+5. Read this file.  I have answered your questions in Q&A.  Read those and act accordingly.  I will then execute a PR for this branch.
 
 ## Claude
 
@@ -62,12 +63,16 @@ made on your behalf and would like confirmed.
    CUGN is not actually a component of it -- correct it here and I will
    propagate the change.
 
+>A. It was ok.  I improved it
+
 2. **Should BOONUS depend on `cugn` at all?** I assumed it does, by analogy with
    `cugn-climatology`, and gave it the glider-flavoured dependency stack
    (`gsw`, `gsw-xarray`, `xhistogram`, `dask`) rather than IOPtics'/EPFT-UP's
    ocean-colour stack. The `cugn` dependency is only a comment in
    `requirements.txt` and `setup.py`, not an active install line, so nothing
    breaks if the answer is no -- but the dependency list would want revisiting.
+
+>A. It might.  Best to model it; thanks
 
 3. **Add the three GitHub `WebFetch` domains to `.claude/settings.json`?**
    `github.com`, `raw.githubusercontent.com`, and `api.github.com` are the only
@@ -76,10 +81,14 @@ made on your behalf and would like confirmed.
    `Bash(git ls-remote *)`). They would be needed if we start installing
    sibling packages from GitHub. I did not add them -- your call.
 
+>A. No need for now
+
 4. **Is `boonus` the package name you want?** It follows the house convention
    (snake_case of the repo name, as in `ioptics`, `cugn_climatology`,
    `epft_up`), but the repo name is an acronym, so a different module name
    would be easy to justify while the package is still empty.
+
+>A. Yes that is good
 
 ## Logging
 
@@ -197,3 +206,59 @@ are PAB's and retrieve-or-bust's three GitHub `WebFetch` domains (`github.com`,
 
 No git commands that change repository state were run (`git remote -v` and
 `git status` only).
+
+### 2026-09-21 (Execute prompt 5: act on the Q&A answers)
+
+Read your four answers in `## Q&A` and acted on them. Only #1 required changes; the
+other three confirmed what prompts 1-4 had already put in place.
+
+**Q&A #1 (Goals -- "It was ok. I improved it") -- propagated.** Your edit changed the
+scope verb: the repository is to *define and promote* BOONUS, where I had written
+*assemble and analyze observations from* it. That is a meaningful difference, not a
+rewording, so I pushed it into the two files that carried my phrasing:
+
+- `CLAUDE.md` -- rewrote `## Project Overview` to match the new Goals text, and added a
+  short paragraph making the emphasis explicit: the work is to define and promote the
+  network, not only to analyze data from it, so deliverables that argue for and specify
+  the network (documents, figures, requirements) are expected alongside analysis code.
+  A future session reading only `CLAUDE.md` would otherwise assume this is a
+  data-analysis repo like `cugn-climatology`.
+- `README.md` -- opening paragraph now reads "Defines and promotes BOONUS: ..." and
+  carries the community-sharing sentence from Goals.
+- `setup.py` -- **no change needed.** Its `description` is the bare expansion of the
+  acronym ("Boundary Ocean Observing Network of the United States (BOONUS)"), which is
+  scope-neutral and correct under either reading. I had listed it as a propagation
+  target in the question; on inspection it never contained the wording that changed.
+
+**Q&A #2 (depend on `cugn`? -- "It might. Best to model it") -- no change.** Kept the
+cugn-climatology model: the glider/gridded dependency stack (`gsw`, `gsw-xarray`,
+`xhistogram`, `dask`) and the `cugn` dependency recorded as a comment rather than an
+active install line, in both `requirements.txt` and `setup.py`. Nothing needs to
+change if BOONUS does take the dependency -- uncommenting the absolute-path
+`pip install -e /home/xavier/Oceanography/python/cugn` is the whole step.
+
+**Q&A #3 (GitHub `WebFetch` domains? -- "No need for now") -- no change.**
+`.claude/settings.json` stays at 37 allow / 7 deny / 1 ask. Worth knowing for whoever
+hits it later: if a session ever needs to install a sibling package from GitHub, the
+three domains (`github.com`, `raw.githubusercontent.com`, `api.github.com`) are the
+entries to add, and they exist verbatim in PAB and retrieve-or-bust.
+
+**Q&A #4 (package name -- "Yes that is good") -- no change.** `boonus/` stands.
+
+Verified after the edits: `setup.py` still parses and
+`conda run -n ocean14 python -m pytest -q` passes (2 tests).
+
+**What I learned about this repository:**
+
+- The scope correction is the substantive outcome of this prompt. "Define and promote"
+  puts this repo closer to an advocacy/specification project with analysis in support,
+  which is unlike every sibling in `Oceanography/python` -- those are all analysis
+  packages. If that holds, the layout will want a `docs/`, `papers/`, or `reports/`
+  directory before it wants more Python; I did not create one, since the house pattern
+  is to add those directories when there is something to put in them.
+- My propagation list in Q&A #1 was one file too long. Worth checking what a file
+  actually says before promising to update it -- `setup.py`'s description had been
+  written generically enough to survive the change.
+
+No git commands that change repository state were run (`git status` only). The branch
+is `start_up`; everything is left unstaged for your PR.

@@ -1,10 +1,11 @@
 # BOONUS
 The Boundary Ocean Observing Network of the United States
 
-Assembles and analyzes observations from the sustained network of
-boundary-current and coastal observations of the United States, of which the
-California Underwater Glider Network
-([CUGN](https://spraydata.ucsd.edu/projects/CUGN/)) is one component.
+Defines and promotes BOONUS: the sustained network of boundary-current and
+coastal observations of the United States, of which the California Underwater
+Glider Network ([CUGN](https://spraydata.ucsd.edu/projects/CUGN/)) is one
+component. We will generate data products, metrics, and diagnostics to share
+with the community.
 
 ## Installation
 
