@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Project Overview
 
 This repository is used to define and promote BOONUS, the Boundary Ocean Observing
-Network of the United States — the sustained network of boundary-current and coastal
+Network for the United States — the sustained network of boundary-current and coastal
 observations of which the California Underwater Glider Network (CUGN) is one component.
 We will generate data products, metrics, and diagnostics to share with the community.
 

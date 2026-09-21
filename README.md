@@ -1,5 +1,5 @@
 # BOONUS
-The Boundary Ocean Observing Network of the United States
+The Boundary Ocean Observing Network for the United States
 
 Defines and promotes BOONUS: the sustained network of boundary-current and
 coastal observations of the United States, of which the California Underwater

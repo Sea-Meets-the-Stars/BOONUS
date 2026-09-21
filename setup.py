@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 # Begin setup
 setup_keywords = dict()
 setup_keywords['name'] = 'boonus'
-setup_keywords['description'] = 'Boundary Ocean Observing Network of the United States (BOONUS)'
+setup_keywords['description'] = 'Boundary Ocean Observing Network for the United States (BOONUS)'
 setup_keywords['author'] = 'J. Xavier Prochaska'
 setup_keywords['author_email'] = 'jxp@ucsc.edu'
 setup_keywords['license'] = 'BSD'
