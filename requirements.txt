@@ -1,0 +1,29 @@
+# Runtime dependencies for boonus.
+#
+# Keep this list in sync with install_requires in setup.py.
+
+# Core scientific stack
+numpy
+scipy
+pandas
+matplotlib
+seaborn
+scikit-learn
+tqdm
+IPython
+pytest
+
+# Oceanography / gridded data I/O
+xarray
+h5netcdf
+netcdf4
+cftime
+gsw
+gsw-xarray
+xhistogram
+dask
+
+# Sibling package (not on PyPI): CUGN glider data handling and analysis.
+# NOTE: this repository lives in /home/xavier/Projects, so `cugn` is NOT in
+# the parent directory. Install it from its absolute path (see CLAUDE.md):
+#   pip install -e /home/xavier/Oceanography/python/cugn
