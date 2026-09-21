@@ -28,6 +28,10 @@ me to download any additional files and place them in the `context` folder.
 and then ask me another round if needed.  Use Fable if you can.  Log your work.  Do not write the
 context file yet.
 
+4. Read this file.  I have answered your third round of questions in Q&A.  Read those, act accordingly.
+Then proceed to write the context file.  Use Fable if you can.  Log your work.  
+If you have any additional questions, ask me in the Q&A section.
+
 ## Q&A
 
 I have read all five items in the Context section (text of every page, plus the two
@@ -399,6 +403,7 @@ gitignore will keep it out of GitHub once it is there.
     with the regional models, starting from the CUGN lines; the multi-pager map is
     illustrative, not a plan." Is "observing-system design experiments" the right
     term, and is the CUGN-as-starting-point clause correct?
+>A. Correct
 
 46. **The CUGN scaling ratio.** You said CUGN needs 10 gliders minimum to keep 4 standard
     lines plus the alongshore line active. Is that 10 the total inventory (in the water
@@ -406,11 +411,13 @@ gitignore will keep it out of GitHub once it is there.
     gliders supports about 50 line-equivalents; at 2 in the water per line, 50+ in
     the water supports about 25. The brief should state the arithmetic once, and I
     want the right basis.
+>A. At least 2 gliders per line.  We would also have an extra pool for target of opportunity gliders.
 
 47. **Cost.** No source gives a cost, and funding is deferred. Should the brief carry
     one line, "Cost model: TBD; the one-pager anticipates an economy of scale relative
     to CUGN `[aspirational]`", or omit cost entirely? Recommendation: the one line, so a
     future session does not invent a number.
+>A. The one line is good.
 
 ### K. Tagging and the private sources
 
@@ -419,11 +426,13 @@ gitignore will keep it out of GitHub once it is there.
     (IOOS hurricane gliders improving intensity forecasts; Oregon glider hypoxia
     records). Recommendation: one tag, with the citation making the source clear, so
     the vocabulary stays at four tags. OK?
+>A. Ok
 
 49. **Quoting the private documents.** The brief folds in the one-pager and
     multi-pager content, and the brief will be public. I plan to paraphrase their
     substance, not quote their pitch headings ("The Wow", "The Irrefutable Case"), and
     not mention the recipients or the foundation. Confirm?
+>A. Yes
 
 ### L. Files around the brief
 
@@ -431,22 +440,50 @@ gitignore will keep it out of GitHub once it is there.
     under Repository layout: "`context/initial_context_for_claude.md` is the canonical
     project brief; read it before writing anything about BOONUS." Do this when the
     brief is written (prompt #4)? Recommendation: yes.
+>A. Yes
 
 51. **A `context/README.md`.** Short file saying which contents are tracked (the brief,
     `sources/*.md`) and which are private and gitignored (the PDFs), with the citation
     for each PDF so a fresh clone knows what to obtain. Recommendation: yes, written
     with the brief.
+>A. Yes
 
 52. **Digest template.** For each of the four published sources
     (`context/sources/boon2018.md`, `ioos2021.md`, `rudnick2016.md`, `rudnick2017.md`):
     citation and local filename; one-paragraph "what it is"; key facts with page
     references; quotable lines; a "differs from canonical" note where relevant (Q25);
     and a "relevance to BOONUS" paragraph. Approve, or add a field?
+>A. Approve
 
 53. **Sequencing for prompt #4.** I propose to write, in one prompt: the brief (v0.1),
     the four digests (Rudnick 2017 only if its PDF is present), `context/README.md`,
     and the one-line `CLAUDE.md` pointer, then log. If you would rather review the
     digests before the brief, say so and I will split it.
+>A. Ok
+
+### Round 4 (2026-09-21): checks on the written brief
+
+The brief is written (`context/initial_context_for_claude.md` v0.1). Four small points
+where I made a call you may want to reverse; none blocks use of the brief.
+
+54. **Matt Mazloff is named** as nominal lead of the AI-driven component (Q11, and the
+    approved outline in Q37), despite the "JXP and Dan only" rule from Q18/Q20. The
+    style rules say so explicitly. Keep, or drop the name?
+>A.
+
+55. **Your affiliation and role** are given as "J. Xavier Prochaska (JXP, UC Santa Cruz
+    Ocean Sciences), lead". Correct wording?
+>A.
+
+56. **Line 56.7 "since ~2016"** is inferred from boon.pdf (March 2018: "occupied for
+    two years"); the alongshore line has no start date, only "data in the climatology
+    from 2019". Corrections welcome.
+>A.
+
+57. **The coverage-gap estimate (<10%)** is recorded untagged as a "project estimate
+    (JXP); not derived in this repository". If you would rather it carry a tag or a
+    sentence of justification, say which.
+>A.
 
 ## Logs
 
@@ -624,3 +661,52 @@ learned assimilation components, and event detection; glossary as proposed.
 No git commands that change repository state were run (`git status`,
 `git check-ignore` only). Files modified: this prompt doc, `README.md`, `CLAUDE.md`,
 `setup.py`, `boonus/__init__.py`, `.gitignore`.
+
+### 2026-09-21 (Execute context prompt #4: act on round-3 answers, write the context file)
+
+Read your answers to Q45-Q53 (all approvals or clarifications; no reversals), then
+wrote the full context set in one pass as agreed in Q53. Model: Claude Fable 5.1.
+
+**Files created:**
+
+- `context/initial_context_for_claude.md` (v0.1, ~2800 words, about four pages): the
+  canonical brief in the ten-section outline approved in Q37. Section 1 is a fact
+  table with one value per item; Sections 2-5 carry the four claim tags; Section 6
+  holds ten style rules; Section 7 lists open decisions; Section 10 is the change log.
+- `context/sources/boon2018.md`, `ioos2021.md`, `rudnick2016.md`, `rudnick2017.md`:
+  public digests in the Q52 template (citation and local file; what it is; key facts
+  with page references; quotable lines; differs from canonical; relevance to BOONUS).
+  The Rudnick 2017 digest was written from the PDF you downloaded (45 MB, 43 pp.) and
+  cross-checked against section 13 of the cugn-climatology context doc, which it
+  credits and points to.
+- `context/README.md`: what is tracked and what is private, with a citation and
+  "how to obtain" for each PDF.
+
+**File modified:** `CLAUDE.md`, one new bullet under Repository layout pointing at the
+brief and the digests (Q50). Also this prompt doc (Round 4 and this log).
+
+**Calls made while writing, flagged in Round 4:** Mazloff named as nominal AI lead;
+JXP's affiliation and role wording; the inferred 2016 start of line 56.7; the untagged
+coverage-gap estimate. Two other choices worth knowing: canonical facts in Section 1
+are untagged by design (tags are for claims, not settled values), and the brief
+attributes the "97% of 3 glider-days/day since 2009" and "two gliders per line" facts
+to Rudnick et al. 2017 rather than to your Q31/Q46 answers, which they corroborate.
+
+**What I learned about the repository and sources:**
+
+- Rudnick et al. (2017) contains, almost verbatim, the BOONUS thesis: "A series of
+  networks like the CUGN in boundary currents around the world is a conceivable future
+  for gliders in global ocean observing" (p. 104). It is the citation to lead with.
+- The same paper states the two-gliders-per-line operating model and the
+  glider-days/day metric, which makes the fleet arithmetic in the brief a published
+  ratio rather than a project assumption.
+- The Rudnick 2017 PDF as downloaded is 45 MB and 43 pages, mostly figures;
+  `pdftotext` handles it but figure axis labels flood the text, so digests should be
+  written from the prose sections (2, 3, 5, 6) and the figure captions.
+- `context/` now mixes tracked Markdown with ignored PDFs; `git status --ignored`
+  is the way to see both. `git add context/` stages only the Markdown.
+- The brief's Section 3 data-access block duplicates paths documented in
+  `cugn/CLAUDE.md` and `cugn/erddap.py`; if those move, the brief needs a version bump.
+
+No git commands that change repository state were run (`git status`,
+`git check-ignore` only). The five PDFs remain untracked and ignored.

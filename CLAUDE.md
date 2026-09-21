@@ -15,6 +15,9 @@ figures, requirements) alongside the analysis code.
 
 Repository layout:
 
+- `context/initial_context_for_claude.md` — the canonical project brief; read it
+  before writing anything about BOONUS. `context/sources/` holds digests of the source
+  documents; the source PDFs themselves are private and gitignored.
 - `claude_prompts/` — prompts and task definitions that drive this work. Read the
   relevant prompt doc (starting with `start_up.md`) before acting, and execute only
   the numbered task you were pointed at.
