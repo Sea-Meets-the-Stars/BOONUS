@@ -42,6 +42,8 @@ If you have any additional questions, ask me in the Q&A section.
 
 3. I have answered your second round of questions in Q&A/Data assimilation.  Read those and ask another round as you need.  Use Fable if you can.  Log your work.
 
+4. Ok, I think we are ready to work on the Report.  Please update the `data_assimilation_prompts.md` file with a set of prompts to do so.  Use Fable if you can.  Log your work.
+
 ## Q&A
 
 ### Data assimilation
@@ -1240,3 +1242,35 @@ No git commands that change repository state were run (`git status`, `git check-
 only). Files created: `context/da/README.md`, `claude_prompts/data_assimilation_prompts.md`,
 seven PDFs in `context/da/` (ignored). Files modified: this prompt doc. Not touched:
 `.claude/settings.json`, `.gitignore`, `CLAUDE.md`, the brief.
+
+### 2026-09-22 (Execute data assimilation prompt #4: write the report prompts)
+
+Read `CLAUDE.md`, the brief (v0.1), `context/da/README.md`, the DA Q&A rounds 1-3 and
+the three DA log entries above, the new prompt doc's "Decisions carried over" block, the
+El Nino 2026 exemplar (`sources.md`, `sources.bib`, `scripts/check_links.py`, report
+header), and the house prompt style in `start_up.md` and this file. Then wrote nine
+numbered prompts under `## Prompts` in `claude_prompts/data_assimilation_prompts.md`,
+replacing the placeholder comment, and logged them there in detail. Model: Claude Fable
+5.1, as requested. Nothing was started on the outline, reading list or report.
+
+**The sequence, one line each:** (1) read the eight anchor PDFs, write `outline.md` and
+the annotated 40-60 item `reading_list.md`, questions in Q&A, JXP review gate; (2) act on
+the review, set up `sources.md`/`sources.bib`/`scripts/check_sources.py`, fetch further
+open-access PDFs; (3) start `da_ai_review.md`: primer, classical methods, global and
+regional systems, the operational-systems table; (4) NWP section, ocean AI by the
+four-way taxonomy with maturity tags and verification notes, BGC; (5) glider-specific DA,
+glossary, questions for Matt, executive summary; (6) the four figures (two Mermaid, the
+matplotlib timeline in `ocean14`, the table); (7) verification pass and `v0.1` for JXP's
+review; (8) revise to `v0.2`, the copy shared with Matt Mazloff; (9) digest in
+`context/sources/` and brief v0.2 pointer (DA18). Each ends "Use Fable if you can. Log
+your work." No Q&A was added: nothing blocked writing the prompts.
+
+**What I learned about the repository.** All eight anchor PDFs are present in
+`context/da/` on this machine (Geer 2021 included, downloaded by JXP after Round 3), so
+the outline session can start reading at once. The exemplar's link checker verifies
+Markdown links only, not DOIs; the DA report needs a new `check_sources.py`. The pattern
+of a new prompt doc carrying a "Decisions carried over" block let every prompt refer to
+the decisions by name instead of repeating them, which kept the prompts at JXP's length.
+
+No git commands were run. Files modified: this prompt doc (this log entry only) and
+`claude_prompts/data_assimilation_prompts.md`.
