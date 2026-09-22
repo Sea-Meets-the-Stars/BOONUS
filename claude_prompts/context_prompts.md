@@ -18,6 +18,8 @@ Here are a number of things to start with in the `context` folder:
 
 ## Prompts
 
+### First bits
+
 1. Read this file.  Examine all of the items in the Context section.  We are eventually going to create a context file named `context/initial_context_for_claude.md`.  We will first have a conversation with Claude to determine what to include in the context file.  Place a series of questions in the Q&A section and I will answer them.  Use Fable if you can.  Log your work.  
 
 2. Read this file.  I have answered your first round of questions in Q&A.  Read those and
@@ -32,7 +34,382 @@ context file yet.
 Then proceed to write the context file.  Use Fable if you can.  Log your work.  
 If you have any additional questions, ask me in the Q&A section.
 
+### Data assimilation
+
+1. Read your context.  We will generate a report that describes the state-of-the-art in data assimilation for oceanography.  With emphasis on where and how AI is being adopted in data assimilation.  Before generating the report, we will discuss it.  Ask me a series of questions in Q&A/Data assimilation.
+
+2. I have answered your first round of questions in Q&A/Data assimilation.  Read those and ask another round as you need.  Use Fable if you can.  Log your work.
+
+3. I have answered your second round of questions in Q&A/Data assimilation.  Read those and ask another round as you need.  Use Fable if you can.  Log your work.
+
 ## Q&A
+
+### Data assimilation
+
+#### Round 1 (2026-09-22)
+
+I have re-read the brief (`context/initial_context_for_claude.md` v0.1) and the digests.
+The brief already fixes several things this report must respect: ROMS 4D-Var
+assimilation of CUGN is `[demonstrated]`; the AI-driven component (nominal lead Matt
+Mazloff) is `[planned; scope TBD]` as some combination of adaptive piloting, learned
+components inside assimilation, and anomaly detection; line locations will come from
+observing-system design experiments. Questions are numbered DA1, DA2, ... so they do not
+collide with Q1-Q57 above. Where I have a recommendation I state it. Answer inline with
+`>A.` lines; "as recommended" is enough.
+
+#### DA-A. Purpose and audience
+
+DA1. **What is the report for?** Options: (a) an internal reference that steers BOONUS
+     design (what DA systems will ingest BOONUS data, what they need from it);
+     (b) an advocacy-grade review arguing that sustained coastal glider data are the
+     limiting input for AI-era ocean prediction; (c) a neutral, publishable review of
+     the field. Recommendation: (a) written to the standard of (b), so it can later
+     be cut into a proposal section. Neutral (c) is a much larger job.
+>A. This first document will be to educate JXP. We will write separate documents for BOONUS in the future. 
+
+DA2. **Primary reader.** Oceanographers who are not DA specialists (you, Dan, glider
+     operators), DA/modeling specialists (Mazloff and colleagues), or non-specialist
+     funders? This sets how much of the DA machinery (Kalman filters, adjoints,
+     background-error covariances) I explain from scratch. Recommendation:
+     oceanographers who are not DA specialists, with a one-page primer.
+>A. JXP.  But I will also share with Matt Mazloff.
+
+DA3. **Length and form.** Recommendation: a Markdown report of roughly 10-15 pages in
+     `reports/data_assimilation/` with `sources.md` and `sources.bib` (style rule 8),
+     a one-page executive summary at the top, and 2-4 figures (a taxonomy diagram of
+     AI-in-DA approaches; a timeline; a table of operational systems). Or would you
+     prefer LaTeX/PDF, a shared Claude Doc, or an HTML artifact?
+>A. I like 10-15 pages and Markdown.  Include figures where you can.
+
+#### DA-B. Scope
+
+DA4. **Spatial scope.** Global ocean DA (ECMWF, Mercator, NOAA RTOFS, Navy, ECCO) as
+     background, with the depth spent on regional and coastal DA (U.S. West Coast
+     ROMS 4D-Var, NOAA's operational coastal forecast systems, boundary-current
+     systems elsewhere)? Recommendation: yes, roughly 1/3 global, 2/3 regional and
+     coastal, because that is where BOONUS data land.
+>A. Yes, roughly 1/3 global, 2/3 regional and coastal.
+
+DA5. **Physical only, or biogeochemical too?** The brief lists oxygen, pH, chlorophyll
+     and the Darwin model, and BGC assimilation is where DA is least mature and where
+     ML is most tempting. Recommendation: include BGC as a full section.
+>A. Yes, include BGC as a full section.
+
+DA6. **Reanalysis and state estimation, or forecasting only?** ECCO-style
+     smoother/state estimation (Mazloff's home turf, e.g. the Southern Ocean and
+     California Current state estimates) versus operational filtering for forecasts.
+     Recommendation: both, with a clear split, since BOONUS claims both a climate
+     record and 3-day forecasts.
+>A. Yes, both.  With a clear split.
+
+DA7. **Time window.** Classical methods summarized briefly (OI, 3D/4D-Var, EnKF and
+     hybrids), with the literature review concentrated on roughly 2019-2026 for AI?
+     Recommendation: yes.
+>A. Yes
+
+DA8. **Should atmospheric (weather) AI be covered?** The AI-in-DA story is being written
+     mostly in numerical weather prediction: ML emulators (GraphCast, Pangu, FourCastNet,
+     AIFS), then ML used inside or instead of DA (learned 4D-Var, end-to-end
+     observation-to-forecast systems, diffusion-model DA). Ocean work follows with a
+     lag. Recommendation: one section on NWP as the leading indicator, then ocean.
+>A. Follow your recommendation
+
+#### DA-C. The AI emphasis
+
+DA9. **Taxonomy.** I propose to organize the AI material by where ML enters the DA
+     pipeline: (1) ML emulators/surrogates of the ocean model (as the forecast model or
+     for cheap ensembles); (2) ML inside classical DA (learned background-error
+     covariances, model-error/bias correction, observation operators, ensemble
+     inflation/localization, tangent-linear/adjoint surrogates); (3) ML replacing DA
+     (end-to-end mapping of observations to state or forecast; generative/diffusion
+     reconstructions; neural interpolation of sparse observations, e.g. SSH mapping);
+     (4) ML around DA (observation QC, super-resolution/downscaling, anomaly detection,
+     adaptive sampling and OSSE design). Does this match how you and Mazloff think
+     about it, or do you want another axis (e.g. maturity: research / pre-operational
+     / operational)?
+>A. I like the way you have defined it.
+
+DA10. **Maturity and honesty.** Consistent with style rule 1 (no hype), should every AI
+      approach carry a maturity tag (e.g. `idealized`, `realistic hindcast`,
+      `pre-operational`, `operational`) and a note on how its skill was verified
+      (against withheld observations vs. against a reanalysis it was trained on)?
+      Recommendation: yes; the training-on-reanalysis circularity is the central
+      caveat for ocean ML and the natural argument for independent in situ data.
+>A. Yes, use your recommendation.
+
+DA11. **The BOONUS thesis.** Should the report explicitly argue that AI models trained
+      largely on reanalyses inherit the reanalyses' poorly constrained coastal
+      subsurface, so sustained subsurface observations (gliders) become *more*
+      valuable, not less, as AI spreads? This is my reading of where the argument is
+      strongest, but it must be evidenced, not asserted. Keep, soften, or drop?
+>A. Avoid for now
+
+DA12. **Glider-specific DA.** Should I dedicate a section to how gliders enter DA
+      (profile vs. binned assimilation, depth-average velocity as an observation,
+      representativeness error, observation-impact studies and OSEs/OSSEs showing
+      glider value, including the IOOS hurricane-glider results and the California
+      Current ROMS work)? Recommendation: yes; it connects the review to BOONUS design.
+>A. Yes, it connects the review to BOONUS design.
+
+DA13. **Which AI component work to frame toward.** The brief lists three strands for
+      the BOONUS AI component. Should the report end with a section mapping the
+      literature onto those three strands (what exists, what BOONUS would add, what a
+      first demonstration could be, e.g. an ML emulator of the CCS ROMS state
+      estimate constrained by CUGN)? Or stop at the review and leave design to a later
+      prompt? Recommendation: a short "implications for BOONUS" section, tagged
+      `[TBD]`/`[aspirational]`, no commitments.
+>A. Stop at the review.
+
+#### DA-D. Sources and people
+
+DA14. **Literature access.** WebFetch is allowed only for `doi.org`, `tandfonline.com`,
+      `opg.optica.org` and the ASLO Wiley domain; WebSearch is not in the allow list.
+      For a 2019-2026 review I will need arXiv, ESS Open Archive, AGU/Wiley (JAMES,
+      GRL, JGR), AMS journals, Frontiers, Copernicus (GMD, OS, NPG), Nature, and
+      ECMWF/NOAA pages. Options: (a) you add those domains and WebSearch to
+      `.claude/settings.json`; (b) you approve fetches one by one; (c) you download key
+      PDFs into a private folder (e.g. `context/da/`, gitignored). Recommendation: (a)
+      plus (c) for anchor papers. I will not cite anything I have not verified by
+      DOI.
+>A. (a) plus (c) for anchor papers.
+
+DA15. **Anchor papers.** Candidates I would want in hand (to verify, not assumed):
+      Moore et al. 2019 (Front. Mar. Sci., ocean DA for operational and reanalysis
+      systems, OceanObs'19); Carrassi et al. 2018 (WIREs Clim. Change, DA in the
+      geosciences); Geer 2021 (Phil. Trans. R. Soc. A, ML vs. DA for learning Earth
+      system models); Cheng et al. 2023 (IEEE/CAA JAS, ML with DA and UQ review); and
+      recent ocean emulator papers (e.g. Samudra, and the Chinese ocean forecast
+      emulators). Do you or Mazloff have a reading list, or specific papers you want
+      featured (including your own or Mazloff's)?
+>A. I like your list, let's use it.
+
+DA16. **Naming people.** Style rule 5 limits names to JXP, Rudnick and Mazloff. A
+      literature review must cite authors. I propose: author names appear only in
+      citations (as in any review), never as prospective partners or collaborators.
+      OK?
+>A.  It is perfectly fine to cite authors 
+
+DA17. **Mazloff's role in this report.** Should the draft be written for Mazloff to
+      review (and possibly co-author), and should it describe his group's work (e.g.
+      the California Current and Southern Ocean state estimates, ML-DA projects) in
+      detail? If so, can you point me to what he considers representative?
+>A.  I am the main reader of this report.  I will share with Matt Mazloff.
+
+#### DA-E. Process
+
+DA18. **Brief update.** Once the report exists, should a short digest go into
+      `context/sources/` and a pointer into the brief (v0.2, Section 5), so future
+      sessions know the AI-DA landscape without rereading the report?
+      Recommendation: yes.
+>A. yes
+
+DA19. **Model and rounds.** Earlier prompts asked for Fable; this one does not. Which
+      model do you want for the drafting, and do you expect another Q&A round before
+      the outline, or should the next step be an outline for your approval?
+      Recommendation: next step is a one-page outline plus reading list for approval,
+      then the draft.
+>A.  Use Fable for this effort
+
+#### Round 2 (2026-09-22)
+
+Round 1 is fully answered and every answer is now a fixed decision: the report educates
+JXP and will be shared with Matt Mazloff; 10-15 pages of Markdown with figures; roughly
+1/3 global and 2/3 regional and coastal; a full BGC section; reanalysis/state estimation
+and forecasting both, clearly split; classical methods in brief, AI literature 2019-2026;
+NWP as the leading indicator; the four-way taxonomy of where ML enters DA; a maturity tag
+and a verification note on every AI approach; the "AI makes gliders more valuable" thesis
+is left out; a glider-specific DA section; the report stops at the review; literature
+access by (a) new domains in settings plus (c) anchor PDFs in a private folder; the
+anchor list stands; authors are cited freely; a digest and brief v0.2 pointer afterwards;
+Fable throughout. Nothing below reopens those. Two of the round-1 answers need a concrete
+follow-through before drafting can start (DA20, DA21), and DA19's "use Fable" left the
+outline-versus-draft question open (DA22). The rest settle shape and depth. Answer inline
+with `>A.` lines; "as recommended" is enough.
+
+#### DA-F. Access and files (needed before any drafting)
+
+DA20. **The domain list for `.claude/settings.json`.** Nothing has been added yet: the
+      allow list still holds only `doi.org`, `www.tandfonline.com`, `opg.optica.org` and
+      the ASLO Wiley host, and no `WebSearch`. I propose adding `WebSearch` plus
+      `WebFetch(domain:...)` for: preprints and metadata (`arxiv.org`,
+      `essopenarchive.org`, `api.crossref.org`, `api.semanticscholar.org`); publishers
+      (`agupubs.onlinelibrary.wiley.com`, `onlinelibrary.wiley.com`,
+      `rmets.onlinelibrary.wiley.com`, `journals.ametsoc.org`, `www.frontiersin.org`,
+      `gmd.copernicus.org`, `os.copernicus.org`, `npg.copernicus.org`,
+      `egusphere.copernicus.org`, `www.nature.com`, `www.science.org`,
+      `royalsocietypublishing.org`, `ieeexplore.ieee.org`, `www.sciencedirect.com`,
+      `linkinghub.elsevier.com`, `link.springer.com`, `www.pnas.org`); ML venues
+      (`openreview.net`, `proceedings.neurips.cc`, `proceedings.mlr.press`); and
+      operational centers (`www.ecmwf.int`, `www.jcsda.org`, `ecco-group.org`,
+      `www.mercator-ocean.eu`, `marine.copernicus.eu`, `polar.ncep.noaa.gov`,
+      `tidesandcurrents.noaa.gov`, `ioos.noaa.gov`, `gliders.ioos.us`, `github.com`).
+      Expect some publisher hosts to return 403 to automated fetchers regardless (the
+      El Nino 2026 `sources.md` records this for several), which is why (c) matters.
+      Recommendation: authorize me to make this edit to the BOONUS `settings.json` in the
+      next prompt (BOONUS only; `CLAUDE.md` names IOPtics as the upstream for that file,
+      and I would not touch IOPtics). Strike any host you object to.
+>A.  That all is fine
+
+DA21. **Anchor-PDF folder and its gitignore rule.** `context/da/` does not exist, and
+      the current rule `context/*.pdf` does not reach into subfolders (verified with
+      `git check-ignore`: `context/da/x.pdf` is *not* ignored today). Proposal: create
+      `context/da/` holding the anchor PDFs, replace the rule with `context/**/*.pdf`
+      (one rule for the current folder and every future subfolder), and add a tracked
+      `context/da/README.md` listing each PDF with citation, DOI and "how to obtain",
+      mirroring `context/README.md`. On who downloads: Moore et al. 2019 (Frontiers),
+      Carrassi et al. 2018 (WIREs), Geer 2021 (Phil. Trans. A), Cheng et al. 2023
+      (IEEE/CAA JAS; also on arXiv) and Samudra (arXiv/JAMES) are open access as far
+      as I know, so I could fetch them with `curl` once you approve that command; the
+      Chinese ocean-emulator papers may be paywalled (Nature-family journals). Would
+      you rather download all of them yourself into `context/da/`, or let me fetch the
+      open-access ones and leave you only the paywalled ones? Recommendation: the
+      latter, with the rule and README edits authorized in the same prompt as DA20.
+>A. Go with your recommendation.
+
+#### DA-G. Process and shape
+
+DA22. **Outline first, or draft directly?** DA19 recommended a one-page outline plus an
+      annotated reading list for your approval before the draft; your answer fixed the
+      model but not the sequence. Recommendation: outline plus reading list as the next
+      prompt (roughly 40-60 candidate references, each with a one-line reason and a
+      verification status), then the draft. For a 10-15 page document that Mazloff will
+      read, a half-hour of your review at the outline stage is cheap insurance against
+      a wrong emphasis. Alternative: go straight to a full v0.1 and iterate.
+>A. Go with your recommendation.
+
+DA23. **Location and filenames.** Nothing exists yet. Proposal, following the El Nino 2026
+      exemplar: `reports/data_assimilation/da_ai_review.md` (versioned in its header,
+      `v0.1, date, JXP and Claude`, with a change-log table), beside `sources.md`,
+      `sources.bib`, `figs/` and `scripts/`. The outline and reading list from DA22
+      would live in the same folder as `outline.md` and `reading_list.md`, so they stay
+      with the report rather than in this prompt doc. OK, or a different name and place?
+>A. That looks very good
+
+DA24. **Level of mathematics.** Options: (a) prose only; (b) a compact boxed primer with
+      the handful of equations that everything else refers to (the linear Gaussian
+      update and gain, the 3D/4D-Var cost function, the ensemble Kalman gain and why
+      localization and inflation are needed), plus a notation table, with the rest of
+      the report in prose; (c) derivations. Recommendation: (b). You are a working
+      scientist fluent in Bayesian inference, and Mazloff will skip the primer; the
+      equations give the AI sections a fixed vocabulary (what "learning B", "learning
+      the observation operator" or "replacing the adjoint" actually means).
+>A. (b)
+
+DA25. **Register, and analogies to inference you already know.** Some DA machinery has
+      exact counterparts in astrophysical and statistical practice: optimal
+      interpolation is Gaussian-process regression (kriging); 4D-Var is MAP estimation
+      with a dynamical prior; the EnKF is a Monte Carlo Kalman filter; ECCO-style state
+      estimation is a smoother over a decades-long window. Recommendation: use such
+      analogies sparingly, only where exact, and mark the primer "skippable for DA
+      specialists" so the document does not lecture Mazloff. Tone: a technical
+      briefing, not a textbook and not a pitch (style rule 1 still applies even though
+      the BOONUS thesis is out). Object if you want a different register.
+>A. Sounds fine
+
+#### DA-H. Figures and citations
+
+DA26. **How the figures are made, and whether any uses CUGN data.** Candidates: (1) a
+      taxonomy figure of the four ML entry points laid over a DA cycle; (2) a 2018-2026
+      timeline of AI-in-DA milestones, NWP on one track and ocean on the other; (3) a
+      schematic of one assimilation cycle (background, observations, analysis, forecast)
+      marking where glider profiles and depth-average velocity enter and where
+      representativeness error arises; (4) a table of operational systems (a table, not
+      a figure). Tooling options: matplotlib scripts run in `ocean14` and committed to
+      `scripts/` (reproducible, PNG in `figs/`, per style rule 9 and the exemplar), or
+      Mermaid diagrams inline in the Markdown (render on GitHub with no build step but
+      are box-and-arrow only). Recommendation: matplotlib for the timeline and anything
+      that carries data; Mermaid for the two flow schematics. On data: a review does
+      not need new computations, so v0.1 would be schematic only; an optional later
+      figure could show CUGN profile density along a line against the resolution of a
+      ROMS grid, from the local `$OS_SPRAY/CUGN` files, if you want one concrete image.
+      Schematic only for v0.1?
+>A. Those look good
+
+DA27. **Citation volume, style and verification.** Recommendation: 40-60 references;
+      author-year in the text, e.g. "(Carrassi et al. 2018)", with the BibTeX key in
+      `sources.md`/`sources.bib` as in the exemplar; every DOI verified with
+      `curl -sI https://doi.org/<doi>` and the access date recorded; arXiv preprints
+      allowed but flagged `preprint` in both the text and the bibliography; grey
+      literature (ECMWF newsletters and technical memoranda, NOAA technical reports,
+      JEDI/SOCA documentation, GitHub READMEs) allowed with URL and access date, flagged
+      `grey`. A `scripts/check_sources.py` would re-verify every DOI and URL before
+      delivery, as `check_links.py` does for the El Nino report. OK?
+>A. OK
+
+#### DA-I. Depth on specific systems (candidates to verify, not commitments)
+
+DA28. **Ocean systems: paragraph or table row.** Candidates I expect to find in the
+      literature, each to be verified before it is named in the report. Global:
+      ECMWF's ocean reanalysis and analysis (ORAS/OCEAN5 line), Mercator Ocean's global
+      analysis and the GLORYS reanalysis, NOAA RTOFS, the U.S. Navy HYCOM/NCODA system,
+      NOAA's JEDI/SOCA ocean DA for the coupled UFS, and ECCO (v4 and the regional
+      state estimates). Regional and coastal U.S.: the UC Santa Cruz California Current
+      ROMS 4D-Var system, the Scripps California Current state estimate, the Rutgers
+      Mid-Atlantic ROMS 4D-Var ("doppio"), NOAA's NOS operational forecast systems
+      (including the West Coast OFS), and the ocean component of NOAA's hurricane
+      models that ingests hurricane-glider data. Elsewhere: Australia's Bluelink and
+      Copernicus regional systems as boundary-current comparators. Recommendation: a
+      paragraph for every system that assimilates or has assimilated gliders in U.S.
+      waters; a table row for the rest. Add or drop any?
+>A.  Use your recommendation.
+
+DA29. **NWP AI systems: how many, how deep.** Candidates to verify: emulators GraphCast,
+      Pangu-Weather, FourCastNet, FengWu/FuXi, NeuralGCM and ECMWF's AIFS (with its
+      ensemble); ML inside or instead of DA: ECMWF's observation-driven work (GraphDOP),
+      the end-to-end Aardvark Weather system, FengWu-4DVar / FuXi-DA style learned
+      assimilation, and diffusion-model DA (DiffDA, score-based DA). Recommendation:
+      one paragraph per family rather than per model (emulators; learned DA; end-to-end
+      observation-to-forecast; generative DA), naming two or three exemplars each, so
+      the NWP section stays near 2 pages and the ocean sections get the depth. OK?
+>A. OK
+
+DA30. **Ocean ML systems to feature.** Candidates to verify: Samudra (an emulator trained
+      on a GFDL ocean model's output) and the GLORYS-trained Chinese and Mercator
+      emulators (e.g. Xihe, WenHai, GLONET) for the emulator strand, with the
+      trained-on-reanalysis caveat from DA10 made concrete; 4DVarNet and the ocean
+      SSH-mapping data challenges for neural mapping; ML bias correction and learned
+      parameterizations inside ocean models for the "ML inside DA" strand; ML QC and
+      anomaly detection on Argo and glider streams for "ML around DA". Anything on your
+      or Mazloff's radar that must appear (ECCO-adjacent ML surrogates, for example)?
+      Recommendation: proceed with these and let the reading list (DA22) be the place
+      you add or strike.
+>A. Follow your recommendation.
+
+#### DA-J. Apparatus
+
+DA31. **Glossary and a "questions for Matt" appendix.** Recommendation: yes to a DA
+      glossary (background, analysis, increment, innovation, B and R matrices, adjoint
+      and tangent-linear model, localization, inflation, OSE/OSSE, observation impact
+      and FSOI, representativeness error), and yes to a short closing appendix listing
+      the questions the literature left open that a state-estimation expert would
+      settle quickly, framed as your reading notes for the Mazloff conversation. Cut
+      either if you prefer a leaner document.
+>A.  Sounds good
+
+DA32. **The prompt doc for this work.** The DA prompts and Q&A currently sit inside
+      `context_prompts.md`, whose goal statement is the context brief. Fine to continue
+      here, or would you rather I start `claude_prompts/data_assimilation_prompts.md`
+      when the outline prompt comes (you would move prompt #3 there; I would not move
+      your text)? Recommendation: a new prompt doc, following the one-doc-per-effort
+      pattern (`start_up.md`, `context_prompts.md`).
+>A. Start a new prompt doc.
+
+#### Round 3 (2026-09-22)
+
+No further questions. Every round-2 answer accepted the recommendation, so DA1-DA32 are
+now fixed decisions and nothing that remains open would change the outline; the reading
+list is the agreed place to add or strike specific papers (DA30). Acted on this round:
+the `settings.json` domain list (DA20), the `context/**/*.pdf` rule and `context/da/`
+folder with its README (DA21), the anchor PDFs fetched where open access (DA21), and the
+new prompt doc `claude_prompts/data_assimilation_prompts.md` (DA32), which carries a
+compact summary of DA1-DA32 so future sessions need not reread this file. **One download
+request:** Geer (2021), *Phil. Trans. R. Soc. A* 379, 20200089,
+doi:10.1098/rsta.2020.0089, is not open access (Europe PMC) and the publisher returns
+403 to fetchers; please save it as `context/da/geer2021.pdf`. The next step is the
+outline plus annotated reading list, driven from the new prompt doc (JXP to write the
+prompt under `### Outline and reading list` there).
+
+### First
 
 I have read all five items in the Context section (text of every page, plus the two
 figures in the multi-pager: the flag map of proposed sites and the Spray photo).
@@ -710,3 +1087,156 @@ to Rudnick et al. 2017 rather than to your Q31/Q46 answers, which they corrobora
 
 No git commands that change repository state were run (`git status`,
 `git check-ignore` only). The five PDFs remain untracked and ignored.
+
+### 2026-09-22 (Execute data assimilation prompt #1: pose Q&A for the DA/AI report)
+
+Re-read this prompt doc, the brief (`context/initial_context_for_claude.md` v0.1),
+`context/README.md` and the digests, then wrote Round 1 of the data assimilation Q&A
+(DA1-DA19) under `## Q&A / ### Data assimilation`, nested with `####` headings so the
+earlier context rounds stay intact. Model: Claude Opus 5.5 (the prompt did not ask for
+Fable). No report or outline yet, per the prompt.
+
+**Question groups:** purpose and audience (DA1-3); scope: global vs coastal, physics vs
+BGC, reanalysis vs forecast, time window, NWP as leading indicator (DA4-8); the AI
+emphasis: a four-way taxonomy by where ML enters the DA pipeline, maturity tags, the
+"AI trained on reanalyses needs independent in situ data" thesis, glider-specific DA,
+mapping onto the brief's three AI strands (DA9-13); sources, literature access and
+naming rules (DA14-17); process (DA18-19).
+
+**What I learned about the repository:**
+
+- The brief already carries the facts this report must honor: ROMS assimilation of CUGN
+  is `[demonstrated]` (Todd et al. 2011b; Rudnick 2016 sec. 7), IOOS hurricane-glider
+  data are assimilated into NOAA intensity forecasts (IOOS 2021 digest), and the AI
+  component is `[planned; scope TBD]`.
+- `.claude/settings.json` allows WebFetch only for `doi.org`, `tandfonline.com`,
+  `opg.optica.org` and `aslopubs.onlinelibrary.wiley.com`, and no WebSearch. A
+  2019-2026 AI-DA literature review will be blocked without more domains (DA14).
+- Style rule 5 (name only JXP, Rudnick, Mazloff) conflicts with a literature review's
+  citations; DA16 proposes the resolution.
+- There is no `reports/` directory yet; DA3 proposes `reports/data_assimilation/`.
+
+No git commands that change repository state were run.
+
+### 2026-09-22 (Execute data assimilation prompt #2: read round-1 answers, pose round 2)
+
+Read `CLAUDE.md`, the brief (v0.1) and all nineteen round-1 answers (DA1-DA19), then
+wrote Round 2 (DA20-DA32) under `## Q&A / ### Data assimilation`, inserted directly
+after Round 1 and before the older `### First` context Q&A, which is untouched. Round 2
+opens by restating the round-1 decisions as fixed and asks thirteen questions in five
+groups: access and files (the exact domain list for `settings.json` and the anchor-PDF
+folder with its gitignore rule, both offered as edits I make on authorization); process
+and shape (outline first or draft directly, location and filenames, level of
+mathematics, register and analogies); figures and citations (matplotlib vs Mermaid,
+whether any figure uses CUGN data, citation volume, style and DOI verification); depth
+on specific ocean, NWP-AI and ocean-ML systems, all framed as candidates to verify; and
+apparatus (glossary, a "questions for Matt" appendix, a separate prompt doc for the DA
+effort). Did not start the report, outline or reading list. Model: Claude Fable 5.1,
+as requested.
+
+**Facts checked before asking (so the questions are grounded, not assumed):**
+
+- `.claude/settings.json` is unchanged since round 1: WebFetch for four domains, no
+  WebSearch, and it matches the IOPtics upstream line for line, so DA14(a) has not
+  been acted on. DA20 lists the proposed additions explicitly.
+- `git check-ignore -v context/da/x.pdf` returns nothing: the rule `context/*.pdf`
+  (`.gitignore` line 222) does not cover a subfolder. DA21 proposes `context/**/*.pdf`.
+- Neither `reports/` nor `context/da/` exists.
+- The El Nino 2026 exemplar (`cugn/reports/El_Nino_2026/`) records its conventions in
+  `sources.md`: DOI verified by `curl -sI https://doi.org/<doi>`, access dates, BibTeX
+  keys shared with `sources.bib`, a `check_links.py` script, and a note that several
+  publisher hosts return 403 to automated fetchers. DA27 adopts these for the report.
+
+**What I learned about the repository:**
+
+- This session runs on macOS with the repository at `/Users/xavier/Projects/BOONUS` and
+  the sibling repositories at `/Users/xavier/Oceanography/python/{cugn,
+  cugn-climatology, IOPtics}`. `CLAUDE.md` and the brief give `/home/xavier/...` paths
+  (the Linux machine). Both machines are in use; paths in the brief's Section 3
+  data-access block and in `CLAUDE.md` are machine-specific and may need a
+  per-machine note. Not changed here.
+- On this machine `context/` holds only the tracked Markdown (README, brief, four
+  digests); none of the six private PDFs is present. The gitignore worked as intended,
+  and any PDF work for the report will need the PDFs fetched here.
+- `pdftotext` is available at `/opt/homebrew/bin/pdftotext`; conda is
+  `/Users/xavier/miniforge3/bin/conda`.
+- Two of the round-1 answers ("(a) plus (c)" in DA14, "use Fable" in DA19) were
+  approvals in principle that left the concrete step undecided; the prompt-doc pattern
+  handles this well by carrying the follow-through into the next round rather than
+  guessing.
+
+No git commands that change repository state were run (`git status`, `git branch`,
+`git check-ignore` only). Only this prompt doc was modified.
+
+### 2026-09-22 (Execute data assimilation prompt #3: act on round-2 answers)
+
+Read `CLAUDE.md`, the brief (v0.1), `context/README.md` and all thirteen round-2
+answers (DA20-DA32). Every answer accepted the recommendation, so this prompt was
+follow-through rather than discussion. Model: Claude Fable 5.1, as requested.
+
+**Edits made by the parent session before this work (recorded here, not redone):**
+
+- **DA20, `.claude/settings.json`:** `WebSearch` and `WebFetch(domain:...)` added for the
+  full DA20 domain list (preprint servers and Crossref, publishers, ML venues,
+  operational centers). BOONUS only; IOPtics untouched. Settings changes do not reach a
+  running session, so all fetching below used `curl` via Bash.
+- **DA21, `.gitignore`:** rule changed from `context/*.pdf` to `context/**/*.pdf`;
+  `git check-ignore` confirmed `context/da/x.pdf` and `context/boon.pdf` are ignored.
+  Empty `context/da/` created.
+
+**Done in this session:**
+
+- **Citations verified, nothing guessed.** Each anchor was resolved through the Crossref
+  API (`api.crossref.org/works`) and the arXiv API (`export.arxiv.org/api/query`, https;
+  the http endpoint returns an empty body), then `curl -sI https://doi.org/<doi>` was
+  run for every DOI (all HTTP 302 on 2026-09-22). Full author lists were taken from
+  Crossref.
+- **PDFs fetched into `context/da/` (seven), each checked with `file` and `pdfinfo`:**
+  `moore2019.pdf` (Frontiers, publisher PDF, CC BY; a 6-page Mini Review, which is the
+  real length, not a truncated download); `carrassi2018.pdf` (arXiv 1709.02798v3; Wiley
+  returned 403); `cheng2023.pdf` (arXiv 2303.10462v1; IEEE returned an empty 202);
+  `dheeshjith2025.pdf` (Samudra, arXiv 2412.03795v4; AGU returned 403 despite CC BY);
+  `wang2024.pdf` (XiHe, arXiv 2402.02995v4, preprint only, no journal version found);
+  `cui2025.pdf` (WenHai, *Nat. Commun.* 16, 2268, publisher PDF, CC BY-NC-ND);
+  `elaouni2025.pdf` (GLONET, arXiv 2412.05454v3; AGU returned 403 despite CC BY). Five
+  HTML landing pages and one empty file returned by the 403/202 hosts were deleted.
+- **User to download (one):** Geer (2021), *Phil. Trans. R. Soc. A* 379, 20200089,
+  doi:10.1098/rsta.2020.0089. Europe PMC reports it not open access; the Royal Society
+  host returned 403; no arXiv or ECMWF-elibrary copy was found. Save as
+  `context/da/geer2021.pdf`. Requested in Round 3.
+- **`context/da/README.md`** (tracked): table of the eight papers with verified
+  citation, DOI or arXiv ID, access status and present/user-to-download status,
+  mirroring `context/README.md`; notes the `context/**/*.pdf` rule and that arXiv copies
+  may differ from the published versions. Also records Samudra 2 (arXiv 2606.02610,
+  May 2026) as a reading-list candidate found in passing.
+- **`claude_prompts/data_assimilation_prompts.md`** (DA32): new prompt doc with Goals,
+  Context (brief, `context/da/README.md`, and a pointer to the DA Q&A history here, which
+  is not moved), a "Decisions carried over" section summarizing DA1-DA32 compactly, an
+  empty `### Outline and reading list` prompt heading for JXP to fill, and empty Q&A and
+  Logs sections. No prompt text of JXP's was copied or moved.
+- **Round 3** added above as a one-paragraph note: no further questions; the Geer
+  download request; next step is the outline plus reading list from the new prompt doc.
+  Nothing was started on the outline, reading list or report.
+
+**What I learned about the repository and the sources:**
+
+- Crossref and the arXiv API are reliable and fast from this machine; publisher PDF
+  hosts (Wiley/AGU, Royal Society, IEEE) block `curl` even for CC BY articles, while
+  Frontiers, Nature and arXiv serve PDFs directly. For the report, plan on arXiv copies
+  for AGU/Wiley papers and record the published DOI alongside.
+- Europe PMC's REST API (`ebi.ac.uk/europepmc/webservices/rest/search?query=DOI:...`)
+  gives a quick, citable open-access status for any DOI; useful for `check_sources.py`.
+- Moore et al. (2019) is a 6-page OceanObs'19 Mini Review, not a full review; the
+  outline should treat it as a systems overview and lean on Carrassi et al. (2018,
+  79 pp. on arXiv) and Cheng et al. (2023) for method depth.
+- `context/da/` now holds ~75 MB of PDFs, all ignored (`git check-ignore -v` points at
+  `.gitignore:222`); `git status` shows only `context/da/README.md` as new content
+  there, as intended.
+- The repository now has two prompt docs for two efforts plus this one; the pattern of
+  a "Decisions carried over" block in a new prompt doc is how history can be left in
+  place without forcing a reread.
+
+No git commands that change repository state were run (`git status`, `git check-ignore`
+only). Files created: `context/da/README.md`, `claude_prompts/data_assimilation_prompts.md`,
+seven PDFs in `context/da/` (ignored). Files modified: this prompt doc. Not touched:
+`.claude/settings.json`, `.gitignore`, `CLAUDE.md`, the brief.
