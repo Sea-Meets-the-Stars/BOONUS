@@ -415,7 +415,184 @@ DA46. **Two cross-references inside the prompt text still read "prompt 3".** Pro
       "prompt 4", or tell me to and I will.
 >A. I have asked you to do it.
 
+### Draft, first third (prompt #4, 2026-09-23)
+
+DA45 was acted on as answered (the full-text Bonavita note stands in `sources.md`; nothing
+in this session's sections cites it). The first third of `da_ai_review.md` is drafted
+(details in the log). Five items need you; the first two affect what the next sessions can
+write.
+
+DA47. **The "Copernicus regional" comparator row has no source.** Martin et al. (2015),
+      chosen under DA33b to carry the Bluelink and Copernicus comparator rows, covers only
+      the basin-scale and global GODAE OceanView systems and defers coastal and shelf
+      systems to a companion paper (Kerafalou et al. 2015) that is not in the list. Table 1
+      therefore has rows for Bluelink, FOAM (Met Office) and TOPAZ (MET Norway) from Martin
+      et al. and none for the Copernicus regional systems (IBI, Mediterranean, North-West
+      Shelf). Options: (a) accept FOAM and TOPAZ as the European comparators (the table
+      note says so); (b) add Sotillo et al. (2015, Copernicus IBI, doi:10.1080/1755876X.2015.1014663,
+      listed under "Not included" in `reading_list.md`) through `build_bib.py` for one true
+      Copernicus regional row. Recommendation: (a) unless you want the regional row for
+      Matt's benefit.
+
+DA48. **Two papers where the abstract is not enough (DA44).** The UCSC ROMS 4D-Var paragraph
+      (Section 5.1) rests on Moore et al. (2011, Part I) and Neveu et al. (2016), and neither
+      has an abstract in Crossref, OpenAlex or Semantic Scholar; the Elsevier host and its
+      accepted-manuscript link return 403. Their content in the draft comes from the
+      reading-list annotation and from Edwards et al. (2015) and is flagged "[not read]".
+      Please download them as `context/da/moore2011.pdf` and `neveu2016.pdf` (and, for
+      Section 9 in prompt #6, Shulman et al. 2009 as `shulman2009.pdf`, same problem). Lower
+      priority, abstracts in hand and adequate for Section 5 but thin for Section 9: Todd et
+      al. (2011, Wiley 403) and Zaba et al. (2018, AMS returns an empty 202) as
+      `todd2011.pdf`, `zaba2018.pdf`; Moore et al. (2018, AGU 403, optional) as
+      `moore2018.pdf`. Recommendation: the first two now, the glider ones before prompt #6.
+
+DA49. **WCOFS: the CO-OPS page does not state the DA method or the observation types.** It
+      says only that WCOFS "assimilates real-time observations in a three-day window ...
+      once a day". The fallback named in `reading_list.md`, Kurapov et al. (2017, *Ocean
+      Dyn.*), has sea-level verification as its subject (abstract checked) and would not
+      fill the gap, so it was not added. The draft says "not stated" and cannot say whether
+      WCOFS has assimilated glider profiles. Do you or Matt know a citable NOAA technical
+      report or paper on the WCOFS DA configuration? If not, the row stays as written.
+
+DA50. **Two operational-status facts I could not establish.** (a) Whether the HAFS ocean
+      component has moved from RTOFS-initialized HYCOM (Kim et al. 2024, operational June
+      2023, no ocean DA inside HAFS) to MOM6 with Marine JEDI/SOCA (Liu et al. 2023, a case
+      study) in the operational system; (b) SOCA's solver list (3D-Var FGAT, hybrid 3DEnVar,
+      LETKF) and its GFSv17/GEFSv13 plan, recorded in `sources.md` on 2026-09-22 from the
+      JEDI documentation, which I could not re-find on the documentation landing page or in
+      the repository README ("JEDI encapsulation of MOM6") today. Both are flagged in the
+      text and both are candidates for the questions-for-Matt list. Recommendation: leave
+      flagged; ask Matt.
+
+DA51. **Length.** The drafted sections run 1,041 words for the primer (target 500), 640 for
+      classical methods (375), 1,291 for global systems (625, trimmed from 1,857 in a first
+      pass, because the Decisions give the global systems table rows rather than
+      paragraphs), and 1,657 plus a 573-word table for regional and coastal systems
+      (1,000): 11.2 pages of prose plus 1.5 pages of tables against the outline's 5.25
+      pages for Sections 1-5. At this rate the full report lands near 20 pages rather than
+      14. Under DA38 ("clarity over brevity") I kept the numbers and quotations that make
+      the systems comparable and did not cut further. Options: (a) leave trimming to the
+      prompt-8 verification pass, which will cut repetition against the 15-page guide; (b)
+      tell me now to cut each system paragraph to about 120 words and move the detail into
+      Table 1. Recommendation: (a). A note rather than a question: Section 1 (Introduction,
+      0.25 page in the outline) was not assigned to any prompt, so I drafted it here since
+      it states the flags the rest of the text uses.
+
 ## Logs
+
+### 2026-09-23 (Execute prompt #4: start `da_ai_review.md`, draft the first third)
+
+Read `CLAUDE.md`, this prompt doc in full (Decisions fixed; Q&A through DA46, with DA45
+"use your recommendation" taken as accepting the full-text Bonavita note and DA46 already
+done), `context/initial_context_for_claude.md` (Sections 5 and 6 in particular),
+`outline.md` including its "Drafting guidance for prompts 4-6", `sources.md`, the key list
+of `sources.bib`, the global, regional and glider groups of `reading_list.md`,
+`context/da/README.md`, `context/sources/rudnick2016.md`, and the El Nino 2026 exemplar
+(`El_Nino_2026_09.md` header and References; `sources.md`) for conventions. Model: Claude
+Fable 5.1. Sources read in full or in the relevant sections via `pdftotext`: Moore et al.
+2019 (all 6 pp.), Carrassi et al. 2018 (introduction, Bayesian formulation, Kalman filter
+and smoother, variational section, EnKF, square-root schemes, localization and inflation,
+EnVar and hybrids, TOPAZ, Appendix D), Geer 2021 (the equivalence passages), and the ten
+PDFs fetched today (below), with three read-only subagents extracting facts from Zuo 2019,
+Lellouche 2018 and 2021, Forget 2015 and Kim 2024 in parallel and every number used in the
+text re-checked by grep against the source before it was written.
+
+**Files created.** `reports/data_assimilation/da_ai_review.md` (v0.1 draft header, change
+log with one row, citation-convention note, executive-summary placeholder, the full
+section skeleton 0-11 with 7.1-7.4, placeholders naming prompt 5 or 6 and the intended
+content, References listing the cited keys in the exemplar's form). Drafted: Section 1
+(Introduction and scope, 280 words; not assigned to any prompt, drafted here because it
+defines the flags the text uses, DA51), Section 2 (the primer as "Box 1" set off by rules,
+skippable, notation table of 13 symbols, the linear Gaussian update and gain, 3D-Var and
+strong/weak/incremental 4D-Var with the gradient and adjoint, the ensemble gain with the
+Carrassi sampling-error formula behind localization and the reason for inflation, hybrid B
+and ECCO; the four analogies each with an "exact" statement and a "where it breaks"
+clause; 1,041 words plus table), Section 3 (OI/EnOI, 3D-Var FGAT, 4D-Var, EnKF stochastic
+and deterministic with TOPAZ, hybrids/EnVar, and Moore et al.'s list of unsolved problems;
+640 words), Section 4 (the reanalysis/state-estimation vs operational-forecast split with
+Moore 2019 and Stammer 2016, then 4.1 ORAS5, GLORYS12, ECCO v4 and 4.2 GLO12, OCEAN5-RT,
+Global RTOFS, GOFS/NCODA, JEDI/SOCA; 1,291 words), Section 5 (5.1 UCSC ROMS 4D-Var, 5.2
+Scripps CASE, 5.3 doppio, 5.4 NOS OFS/WCOFS, 5.5 HWRF-HYCOM, HAFS and HAFS-MOM6/SOCA, 5.6
+Table 1 = Fig. 4 with 18 rows and 8 columns, every row citing a key; 1,657 words plus a
+573-word table). `scripts/check_citations.py` (docstring "Generated by JXP and Claude":
+lists `[@key]` citations, keys missing from `sources.bib`, keys not yet cited, the
+evidential flags, and a per-section page estimate at 500 words/page with math, keys and
+table rows excluded from prose and table words counted separately; `--strict` for prompt
+8). Result in `ocean14`: 61 keys in `sources.bib`, 27 cited, 0 missing, 34 not yet cited
+(all of them serve Sections 6-9 and are expected in prompts 5-6, except `shulman2009impact`
+and `halliwell2017north`, Section 9); flags: `[abstract only]` x11, `[not read` x7,
+`[not re-verified]` x2, `(preprint)` x1 (the convention note), `(grey)` x7; exit 0. Length:
+5,616 prose words = 11.2 pp plus 732 table words = 1.5 pp, of which the drafted Sections
+1-5 are 4,909 prose words = 9.8 pp against the outline's 5.25 (DA51). A first version of
+Section 4 ran 1,857 words and was cut to 1,291 because the Decisions give the global
+systems table rows, not paragraphs.
+
+**PDFs fetched (DA44).** Ten open-access non-AI PDFs were added to the `PDFS` list of
+`fetch_pdfs.py` and fetched into `context/da/` (all `file` = PDF, title match 1.00; total
+now 38 files, 28 in the script's list): Zuo 2019, Lellouche 2018, Forget 2015, Ford 2021
+(Copernicus), Lellouche 2021, Kim 2024, Fennel 2019 (Frontiers), and three repository
+copies of publisher PDFs found through Unpaywall and OpenAlex where the publisher host
+refuses `curl`: Dong 2017 (NOAA Institutional Repository noaa/17960; AMS returns an empty
+HTTP 202), Bannister 2017 (CentAUR, University of Reading; Wiley 403), Martin 2015
+(Figshare 22957895; T&F 403 even with browser headers and `needAccess=true`). Fennel 2019
+and Ford 2021 are for prompt 5 and were not read. Listed in a new table in
+`context/da/README.md` with the reasons the remaining non-AI entries are still not in hand.
+Kurapov et al. (2017) was checked (Crossref, DOI 302, Springer abstract) and not added: its
+subject is sea-level verification, not the WCOFS DA (DA49). No reference was added to
+`build_bib.py`, so `sources.md`/`sources.bib` are unchanged and `check_sources.py` was not
+rerun.
+
+**Choices made.** (i) Citation form "Author (year) [@key]" with the bare key on repeat,
+matching the exemplar's bracketed-key convention and its References paragraph that lists
+the cited keys; stated in a convention note at the top. (ii) Two evidential flags beyond
+the DA44 "[abstract only]": "[not read; via `key`]" for the papers with no abstract
+anywhere (Moore 2011, Neveu 2016, Cummings 2013), and "[not re-verified]" for the SOCA
+solver list carried over from `sources.md`. (iii) The primer is set off by horizontal
+rules with a "Box 1" heading and an explicit end line, so display math renders outside a
+blockquote. (iv) Analogies only with a stated exactness condition: OI = GP regression
+(static B, linear H), 4D-Var = MAP with the dynamics as prior (Carrassi eq. 28-29), EnKF =
+Monte Carlo Kalman filter in the linear-Gaussian N -> infinity limit (Le Gland via
+Carrassi), ECCO = long-window smoother (linear-case equivalence to the Kalman smoother),
+each with where it breaks. (v) Table 1 carries a "Gliders assimilated?" column with "not
+named" distinguished from "no", since most systems ingest whatever profiles the GTS or
+Coriolis carry; Martin et al. (2015) Table 1 is the one source that names gliders as an
+assimilated platform for GOFS, FOAM, Bluelink, Mercator, CONCEPTS and ECMWF (2015
+configurations). (vi) For the comparator rows, FOAM and TOPAZ stand in for "Copernicus
+regional", which Martin et al. do not cover (DA47). (vii) Zaba 2018's "CASE" and Todd
+2011's state estimate are described from abstracts; the MITgcm/adjoint attribution is
+marked as coming from the reading-list annotation.
+
+**Abstract-only and not-read flags placed** (for prompt 8): Stammer 2016 (Section 4
+opening); Moore 2011 and Neveu 2016 (5.1, not read); Moore 2018 (5.1); Edwards 2015 (5 and
+3); Todd 2011 and Zaba 2018 (5.2); Levin 2020 (5.3); Liu 2023 (4.2, 5.5, table);
+Cummings 2013 (4.2, table, not read); Evensen 2003 (Box 2.4, not read, via Carrassi); SOCA
+solver list (4.2, table, not re-verified).
+
+**What I learned about the repository and the sources.** Unpaywall
+(`api.unpaywall.org/v2/<doi>?email=`) and OpenAlex `locations` find repository copies of
+publisher PDFs that the publishers' own hosts refuse: CentAUR for QJRMS, Figshare for T&F
+open-access supplements, the NOAA IR for AMS papers by NOAA authors; Zenodo record 31969
+(Stammer 2016) exists but its files return 403. Elsevier serves nothing to `curl` (403 on
+landing pages, abstracts and accepted manuscripts) and its Prog. Oceanogr. and Ocean
+Modelling records carry no abstract in Crossref, OpenAlex or Semantic Scholar, so the two
+core ROMS 4D-Var papers cannot be characterized without JXP's copies (DA48). Springer
+landing pages return a CSP stub without the abstract to `curl`. `conda run` swallows
+heredocs (as logged before), so the Section 4 splice was done with a plain `python3`
+heredoc. `pdftotext -layout` interleaves the two columns of the Copernicus and Frontiers
+PDFs, so a quoted phrase can span two line numbers; grep on a distinctive fragment is the
+reliable check. The El Nino exemplar's `[@key]` convention has no author-year in the
+text; this report adds it because the audience will read the text, not the bibliography.
+`git status` shows `reports/` is now staged (the earlier files are "A"), so from this
+session on JXP's inline edits to the report will be visible in `git diff`.
+
+No git commands that change repository state were run (`git status` only). Files created:
+`reports/data_assimilation/da_ai_review.md`,
+`reports/data_assimilation/scripts/check_citations.py`. Files modified:
+`reports/data_assimilation/scripts/fetch_pdfs.py` (ten entries), `context/da/README.md`
+(count line and a new table), this prompt doc (Q&A DA47-DA51 and this entry). Not
+touched: the prompt text above `## Q&A`, `outline.md`, `reading_list.md`, `build_bib.py`,
+`check_sources.py`, `sources.md`, `sources.bib`, the brief, `.claude/settings.json`,
+`context_prompts.md`.
 
 ### 2026-09-23 (Act on DA46: fix stale cross-references in the prompt text)
 
