@@ -11,7 +11,9 @@ were downloaded by JXP on 2026-09-23 (DA40) and checked the same way by hand. Wi
 them every AI entry of the reading list (8 anchors plus 20 others, 28 files) is in hand.
 Per DA44 the Draft sessions (prompts #4-#6) add the open-access non-AI PDFs they need
 to the `PDFS` list of `fetch_pdfs.py`, fetch them and list them here; the first Draft
-session (prompt #4, 2026-09-23) fetched 10 (last table below), for 38 files in all.
+session (prompt #4, 2026-09-23) fetched 10, and JXP downloaded three paywalled Elsevier
+papers for the second (prompt #5, 2026-09-23, DA48; last two tables below), for 42 files
+in all (41 papers; `fablet2021learning` is present twice).
 
 ## Tracked in git
 
@@ -83,8 +85,8 @@ Fetched by `fetch_pdfs.py` (each checked with `file` and by title match 1.00) fo
 primer, classical-methods and systems sections of the draft. Where a publisher host refused
 `curl`, a repository copy of the publisher PDF found through Unpaywall or OpenAlex was used.
 Still not in hand and written from abstracts or from what the reviews say (the draft flags
-each use): `moore2011roms`, `neveu2016historical`, `shulman2009impact` (Elsevier, no abstract
-in Crossref, OpenAlex or Semantic Scholar), `cummings2013variational`, `evensen2003ensemble`
+each use): `moore2011roms` (Part I; Elsevier, no abstract in Crossref, OpenAlex or Semantic
+Scholar; its content is cited through Part II, below), `cummings2013variational`, `evensen2003ensemble`
 (Springer, no abstract served), `edwards2015regional`, `stammer2016ocean`, `rudnick2016ocean`
 (Annual Reviews, 403; Stammer's Zenodo record 31969 returns 403 on its files),
 `todd2011poleward`, `moore2018reduced` (AGU/Wiley, 403), `zaba2018annual`, `liu2023impact`,
@@ -102,8 +104,25 @@ closed).
 | `dong2017.pdf` | Dong, J., et al., "Impact of Assimilating Underwater Glider Data on Hurricane Gonzalo (2014) Forecasts," *Wea. Forecasting* 32, 1143-1159 (2017). | doi:10.1175/WAF-D-16-0182.1 | Open access at AMS (the `downloadpdf` host returns an empty 202 to `curl`); publisher PDF in the NOAA Institutional Repository (noaa/17960) | Present (publisher PDF via NOAA IR; read for Sections 5 and 9) | `dong2017impact` |
 | `bannister2017.pdf` | Bannister, R. N., "A review of operational methods of variational and ensemble-variational data assimilation," *Q. J. R. Meteorol. Soc.* 143, 607-633 (2017). | doi:10.1002/qj.2982 | Open access (CC BY) at Wiley, 403 to fetchers; publisher PDF at CentAUR (University of Reading, 68685) | Present (publisher PDF via CentAUR; hybrid and EnVar sections read for Sections 2-3) | `bannister2017review` |
 | `martin2015.pdf` | Martin, M. J., et al., "Status and future of data assimilation in operational oceanography," *J. Oper. Oceanogr.* 8(sup1), s28-s48 (2015). | doi:10.1080/1755876X.2015.1022055 | Open access (CC BY 4.0) at T&F, 403 to fetchers; publisher PDF at Figshare (article 22957895) | Present (publisher PDF via Figshare; Tables 1-2 and the methods sections read for Sections 3-5) | `martin2015status` |
-| `fennel2019.pdf` | Fennel, K., et al., "Advancing Marine Biogeochemical and Ecosystem Reanalyses and Forecasts as Tools for Monitoring and Managing Ecosystem Health," *Front. Mar. Sci.* 6, 89 (2019). | doi:10.3389/fmars.2019.00089 | Open access (CC BY 4.0) | Present (publisher PDF; for Section 8, prompt #5; not yet read) | `fennel2019advancing` |
-| `ford2021.pdf` | Ford, D., "Assimilating synthetic Biogeochemical-Argo and ocean colour observations into a global ocean model to inform observing system design," *Biogeosciences* 18, 509-534 (2021). | doi:10.5194/bg-18-509-2021 | Open access (CC BY 4.0) | Present (publisher PDF; for Sections 8-9, prompts #5-#6; not yet read) | `ford2021assimilating` |
+| `fennel2019.pdf` | Fennel, K., et al., "Advancing Marine Biogeochemical and Ecosystem Reanalyses and Forecasts as Tools for Monitoring and Managing Ecosystem Health," *Front. Mar. Sci.* 6, 89 (2019). | doi:10.3389/fmars.2019.00089 | Open access (CC BY 4.0) | Present (publisher PDF, 9 pp.; read for Section 8 in prompt #5) | `fennel2019advancing` |
+| `ford2021.pdf` | Ford, D., "Assimilating synthetic Biogeochemical-Argo and ocean colour observations into a global ocean model to inform observing system design," *Biogeosciences* 18, 509-534 (2021). | doi:10.5194/bg-18-509-2021 | Open access (CC BY 4.0) | Present (publisher PDF, 26 pp.; read for Section 8 in prompt #5; Section 9 in prompt #6) | `ford2021assimilating` |
+
+### Downloaded by JXP on 2026-09-23 (Q&A DA48; read in prompt #5)
+
+Each file was checked with `file` (PDF 1.7) and by `pdftotext` of its first page against the
+Crossref title. Two match their `sources.bib` entries. The third does not: `moore2011.pdf` is
+**Part II** of the ROMS 4D-Var trilogy (*Prog. Oceanogr.* 91, 50-73, doi:10.1016/j.pocean.2011.05.003,
+"Performance and application to the California Current System"), not Part I (91, 34-49,
+doi:10.1016/j.pocean.2011.05.004, `moore2011roms`) that DA48 asked for. Part II is the paper
+Section 5.1 needs (the California Current configuration and diagnostics), so it was added to
+`build_bib.py` as `moore2011romsII` and Part I stays as the formulation reference, cited through
+Part II and flagged "[not read]"; JXP to confirm or download Part I (Q&A DA52).
+
+| File | Citation | DOI | Access | Status | Key |
+|---|---|---|---|---|---|
+| `moore2011.pdf` | Moore, A. M., Arango, H. G., Broquet, G., Edwards, C., Veneziani, M., Powell, B., Foley, D., Doyle, J. D., Costa, D., and Robinson, P., "The Regional Ocean Modeling System (ROMS) 4-dimensional variational data assimilation systems. Part II - Performance and application to the California Current System," *Prog. Oceanogr.* 91, 50-73 (2011). | doi:10.1016/j.pocean.2011.05.003 | Elsevier, paywalled; JXP's institutional copy | Present (publisher PDF, 24 pp.; read in full for Sections 3, 5.1 and 9) | `moore2011romsII` |
+| `neveu2016.pdf` | Neveu, E., Moore, A. M., Edwards, C. A., Fiechter, J., Drake, P., Crawford, W. J., Jacox, M. G., and Nuss, E., "An historical analysis of the California Current circulation using ROMS 4D-Var: System configuration and diagnostics," *Ocean Modelling* 99, 133-151 (2016). | doi:10.1016/j.ocemod.2015.11.012 | Elsevier, paywalled; JXP's institutional copy | Present (publisher PDF, 19 pp.; read in full for Section 5.1) | `neveu2016historical` |
+| `shulman2009.pdf` | Shulman, I., Rowley, C., Anderson, S., DeRada, S., Kindle, J., Martin, P., Doyle, J., Cummings, J., Ramp, S., Chavez, F., Fratantoni, D., and Davis, R., "Impact of glider data assimilation on the Monterey Bay model," *Deep-Sea Res. II* 56, 188-198 (2009). | doi:10.1016/j.dsr2.2008.08.003 | Elsevier, paywalled; JXP's institutional copy | Present (publisher PDF, 11 pp.; read in full, for Section 9 in prompt #6) | `shulman2009impact` |
 
 Also checked and not added: Kurapov et al. (2017, *Ocean Dyn.* 67, 23-36,
 doi:10.1007/s10236-016-1013-4), the WCOFS paper named as a fallback in `reading_list.md`;

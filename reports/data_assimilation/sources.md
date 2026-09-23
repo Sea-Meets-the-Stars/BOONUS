@@ -6,7 +6,7 @@
 
 Conventions: "DOI verified" means `curl -sI https://doi.org/<doi>` returned a redirect (HTTP 30x) on 2026-09-23 and the bibliographic fields were taken from the Crossref record for that DOI (author lists complete, volume, issue, pages or article number). **preprint** marks arXiv-only items whose metadata come from the arXiv API and for which no journal version was found in Crossref. **grey** marks web pages and repositories with no DOI; their URL and the HTTP code it returned today are given. *optional* marks entries the report can be written without. "AI notes" give the taxonomy category (1 emulators; 2 ML inside classical DA; 3 ML replacing DA; 4 ML around DA), the maturity tag and the verification note, and state whether they rest on the full text or on the abstract only. "In hand" names the private PDF in `context/da/` (gitignored). `scripts/check_sources.py` re-verifies every DOI and URL in `sources.bib`.
 
-Counts: 61 entries; 5 `grey`, 4 `preprint`, 52 `verified`; 12 optional; 24 AI papers with taxonomy notes, 24 of them resting on the full text; 28 with a PDF in hand.
+Counts: 62 entries; 5 `grey`, 4 `preprint`, 53 `verified`; 12 optional; 24 AI papers with taxonomy notes, 24 of them resting on the full text; 31 with a PDF in hand.
 
 ---
 
@@ -158,53 +158,61 @@ Counts: 61 entries; 5 `grey`, 4 `preprint`, 52 `verified`; 12 optional; 24 AI pa
 21. Moore, A. M., Arango, H. G., Broquet, G., Powell, B. S., Weaver, A. T., and Zavala-Garay, J. (2011). "The Regional Ocean Modeling System (ROMS) 4-dimensional variational data assimilation systems." *Progress in Oceanography* 91(1), 34-49.
     DOI: 10.1016/j.pocean.2011.05.004 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 5 (UCSC ROMS).
-    Supports: The formulation of ROMS 4D-Var (primal and dual, strong and weak constraint) that assimilates CUGN. This is Part I of the trilogy (the Crossref and OpenAlex titles omit the printed "Part I" subtitle); Parts II (doi:10.1016/j.pocean.2011.05.003) and III (doi:10.1016/j.pocean.2011.05.005) are named in the text but not separate entries (DA33a).
+    Supports: The formulation of ROMS 4D-Var: three incremental systems, I4D-Var (primal, strong constraint), 4D-PSAS and R4D-Var (dual; strong or weak constraint), with the TLM, adjoint and diagnostic tools. This is Part I of the trilogy (the Crossref and OpenAlex titles omit the printed "Part I" subtitle); its content is cited through Part II (moore2011romsII), which is the PDF in hand; Part III (doi:10.1016/j.pocean.2011.05.005, observation impact and sensitivity) is named in the text but not an entry (DA33a).
     Status: verified. Key: `moore2011roms`
 
-22. Neveu, E., Moore, A. M., Edwards, C. A., Fiechter, J., Drake, P., Crawford, W. J., Jacox, M. G., and Nuss, E. (2016). "An historical analysis of the California Current circulation using ROMS 4D-Var: System configuration and diagnostics." *Ocean Modelling* 99, 133-151.
+22. Moore, A. M., Arango, H. G., Broquet, G., Edwards, C., Veneziani, M., Powell, B., Foley, D., Doyle, J. D., Costa, D., and Robinson, P. (2011). "The Regional Ocean Modeling System (ROMS) 4-dimensional variational data assimilation systems." *Progress in Oceanography* 91(1), 50-73.
+    DOI: 10.1016/j.pocean.2011.05.003 (DOI verified, HTTP 302 on 2026-09-23).
+    Serves: Section(s) 3, 5 (UCSC ROMS), 9.
+    Supports: Part II of the trilogy: performance and application of ROMS 4D-Var to the California Current (WC30 and WC10 configurations, 2002-2004 sequential cycles): equivalence and convergence of the primal and dual algorithms, weak-constraint example, control-vector impacts (initial conditions dominate), posterior error estimates from the Lanczos vectors, Desroziers consistency checks, degrees of freedom (more than 90% of the assimilated observations redundant) and array modes. Added in prompt #5 because it is the paper JXP downloaded as moore2011.pdf (DA48); JXP to confirm (DA52).
+    In hand: `context/da/moore2011.pdf` (publisher PDF, downloaded by JXP 2026-09-23 (DA48), read in full; the file is Part II although DA48 asked for Part I; gitignored).
+    Status: verified. Key: `moore2011romsII`
+
+23. Neveu, E., Moore, A. M., Edwards, C. A., Fiechter, J., Drake, P., Crawford, W. J., Jacox, M. G., and Nuss, E. (2016). "An historical analysis of the California Current circulation using ROMS 4D-Var: System configuration and diagnostics." *Ocean Modelling* 99, 133-151.
     DOI: 10.1016/j.ocemod.2015.11.012 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 5 (UCSC ROMS).
-    Supports: The 31-year California Current ROMS 4D-Var reanalysis, its observation streams (gliders included) and diagnostics; the reanalysis side of the regional split.
+    Supports: The 31-year (WCRA31, 1980-2010) and 14-year (WCRA14, 1999-2012) California Current ROMS 4D-Var analyses: 1/10 degree, 8-day overlapping windows, dual strong-constraint 4D-Var, gridded AVISO SSH, satellite SST and EN3 hydrographic profiles (XBT, MBT, CTD, Argo, tagged mammals; gliders are not named and no velocity data were assimilated); performance, innovation diagnostics and the EKE and CalCOFI comparisons; the reanalysis side of the regional split.
+    In hand: `context/da/neveu2016.pdf` (publisher PDF, downloaded by JXP 2026-09-23 (DA48), read in full; gitignored).
     Status: verified. Key: `neveu2016historical`
 
-23. Todd, R. E., Rudnick, D. L., Mazloff, M. R., Davis, R. E., and Cornuelle, B. D. (2011). "Poleward flows in the southern California Current System: Glider observations and numerical simulation." *Journal of Geophysical Research* 116(C2), C02026.
+24. Todd, R. E., Rudnick, D. L., Mazloff, M. R., Davis, R. E., and Cornuelle, B. D. (2011). "Poleward flows in the southern California Current System: Glider observations and numerical simulation." *Journal of Geophysical Research* 116(C2), C02026.
     DOI: 10.1029/2010JC006536 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 5 (Scripps state estimate), 9.
     Supports: CUGN Line 90 and 80 data in a MITgcm adjoint California Current state estimate; the brief cites it as [demonstrated] glider assimilation.
     Status: verified. Key: `todd2011poleward`
 
-24. Zaba, K. D., Rudnick, D. L., Cornuelle, B. D., Gopalakrishnan, G., and Mazloff, M. R. (2018). "Annual and Interannual Variability in the California Current System: Comparison of an Ocean State Estimate with a Network of Underwater Gliders." *Journal of Physical Oceanography* 48(12), 2965-2988.
+25. Zaba, K. D., Rudnick, D. L., Cornuelle, B. D., Gopalakrishnan, G., and Mazloff, M. R. (2018). "Annual and Interannual Variability in the California Current System: Comparison of an Ocean State Estimate with a Network of Underwater Gliders." *Journal of Physical Oceanography* 48(12), 2965-2988.
     DOI: 10.1175/JPO-D-18-0037.1 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 5, 9.
     Supports: The Scripps California Current state estimate evaluated against CUGN: what a glider network does and does not constrain.
     Status: verified. Key: `zaba2018annual`
 
-25. Levin, J., Arango, H. G., Laughlin, B., Hunter, E., Wilkin, J., and Moore, A. M. (2020). "Observation impacts on the Mid-Atlantic Bight front and cross-shelf transport in 4D-Var ocean state estimates: Part I — Multiplatform analysis." *Ocean Modelling* 156, 101721.
+26. Levin, J., Arango, H. G., Laughlin, B., Hunter, E., Wilkin, J., and Moore, A. M. (2020). "Observation impacts on the Mid-Atlantic Bight front and cross-shelf transport in 4D-Var ocean state estimates: Part I — Multiplatform analysis." *Ocean Modelling* 156, 101721.
     DOI: 10.1016/j.ocemod.2020.101721 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 5 (Rutgers doppio), 9.
     Supports: The doppio ROMS 4D-Var system and quantified observation impacts by platform, gliders included; Part II (doi:10.1016/j.ocemod.2020.101731) is the companion.
     Status: verified. Key: `levin2020observation`
 
-26. **West Coast Operational Forecast System (WCOFS)** -- NOAA Center for Operational Oceanographic Products and Services, 2026.
+27. **West Coast Operational Forecast System (WCOFS)** -- NOAA Center for Operational Oceanographic Products and Services, 2026.
     URL: https://tidesandcurrents.noaa.gov/ofs/wcofs/wcofs.html (HTTP 200 on 2026-09-23).
     **grey**: web page or repository, no DOI.
     Serves: Section(s) 5 (NOS OFS).
     Supports: Operational description of WCOFS (ROMS-based, U.S. West Coast); the DA configuration is taken from the page or from Kurapov et al. (2016, Ocean Dyn., doi:10.1007/s10236-016-1013-4) if the page is silent.
     Status: grey. Key: `wcofs2026coops`
 
-27. Kim, H.-S., Liu, B., Thomas, B., Rosen, D., Wang, W., Hazelton, A., Zhang, Z., Zhang, X., and Mehra, A. (2024). "Ocean component of the first operational version of Hurricane Analysis and Forecast System: Evaluation of HYbrid Coordinate Ocean Model and hurricane feedback forecasts." *Frontiers in Earth Science* 12, 1399409.
+28. Kim, H.-S., Liu, B., Thomas, B., Rosen, D., Wang, W., Hazelton, A., Zhang, Z., Zhang, X., and Mehra, A. (2024). "Ocean component of the first operational version of Hurricane Analysis and Forecast System: Evaluation of HYbrid Coordinate Ocean Model and hurricane feedback forecasts." *Frontiers in Earth Science* 12, 1399409.
     DOI: 10.3389/feart.2024.1399409 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 5 (hurricane models).
     Supports: The ocean component of HAFSv1 (HYCOM, operational 2023), initialized from RTOFS and evaluated against glider, Argo and buoy observations.
     Status: verified. Key: `kim2024ocean`
 
-28. Liu, L., Mehra, A., Kleist, D., Vernieres, G., Sluka, T., Bhargava, K., Stegmann, P., Kim, H.-S., Paturi, S., Xu, J., and Rivin, I. (2023). "Impact of Assimilating Satellite and Glider Observations on Hurricane Isaias (2020) Forecast Using Marine JEDI." *Weather and Forecasting* 38(9), 1807-1826.
+29. Liu, L., Mehra, A., Kleist, D., Vernieres, G., Sluka, T., Bhargava, K., Stegmann, P., Kim, H.-S., Paturi, S., Xu, J., and Rivin, I. (2023). "Impact of Assimilating Satellite and Glider Observations on Hurricane Isaias (2020) Forecast Using Marine JEDI." *Weather and Forecasting* 38(9), 1807-1826.
     DOI: 10.1175/WAF-D-22-0014.1 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 5, 9.
     Supports: Glider assimilation with JEDI/SOCA into MOM6 coupled to HAFS for Hurricane Isaias (2020); the barrier-layer and intensity result. Optional: Dong et al. (2017) carries the same point for HWRF-HYCOM.
     Status: verified, optional. Key: `liu2023impact`
 
-29. Dong, J., Domingues, R., Goni, G., Halliwell, G., Kim, H.-S., Lee, S.-K., Mehari, M., Bringas, F., Morell, J., and Pomales, L. (2017). "Impact of Assimilating Underwater Glider Data on Hurricane Gonzalo (2014) Forecasts." *Weather and Forecasting* 32(3), 1143-1159.
+30. Dong, J., Domingues, R., Goni, G., Halliwell, G., Kim, H.-S., Lee, S.-K., Mehari, M., Bringas, F., Morell, J., and Pomales, L. (2017). "Impact of Assimilating Underwater Glider Data on Hurricane Gonzalo (2014) Forecasts." *Weather and Forecasting* 32(3), 1143-1159.
     DOI: 10.1175/WAF-D-16-0182.1 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 5, 9.
     Supports: The IOOS hurricane-glider result the brief relies on: glider T/S improved the upper-ocean initial state and barrier layer in HWRF-HYCOM for Hurricane Gonzalo (2014), with a localized footprint.
@@ -213,31 +221,32 @@ Counts: 61 entries; 5 `grey`, 4 `preprint`, 52 `verified`; 12 optional; 24 AI pa
 
 ## E. Glider-specific data assimilation
 
-30. Oke, P. R. and Sakov, P. (2008). "Representation Error of Oceanic Observations for Data Assimilation." *Journal of Atmospheric and Oceanic Technology* 25(6), 1004-1017.
+31. Oke, P. R. and Sakov, P. (2008). "Representation Error of Oceanic Observations for Data Assimilation." *Journal of Atmospheric and Oceanic Technology* 25(6), 1004-1017.
     DOI: 10.1175/2007JTECHO558.1 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 9.
     Supports: Definition and estimation of representation (representativeness) error, the dominant term in R for a glider profile in a several-km grid.
     Status: verified. Key: `oke2008representation`
 
-31. Shulman, I., Rowley, C., Anderson, S., DeRada, S., Kindle, J., Martin, P., Doyle, J., Cummings, J., Ramp, S., Chavez, F., Fratantoni, D., and Davis, R. (2009). "Impact of glider data assimilation on the Monterey Bay model." *Deep Sea Research Part II: Topical Studies in Oceanography* 56(3-5), 188-198.
+32. Shulman, I., Rowley, C., Anderson, S., DeRada, S., Kindle, J., Martin, P., Doyle, J., Cummings, J., Ramp, S., Chavez, F., Fratantoni, D., and Davis, R. (2009). "Impact of glider data assimilation on the Monterey Bay model." *Deep Sea Research Part II: Topical Studies in Oceanography* 56(3-5), 188-198.
     DOI: 10.1016/j.dsr2.2008.08.003 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 9.
-    Supports: An early U.S. West Coast glider assimilation study (NCOM/NCODA, Monterey Bay); the profile-versus-model impact used in the profile-vs-binned discussion.
+    Supports: An early U.S. West Coast glider assimilation study (NCOM/NCODA, Monterey Bay, AOSN-II 2003); each glider descent or ascent is treated as a vertical profile, with "threaded" (slanted) profiles named as future work; the profile-versus-model impact used in the profile-vs-binned discussion.
+    In hand: `context/da/shulman2009.pdf` (publisher PDF, downloaded by JXP 2026-09-23 (DA48); for Section 9, prompt #6; gitignored).
     Status: verified. Key: `shulman2009impact`
 
-32. Rudnick, D. L. (2016). "Ocean Research Enabled by Underwater Gliders." *Annual Review of Marine Science* 8(1), 519-541.
+33. Rudnick, D. L. (2016). "Ocean Research Enabled by Underwater Gliders." *Annual Review of Marine Science* 8(1), 519-541.
     DOI: 10.1146/annurev-marine-122414-033913 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 9.
     Supports: Section 7 of the review covers gliders in assimilating models and depth-average velocity as an absolutely referenced observation; digested in context/sources/rudnick2016.md.
     Status: verified. Key: `rudnick2016ocean`
 
-33. Halliwell, G. R., Mehari, M. F., Le Hénaff, M., Kourafalou, V. H., Androulidakis, I. S., Kang, H. S., and Atlas, R. (2017). "North Atlantic Ocean OSSE system: Evaluation of operational ocean observing system components and supplemental seasonal observations for potentially improving tropical cyclone prediction in coupled systems." *Journal of Operational Oceanography* 10(2), 154-175.
+34. Halliwell, G. R., Mehari, M. F., Le Hénaff, M., Kourafalou, V. H., Androulidakis, I. S., Kang, H. S., and Atlas, R. (2017). "North Atlantic Ocean OSSE system: Evaluation of operational ocean observing system components and supplemental seasonal observations for potentially improving tropical cyclone prediction in coupled systems." *Journal of Operational Oceanography* 10(2), 154-175.
     DOI: 10.1080/1755876X.2017.1322770 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 9.
     Supports: The fraternal-twin OSSE methodology (HYCOM) used to value hurricane-season ocean observations; the template for OSSE claims in the glider section.
     Status: verified, optional. Key: `halliwell2017north`
 
-34. Moore, A. M., Arango, H. G., and Edwards, C. A. (2018). "Reduced-Rank Array Modes of the California Current Observing System." *Journal of Geophysical Research: Oceans* 123(1), 452-465.
+35. Moore, A. M., Arango, H. G., and Edwards, C. A. (2018). "Reduced-Rank Array Modes of the California Current Observing System." *Journal of Geophysical Research: Oceans* 123(1), 452-465.
     DOI: 10.1002/2017JC013172 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 7.4, 9.
     Supports: Adjoint-based observing-system analysis of the California Current array (gliders, HF radar, satellites) in ROMS 4D-Var; the classical counterpart of ML adaptive sampling and the method behind observing-system design in the brief.
@@ -246,7 +255,7 @@ Counts: 61 entries; 5 `grey`, 4 `preprint`, 52 `verified`; 12 optional; 24 AI pa
 
 ## F. AI in numerical weather prediction
 
-35. Bi, K., Xie, L., Zhang, H., Chen, X., Gu, X., and Tian, Q. (2023). "Accurate medium-range global weather forecasting with 3D neural networks." *Nature* 619(7970), 533-538.
+36. Bi, K., Xie, L., Zhang, H., Chen, X., Gu, X., and Tian, Q. (2023). "Accurate medium-range global weather forecasting with 3D neural networks." *Nature* 619(7970), 533-538.
     DOI: 10.1038/s41586-023-06185-3 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 6 (emulators).
     Supports: Pangu-Weather, the first ML medium-range model to beat the operational IFS on reanalysis-based scores; the opening milestone of the NWP track in Fig. 2.
@@ -254,7 +263,7 @@ Counts: 61 entries; 5 `grey`, 4 `preprint`, 52 `verified`; 12 optional; 24 AI pa
     In hand: `context/da/bi2023.pdf` (publisher PDF; gitignored).
     Status: verified. Key: `bi2023accurate`
 
-36. Lam, R., Sanchez-Gonzalez, A., Willson, M., Wirnsberger, P., Fortunato, M., Alet, F., Ravuri, S., Ewalds, T., Eaton-Rosen, Z., Hu, W., Merose, A., Hoyer, S., Holland, G., Vinyals, O., Stott, J., Pritzel, A., Mohamed, S., and Battaglia, P. (2023). "Learning skillful medium-range global weather forecasting." *Science* 382(6677), 1416-1421.
+37. Lam, R., Sanchez-Gonzalez, A., Willson, M., Wirnsberger, P., Fortunato, M., Alet, F., Ravuri, S., Ewalds, T., Eaton-Rosen, Z., Hu, W., Merose, A., Hoyer, S., Holland, G., Vinyals, O., Stott, J., Pritzel, A., Mohamed, S., and Battaglia, P. (2023). "Learning skillful medium-range global weather forecasting." *Science* 382(6677), 1416-1421.
     DOI: 10.1126/science.adi2336 (DOI verified, HTTP 302 on 2026-09-23). arXiv:2212.12794.
     Serves: Section(s) 6 (emulators).
     Supports: GraphCast, the graph-neural-network emulator trained on ERA5; the reference point for what "beats the operational system" means when the targets are reanalysis fields.
@@ -262,7 +271,7 @@ Counts: 61 entries; 5 `grey`, 4 `preprint`, 52 `verified`; 12 optional; 24 AI pa
     In hand: `context/da/lam2023.pdf` (arXiv copy; gitignored).
     Status: verified. Key: `lam2023learning`
 
-37. Lang, S., Alexe, M., Chantry, M., Dramsch, J., Pinault, F., Raoult, B., Clare, M. C. A., Lessig, C., Maier-Gerber, M., Magnusson, L., Bouallègue, Z. B., Nemesio, A. P., Dueben, P. D., Brown, A., Pappenberger, F., and Rabier, F. (2024). "AIFS -- ECMWF's data-driven forecasting system." arXiv:2406.01465, latest version 2024-08-07.
+38. Lang, S., Alexe, M., Chantry, M., Dramsch, J., Pinault, F., Raoult, B., Clare, M. C. A., Lessig, C., Maier-Gerber, M., Magnusson, L., Bouallègue, Z. B., Nemesio, A. P., Dueben, P. D., Brown, A., Pappenberger, F., and Rabier, F. (2024). "AIFS -- ECMWF's data-driven forecasting system." arXiv:2406.01465, latest version 2024-08-07.
     **preprint**: no journal version found in Crossref on 2026-09-23. https://arxiv.org/abs/2406.01465 (DOI 10.48550/arXiv.2406.01465 verified, HTTP 302).
     Serves: Section(s) 6 (emulators).
     Supports: AIFS, the ECMWF data-driven forecasting system that became operational in February 2025; the operational exemplar.
@@ -270,14 +279,14 @@ Counts: 61 entries; 5 `grey`, 4 `preprint`, 52 `verified`; 12 optional; 24 AI pa
     In hand: `context/da/lang2024.pdf` (arXiv; gitignored).
     Status: preprint. Key: `lang2024aifs`
 
-38. **ECMWF's AI forecasts become operational** -- European Centre for Medium-Range Weather Forecasts, 2025.
+39. **ECMWF's AI forecasts become operational** -- European Centre for Medium-Range Weather Forecasts, 2025.
     URL: https://www.ecmwf.int/en/about/media-centre/news/2025/ecmwfs-ai-forecasts-become-operational (HTTP 200 on 2026-09-23).
     **grey**: web page or repository, no DOI.
     Serves: Section(s) 6, Fig. 2.
     Supports: The date on which AIFS Single became operational (25 February 2025), the first ML forecast model run operationally by a major center; a timeline milestone. Optional: needed only for the milestone date.
     Status: grey, optional. Key: `ecmwf2025aifs`
 
-39. Price, I., Sanchez-Gonzalez, A., Alet, F., Andersson, T. R., El-Kadi, A., Masters, D., Ewalds, T., Stott, J., Mohamed, S., Battaglia, P., Lam, R., and Willson, M. (2024). "Probabilistic weather forecasting with machine learning." *Nature* 637(8044), 84-90.
+40. Price, I., Sanchez-Gonzalez, A., Alet, F., Andersson, T. R., El-Kadi, A., Masters, D., Ewalds, T., Stott, J., Mohamed, S., Battaglia, P., Lam, R., and Willson, M. (2024). "Probabilistic weather forecasting with machine learning." *Nature* 637(8044), 84-90.
     DOI: 10.1038/s41586-024-08252-9 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 6 (emulators, probabilistic).
     Supports: GenCast, the diffusion-based probabilistic emulator; the ensemble step of the NWP track.
@@ -285,7 +294,7 @@ Counts: 61 entries; 5 `grey`, 4 `preprint`, 52 `verified`; 12 optional; 24 AI pa
     In hand: `context/da/price2024.pdf` (publisher PDF; gitignored).
     Status: verified. Key: `price2024probabilistic`
 
-40. Bonavita, M. and Laloyaux, P. (2020). "Machine Learning for Model Error Inference and Correction." *Journal of Advances in Modeling Earth Systems* 12(12), e2020MS002232.
+41. Bonavita, M. and Laloyaux, P. (2020). "Machine Learning for Model Error Inference and Correction." *Journal of Advances in Modeling Earth Systems* 12(12), e2020MS002232.
     DOI: 10.1029/2020MS002232 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 6 (learned DA), 7.2.
     Supports: Learned model-error correction at ECMWF: an ANN trained on operational analysis increments predicts model-error tendencies that are then used inside strong- and weak-constraint 4D-Var; the pattern Section 7.2 looks for in the ocean.
@@ -293,7 +302,7 @@ Counts: 61 entries; 5 `grey`, 4 `preprint`, 52 `verified`; 12 optional; 24 AI pa
     In hand: `context/da/bonavita2020.pdf` (publisher PDF (downloaded by JXP 2026-09-23, DA40); gitignored).
     Status: verified. Key: `bonavita2020machine`
 
-41. Hatfield, S., Chantry, M., Dueben, P., Lopez, P., Geer, A., and Palmer, T. (2021). "Building Tangent-Linear and Adjoint Models for Data Assimilation With Neural Networks." *Journal of Advances in Modeling Earth Systems* 13(9), e2021MS002521.
+42. Hatfield, S., Chantry, M., Dueben, P., Lopez, P., Geer, A., and Palmer, T. (2021). "Building Tangent-Linear and Adjoint Models for Data Assimilation With Neural Networks." *Journal of Advances in Modeling Earth Systems* 13(9), e2021MS002521.
     DOI: 10.1029/2021MS002521 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 6 (learned DA), 7.2.
     Supports: Neural tangent-linear and adjoint models of a parametrization for use inside 4D-Var; the adjoint-surrogate idea.
@@ -301,7 +310,7 @@ Counts: 61 entries; 5 `grey`, 4 `preprint`, 52 `verified`; 12 optional; 24 AI pa
     In hand: `context/da/hatfield2021.pdf` (publisher PDF via Zenodo; gitignored).
     Status: verified, optional. Key: `hatfield2021building`
 
-42. Xu, X., Sun, X., Han, W., Zhong, X., Chen, L., Gao, Z., and Li, H. (2025). "FuXi-DA: a generalized deep learning data assimilation framework for assimilating satellite observations." *npj Climate and Atmospheric Science* 8(1), 156.
+43. Xu, X., Sun, X., Han, W., Zhong, X., Chen, L., Gao, Z., and Li, H. (2025). "FuXi-DA: a generalized deep learning data assimilation framework for assimilating satellite observations." *npj Climate and Atmospheric Science* 8(1), 156.
     DOI: 10.1038/s41612-025-01039-3 (DOI verified, HTTP 302 on 2026-09-23). arXiv:2404.08522.
     Serves: Section(s) 6 (learned assimilation).
     Supports: FuXi-DA: learned assimilation of satellite radiances into an ML forecast model; placed in category 3 (DA36a).
@@ -309,7 +318,7 @@ Counts: 61 entries; 5 `grey`, 4 `preprint`, 52 `verified`; 12 optional; 24 AI pa
     In hand: `context/da/xu2025.pdf` (publisher PDF; gitignored).
     Status: verified. Key: `xu2025fuxida`
 
-43. Allen, A., Markou, S., Tebbutt, W., Requeima, J., Bruinsma, W. P., Andersson, T. R., Herzog, M., Lane, N. D., Chantry, M., Hosking, J. S., and Turner, R. E. (2025). "End-to-end data-driven weather prediction." *Nature* 641(8065), 1172-1179.
+44. Allen, A., Markou, S., Tebbutt, W., Requeima, J., Bruinsma, W. P., Andersson, T. R., Herzog, M., Lane, N. D., Chantry, M., Hosking, J. S., and Turner, R. E. (2025). "End-to-end data-driven weather prediction." *Nature* 641(8065), 1172-1179.
     DOI: 10.1038/s41586-025-08897-0 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 6 (end-to-end).
     Supports: Aardvark Weather: end-to-end observation-to-forecast prediction; the first end-to-end exemplar.
@@ -317,7 +326,7 @@ Counts: 61 entries; 5 `grey`, 4 `preprint`, 52 `verified`; 12 optional; 24 AI pa
     In hand: `context/da/allen2025.pdf` (publisher PDF; gitignored).
     Status: verified. Key: `allen2025endtoend`
 
-44. Alexe, M., Boucher, E., Lean, P., Pinnington, E., Laloyaux, P., McNally, A., Lang, S., Chantry, M., Burrows, C., Chrust, M., Pinault, F., Villeneuve, E., Bormann, N., and Healy, S. (2024). "GraphDOP: Towards skilful data-driven medium-range weather forecasts learnt and initialised directly from observations." arXiv:2412.15687, latest version 2024-12-20.
+45. Alexe, M., Boucher, E., Lean, P., Pinnington, E., Laloyaux, P., McNally, A., Lang, S., Chantry, M., Burrows, C., Chrust, M., Pinault, F., Villeneuve, E., Bormann, N., and Healy, S. (2024). "GraphDOP: Towards skilful data-driven medium-range weather forecasts learnt and initialised directly from observations." arXiv:2412.15687, latest version 2024-12-20.
     **preprint**: no journal version found in Crossref on 2026-09-23. https://arxiv.org/abs/2412.15687 (DOI 10.48550/arXiv.2412.15687 verified, HTTP 302).
     Serves: Section(s) 6 (end-to-end).
     Supports: GraphDOP: ECMWF forecasts learnt and initialised from observations only, with no reanalysis inputs; the second end-to-end exemplar.
@@ -325,7 +334,7 @@ Counts: 61 entries; 5 `grey`, 4 `preprint`, 52 `verified`; 12 optional; 24 AI pa
     In hand: `context/da/alexe2024.pdf` (arXiv; gitignored).
     Status: preprint, optional. Key: `alexe2024graphdop`
 
-45. Manshausen, P., Cohen, Y., Harrington, P., Pathak, J., Pritchard, M., Garg, P., Mardani, M., Kashinath, K., Byrne, S., and Brenowitz, N. (2025). "Generative Data Assimilation of Sparse Weather Station Observations at Kilometer Scales." *Journal of Advances in Modeling Earth Systems* 17(10), e2024MS004505.
+46. Manshausen, P., Cohen, Y., Harrington, P., Pathak, J., Pritchard, M., Garg, P., Mardani, M., Kashinath, K., Byrne, S., and Brenowitz, N. (2025). "Generative Data Assimilation of Sparse Weather Station Observations at Kilometer Scales." *Journal of Advances in Modeling Earth Systems* 17(10), e2024MS004505.
     DOI: 10.1029/2024MS004505 (DOI verified, HTTP 302 on 2026-09-23). arXiv:2406.16947.
     Serves: Section(s) 6 (generative DA).
     Supports: Score-based generative assimilation of sparse weather stations at km scale, verified on withheld stations; the generative-DA exemplar.
@@ -336,7 +345,7 @@ Counts: 61 entries; 5 `grey`, 4 `preprint`, 52 `verified`; 12 optional; 24 AI pa
 
 ## G. AI in ocean data assimilation
 
-46. Yuan, Y., Rusak, J., Merose, A., Subel, A., Perezhogin, P., Adcroft, A., Fernandez-Granda, C., and Zanna, L. (2026). "Samudra 2: Scaling Ocean Emulators across Resolutions." arXiv:2606.02610, latest version 2026-06-21.
+47. Yuan, Y., Rusak, J., Merose, A., Subel, A., Perezhogin, P., Adcroft, A., Fernandez-Granda, C., and Zanna, L. (2026). "Samudra 2: Scaling Ocean Emulators across Resolutions." arXiv:2606.02610, latest version 2026-06-21.
     **preprint**: no journal version found in Crossref on 2026-09-23. https://arxiv.org/abs/2606.02610 (DOI 10.48550/arXiv.2606.02610 verified, HTTP 302).
     Serves: Section(s) 7.1.
     Supports: Samudra 2: ocean emulators at 1, 1/2 and 1/4 degree; the most recent entry on the ocean track. Optional (recency).
@@ -344,7 +353,7 @@ Counts: 61 entries; 5 `grey`, 4 `preprint`, 52 `verified`; 12 optional; 24 AI pa
     In hand: `context/da/yuan2026.pdf` (arXiv; gitignored).
     Status: preprint, optional. Key: `yuan2026samudra2`
 
-47. Chattopadhyay, A., Gray, M., Wu, T., Lowe, A. B., and He, R. (2024). "OceanNet: a principled neural operator-based digital twin for regional oceans." *Scientific Reports* 14(1), 21181.
+48. Chattopadhyay, A., Gray, M., Wu, T., Lowe, A. B., and He, R. (2024). "OceanNet: a principled neural operator-based digital twin for regional oceans." *Scientific Reports* 14(1), 21181.
     DOI: 10.1038/s41598-024-72145-0 (DOI verified, HTTP 302 on 2026-09-23). arXiv:2310.00813.
     Serves: Section(s) 7.1 (regional emulator).
     Supports: OceanNet: a neural-operator regional emulator of northwest Atlantic SSH (Gulf Stream, Loop Current); the regional case the ocean track otherwise lacks.
@@ -352,7 +361,7 @@ Counts: 61 entries; 5 `grey`, 4 `preprint`, 52 `verified`; 12 optional; 24 AI pa
     In hand: `context/da/chattopadhyay2024.pdf` (publisher PDF; gitignored).
     Status: verified. Key: `chattopadhyay2024oceannet`
 
-48. Gregory, W., Bushuk, M., Adcroft, A., Zhang, Y., and Zanna, L. (2023). "Deep Learning of Systematic Sea Ice Model Errors From Data Assimilation Increments." *Journal of Advances in Modeling Earth Systems* 15(10), e2023MS003757.
+49. Gregory, W., Bushuk, M., Adcroft, A., Zhang, Y., and Zanna, L. (2023). "Deep Learning of Systematic Sea Ice Model Errors From Data Assimilation Increments." *Journal of Advances in Modeling Earth Systems* 15(10), e2023MS003757.
     DOI: 10.1029/2023MS003757 (DOI verified, HTTP 302 on 2026-09-23). arXiv:2304.03832.
     Serves: Section(s) 7.2.
     Supports: Learned systematic model error from DA increments in the GFDL SPEAR ice-ocean system; the nearest ocean-side analogue of Bonavita and Laloyaux (2020).
@@ -360,7 +369,7 @@ Counts: 61 entries; 5 `grey`, 4 `preprint`, 52 `verified`; 12 optional; 24 AI pa
     In hand: `context/da/gregory2023.pdf` (arXiv copy; gitignored).
     Status: verified. Key: `gregory2023deep`
 
-49. Zanna, L. and Bolton, T. (2020). "Data-Driven Equation Discovery of Ocean Mesoscale Closures." *Geophysical Research Letters* 47(17), e2020GL088376.
+50. Zanna, L. and Bolton, T. (2020). "Data-Driven Equation Discovery of Ocean Mesoscale Closures." *Geophysical Research Letters* 47(17), e2020GL088376.
     DOI: 10.1029/2020GL088376 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 7.2 (boundary case).
     Supports: Data-driven discovery of a mesoscale eddy closure; the one learned-parameterization paper kept as a one-sentence boundary case (changes the model, not the assimilation; DA36c).
@@ -368,7 +377,7 @@ Counts: 61 entries; 5 `grey`, 4 `preprint`, 52 `verified`; 12 optional; 24 AI pa
     In hand: `context/da/zanna2020.pdf` (publisher PDF (not open access; downloaded by JXP 2026-09-23, DA40); gitignored).
     Status: verified, optional. Key: `zanna2020data`
 
-50. Fablet, R., Chapron, B., Drumetz, L., Mémin, E., Pannekoucke, O., and Rousseau, F. (2021). "Learning Variational Data Assimilation Models and Solvers." *Journal of Advances in Modeling Earth Systems* 13(10), e2021MS002572.
+51. Fablet, R., Chapron, B., Drumetz, L., Mémin, E., Pannekoucke, O., and Rousseau, F. (2021). "Learning Variational Data Assimilation Models and Solvers." *Journal of Advances in Modeling Earth Systems* 13(10), e2021MS002572.
     DOI: 10.1029/2021MS002572 (DOI verified, HTTP 302 on 2026-09-23). arXiv:2007.12941.
     Serves: Section(s) 7.3.
     Supports: 4DVarNet: joint learning of a variational prior and its solver on Lorenz systems; the idealized origin of the end-to-end ocean mappers.
@@ -376,7 +385,7 @@ Counts: 61 entries; 5 `grey`, 4 `preprint`, 52 `verified`; 12 optional; 24 AI pa
     In hand: `context/da/fablet2021_james.pdf` (publisher PDF, downloaded by JXP 2026-09-23 (DA40); fablet2021.pdf is the 2020 arXiv v1 under the preprint title; gitignored).
     Status: verified. Key: `fablet2021learning`
 
-51. Beauchamp, M., Febvre, Q., Georgenthum, H., and Fablet, R. (2023). "4DVarNet-SSH: end-to-end learning of variational interpolation schemes for nadir and wide-swath satellite altimetry." *Geoscientific Model Development* 16(8), 2119-2147.
+52. Beauchamp, M., Febvre, Q., Georgenthum, H., and Fablet, R. (2023). "4DVarNet-SSH: end-to-end learning of variational interpolation schemes for nadir and wide-swath satellite altimetry." *Geoscientific Model Development* 16(8), 2119-2147.
     DOI: 10.5194/gmd-16-2119-2023 (DOI verified, HTTP 302 on 2026-09-23). arXiv:2211.05904.
     Serves: Section(s) 7.3.
     Supports: 4DVarNet-SSH on the NATL60 SSH-mapping data challenge; the OSSE half of the "what verified means" pair.
@@ -384,7 +393,7 @@ Counts: 61 entries; 5 `grey`, 4 `preprint`, 52 `verified`; 12 optional; 24 AI pa
     In hand: `context/da/beauchamp2023.pdf` (publisher PDF; gitignored).
     Status: verified. Key: `beauchamp2023fourdvarnet`
 
-52. Martin, S. A., Manucharyan, G. E., and Klein, P. (2023). "Synthesizing Sea Surface Temperature and Satellite Altimetry Observations Using Deep Learning Improves the Accuracy and Resolution of Gridded Sea Surface Height Anomalies." *Journal of Advances in Modeling Earth Systems* 15(5), e2022MS003589.
+53. Martin, S. A., Manucharyan, G. E., and Klein, P. (2023). "Synthesizing Sea Surface Temperature and Satellite Altimetry Observations Using Deep Learning Improves the Accuracy and Resolution of Gridded Sea Surface Height Anomalies." *Journal of Advances in Modeling Earth Systems* 15(5), e2022MS003589.
     DOI: 10.1029/2022MS003589 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 7.3.
     Supports: Deep-learning SSH interpolation from real altimetry and SST, verified on withheld altimeter tracks; the OSE half of the pair. Optional (one of two SSH-mapping exemplars).
@@ -392,14 +401,14 @@ Counts: 61 entries; 5 `grey`, 4 `preprint`, 52 `verified`; 12 optional; 24 AI pa
     In hand: `context/da/martin2023.pdf` (publisher PDF via EarthArXiv; gitignored).
     Status: verified, optional. Key: `martin2023synthesizing`
 
-53. **2020a SSH mapping NATL60 data challenge (and the 2021a OSE challenge)** -- ocean-data-challenges consortium, 2026.
+54. **2020a SSH mapping NATL60 data challenge (and the 2021a OSE challenge)** -- ocean-data-challenges consortium, 2026.
     URL: https://github.com/ocean-data-challenges/2020a_SSH_mapping_NATL60 (HTTP 200 on 2026-09-23).
     **grey**: web page or repository, no DOI.
     Serves: Section(s) 7.3.
     Supports: The shared benchmark on which 4DVarNet and the other neural mappers are scored; defines the OSSE (NATL60) versus OSE (real data) verification split.
     Status: grey. Key: `oceandatachallenges2026`
 
-54. Sugiura, N. and Hosoda, S. (2020). "Machine Learning Technique Using the Signature Method for Automated Quality Control of Argo Profiles." *Earth and Space Science* 7(9), e2019EA001019.
+55. Sugiura, N. and Hosoda, S. (2020). "Machine Learning Technique Using the Signature Method for Automated Quality Control of Argo Profiles." *Earth and Space Science* 7(9), e2019EA001019.
     DOI: 10.1029/2019EA001019 (DOI verified, HTTP 302 on 2026-09-23). arXiv:1907.00500.
     Serves: Section(s) 7.4.
     Supports: ML quality control of Argo profiles with the signature method; the QC exemplar of category 4.
@@ -410,37 +419,37 @@ Counts: 61 entries; 5 `grey`, 4 `preprint`, 52 `verified`; 12 optional; 24 AI pa
 
 ## H. Biogeochemical data assimilation
 
-55. Fennel, K., Gehlen, M., Brasseur, P., Brown, C. W., Ciavatta, S., Cossarini, G., Crise, A., Edwards, C. A., Ford, D., Friedrichs, M. A. M., Gregoire, M., Jones, E., Kim, H.-C., Lamouroux, J., Murtugudde, R., Perruche, C., and the GODAE OceanView Marine Ecosystem Analysis and Prediction Task Team (2019). "Advancing Marine Biogeochemical and Ecosystem Reanalyses and Forecasts as Tools for Monitoring and Managing Ecosystem Health." *Frontiers in Marine Science* 6, 89.
+56. Fennel, K., Gehlen, M., Brasseur, P., Brown, C. W., Ciavatta, S., Cossarini, G., Crise, A., Edwards, C. A., Ford, D., Friedrichs, M. A. M., Gregoire, M., Jones, E., Kim, H.-C., Lamouroux, J., Murtugudde, R., Perruche, C., and the GODAE OceanView Marine Ecosystem Analysis and Prediction Task Team (2019). "Advancing Marine Biogeochemical and Ecosystem Reanalyses and Forecasts as Tools for Monitoring and Managing Ecosystem Health." *Frontiers in Marine Science* 6, 89.
     DOI: 10.3389/fmars.2019.00089 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 8.
     Supports: The OceanObs'19 statement of BGC DA status: what is assimilated (ocean colour, BGC-Argo), physics-BGC coupling problems, non-Gaussianity, the gap to operations.
     Status: verified. Key: `fennel2019advancing`
 
-56. Mattern, J. P., Song, H., Edwards, C. A., Moore, A. M., and Fiechter, J. (2017). "Data assimilation of physical and chlorophyll a observations in the California Current System using two biogeochemical models." *Ocean Modelling* 109, 55-71.
+57. Mattern, J. P., Song, H., Edwards, C. A., Moore, A. M., and Fiechter, J. (2017). "Data assimilation of physical and chlorophyll a observations in the California Current System using two biogeochemical models." *Ocean Modelling* 109, 55-71.
     DOI: 10.1016/j.ocemod.2016.12.002 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 8.
     Supports: Coupled physical-BGC 4D-Var in the California Current ROMS with two ecosystem models; shows the model dependence of BGC assimilation.
     Status: verified. Key: `mattern2017data`
 
-57. Verdy, A. and Mazloff, M. R. (2017). "A data assimilating model for estimating Southern Ocean biogeochemistry." *Journal of Geophysical Research: Oceans* 122(9), 6968-6988.
+58. Verdy, A. and Mazloff, M. R. (2017). "A data assimilating model for estimating Southern Ocean biogeochemistry." *Journal of Geophysical Research: Oceans* 122(9), 6968-6988.
     DOI: 10.1002/2016JC012650 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 8.
     Supports: B-SOSE: adjoint state estimation with carbon, oxygen and nutrients constrained by floats and ships; the state-estimation side of BGC DA.
     Status: verified. Key: `verdy2017data`
 
-58. Carroll, D., Menemenlis, D., Adkins, J. F., Bowman, K. W., Brix, H., Dutkiewicz, S., Fenty, I., Gierach, M. M., Hill, C., Jahn, O., Landschützer, P., Lauderdale, J. M., Liu, J., Manizza, M., Naviaux, J. D., Rödenbeck, C., Schimel, D. S., Van der Stocken, T., and Zhang, H. (2020). "The ECCO-Darwin Data-Assimilative Global Ocean Biogeochemistry Model: Estimates of Seasonal to Multidecadal Surface Ocean pCO2 and Air-Sea CO2 Flux." *Journal of Advances in Modeling Earth Systems* 12(10), e2019MS001888.
+59. Carroll, D., Menemenlis, D., Adkins, J. F., Bowman, K. W., Brix, H., Dutkiewicz, S., Fenty, I., Gierach, M. M., Hill, C., Jahn, O., Landschützer, P., Lauderdale, J. M., Liu, J., Manizza, M., Naviaux, J. D., Rödenbeck, C., Schimel, D. S., Van der Stocken, T., and Zhang, H. (2020). "The ECCO-Darwin Data-Assimilative Global Ocean Biogeochemistry Model: Estimates of Seasonal to Multidecadal Surface Ocean pCO2 and Air-Sea CO2 Flux." *Journal of Advances in Modeling Earth Systems* 12(10), e2019MS001888.
     DOI: 10.1029/2019MS001888 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 8.
     Supports: ECCO-Darwin: the Darwin ecosystem model coupled to the ECCO state estimate; the global BGC state-estimation reference.
     Status: verified. Key: `carroll2020ecco`
 
-59. Ford, D. (2021). "Assimilating synthetic Biogeochemical-Argo and ocean colour observations into a global ocean model to inform observing system design." *Biogeosciences* 18(2), 509-534.
+60. Ford, D. (2021). "Assimilating synthetic Biogeochemical-Argo and ocean colour observations into a global ocean model to inform observing system design." *Biogeosciences* 18(2), 509-534.
     DOI: 10.5194/bg-18-509-2021 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 8, 9.
     Supports: A BGC OSSE valuing in situ chlorophyll, nitrate, oxygen and pH profiles against ocean colour; the template for asking what glider O2, pH and chlorophyll would add.
     Status: verified, optional. Key: `ford2021assimilating`
 
-60. Bittig, H. C., Steinhoff, T., Claustre, H., Fiedler, B., Williams, N. L., Sauzède, R., Körtzinger, A., and Gattuso, J.-P. (2018). "An Alternative to Static Climatologies: Robust Estimation of Open Ocean CO2 Variables and Nutrient Concentrations From T, S, and O2 Data Using Bayesian Neural Networks." *Frontiers in Marine Science* 5, 328.
+61. Bittig, H. C., Steinhoff, T., Claustre, H., Fiedler, B., Williams, N. L., Sauzède, R., Körtzinger, A., and Gattuso, J.-P. (2018). "An Alternative to Static Climatologies: Robust Estimation of Open Ocean CO2 Variables and Nutrient Concentrations From T, S, and O2 Data Using Bayesian Neural Networks." *Frontiers in Marine Science* 5, 328.
     DOI: 10.3389/fmars.2018.00328 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 8, 7.4.
     Supports: CANYON-B: Bayesian neural-network estimation of nutrients and carbonate variables from T, S and O2, the variables a glider carries; category 4 (DA36b).
@@ -448,7 +457,7 @@ Counts: 61 entries; 5 `grey`, 4 `preprint`, 52 `verified`; 12 optional; 24 AI pa
     In hand: `context/da/bittig2018.pdf` (publisher PDF; gitignored).
     Status: verified, optional. Key: `bittig2018canyonb`
 
-61. Gloege, L., Yan, M., Zheng, T., and McKinley, G. A. (2022). "Improved Quantification of Ocean Carbon Uptake by Using Machine Learning to Merge Global Models and pCO2 Data." *Journal of Advances in Modeling Earth Systems* 14(2), e2021MS002620.
+62. Gloege, L., Yan, M., Zheng, T., and McKinley, G. A. (2022). "Improved Quantification of Ocean Carbon Uptake by Using Machine Learning to Merge Global Models and pCO2 Data." *Journal of Advances in Modeling Earth Systems* 14(2), e2021MS002620.
     DOI: 10.1029/2021MS002620 (DOI verified, HTTP 302 on 2026-09-23).
     Serves: Section(s) 8, 7.2.
     Supports: ML correction of global-model pCO2 misfit against observations; a category-2 case on the BGC side.
@@ -464,7 +473,7 @@ Counts: 61 entries; 5 `grey`, 4 `preprint`, 52 `verified`; 12 optional; 24 AI pa
 <!-- check_sources:begin -->
 Output of `scripts/check_sources.py --record`:
 
-- 56 DOIs and 9 URLs checked on 2026-09-23; 0 failed; 0 blocked (403, not counted as broken).
-- Europe PMC: 5 indexed open access, 4 indexed not open access (edwards2015regional, stammer2016ocean, rudnick2016ocean, lam2023learning), 47 not indexed (most earth-science journals are not).
+- 57 DOIs and 9 URLs checked on 2026-09-23; 0 failed; 0 blocked (403, not counted as broken).
+- Europe PMC: 4 indexed open access, 5 indexed not open access (geer2021learning, edwards2015regional, stammer2016ocean, rudnick2016ocean, lam2023learning), 48 not indexed (most earth-science journals are not).
 - All DOIs and URLs resolve.
 <!-- check_sources:end -->

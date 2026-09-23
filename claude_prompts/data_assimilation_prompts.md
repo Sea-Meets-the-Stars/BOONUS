@@ -433,6 +433,7 @@ DA47. **The "Copernicus regional" comparator row has no source.** Martin et al. 
       listed under "Not included" in `reading_list.md`) through `build_bib.py` for one true
       Copernicus regional row. Recommendation: (a) unless you want the regional row for
       Matt's benefit.
+>A. (a)
 
 DA48. **Two papers where the abstract is not enough (DA44).** The UCSC ROMS 4D-Var paragraph
       (Section 5.1) rests on Moore et al. (2011, Part I) and Neveu et al. (2016), and neither
@@ -446,6 +447,8 @@ DA48. **Two papers where the abstract is not enough (DA44).** The UCSC ROMS 4D-V
       `todd2011.pdf`, `zaba2018.pdf`; Moore et al. (2018, AGU 403, optional) as
       `moore2018.pdf`. Recommendation: the first two now, the glider ones before prompt #6.
 
+>A. I have downloaded the first 3 PDFs
+
 DA49. **WCOFS: the CO-OPS page does not state the DA method or the observation types.** It
       says only that WCOFS "assimilates real-time observations in a three-day window ...
       once a day". The fallback named in `reading_list.md`, Kurapov et al. (2017, *Ocean
@@ -453,6 +456,7 @@ DA49. **WCOFS: the CO-OPS page does not state the DA method or the observation t
       fill the gap, so it was not added. The draft says "not stated" and cannot say whether
       WCOFS has assimilated glider profiles. Do you or Matt know a citable NOAA technical
       report or paper on the WCOFS DA configuration? If not, the row stays as written.
+>A. We do not
 
 DA50. **Two operational-status facts I could not establish.** (a) Whether the HAFS ocean
       component has moved from RTOFS-initialized HYCOM (Kim et al. 2024, operational June
@@ -463,6 +467,7 @@ DA50. **Two operational-status facts I could not establish.** (a) Whether the HA
       the repository README ("JEDI encapsulation of MOM6") today. Both are flagged in the
       text and both are candidates for the questions-for-Matt list. Recommendation: leave
       flagged; ask Matt.
+>A. Use your recommendation
 
 DA51. **Length.** The drafted sections run 1,041 words for the primer (target 500), 640 for
       classical methods (375), 1,291 for global systems (625, trimmed from 1,857 in a first
@@ -477,6 +482,62 @@ DA51. **Length.** The drafted sections run 1,041 words for the primer (target 50
       Table 1. Recommendation: (a). A note rather than a question: Section 1 (Introduction,
       0.25 page in the outline) was not assigned to any prompt, so I drafted it here since
       it states the flags the rest of the text uses.
+>A. (a)
+
+### Draft, second third (prompt #5, 2026-09-23)
+
+DA47-DA51 were acted on as answered (details in the log). Sections 6, 7 (7.1-7.4) and 8 are
+drafted, and Sections 3, 5.1 and Table 1 were revised from the full text of the Moore and
+Neveu PDFs. Four items need you; the first affects the bibliography.
+
+DA52. **`moore2011.pdf` is Part II, not Part I.** DA48 asked for Moore et al. (2011) Part I
+      (`moore2011roms`, *Prog. Oceanogr.* 91, 34-49, the formulation paper), but the file you
+      downloaded is Part II ("Performance and application to the California Current System",
+      91, 50-73, doi:10.1016/j.pocean.2011.05.003). Part II is in fact the paper Section 5.1
+      needs (the WC30/WC10 configurations, observations, super-observations, control-vector
+      impacts, degrees of freedom and array modes), so it was added to `build_bib.py` as
+      `moore2011romsII` (62 entries) and is cited in Sections 3, 5.1 and Table 1; Part I stays
+      as the formulation reference, cited "[not read; via Part II]". Options: (a) keep both
+      entries as they are; (b) also download Part I as `moore2011_partI.pdf` so the flag can go;
+      (c) drop Part I and cite Part II alone. Recommendation: (a); (b) only if you want the
+      "[not read]" count at zero before v0.1.
+>A.
+
+DA53. **No source for the near-real-time UCSC assimilation of CUGN.** The brief (Section 5)
+      records ROMS 4D-Var assimilation of CUGN as `[demonstrated]`, but neither Moore et al.
+      (2011, Part II) nor Neveu et al. (2016) name gliders among the assimilated platforms:
+      Part II assimilates Aviso SSH, blended SST, EN3 profiles (XBT, Argo, CalCOFI/GLOBEC/LTOP
+      CTD) and tagged elephant seals; the WCRA31/WCRA14 reanalyses assimilate AVISO, Pathfinder,
+      AMSR-E and MODIS SST and EN3 profiles (XBT, MBT, CTD, Argo, mammals), "no velocity
+      observations", and gliders are not named (the earlier "gliders included" note in
+      `sources.md` was wrong and is corrected). Section 5.1 now says the near-real-time analyses
+      "are not described by either paper and have no source in this list", and a candidate
+      question for Matt sits under Section 11. Do you know which UCSC product or paper documents
+      the CUGN assimilation (a near-real-time system paper, or a later reanalysis)? If so I add
+      it through `build_bib.py` in prompt #6; if not, the brief's `[demonstrated]` tag should
+      cite Todd et al. (2011) and Zaba et al. (2018) (the Scripps state estimate) rather than the
+      UCSC ROMS system when the brief goes to v0.2 (prompt #10).
+>A.
+
+DA54. **The ocean-side gaps in Section 7 are stated as gaps.** The approved list has no ocean
+      counterpart of the NWP end-to-end systems (FuXi-DA, Aardvark, GraphDOP), no ML anomaly
+      detection, downscaling or adaptive-sampling paper, no glider QC paper, and no ocean
+      paper that learns B or the observation operator; Section 7.3 and 7.4 say so in one
+      sentence each rather than citing from memory, and the two absences most relevant to Matt
+      (learned B/H; learned adjoint for ROMS 4D-Var) are on the Section 11 candidate list.
+      Option: name candidates for prompt #6 or #8 to verify and add (I have none I would
+      vouch for without reading them). Recommendation: leave the gaps stated; revisit after
+      Matt's comments.
+>A.
+
+DA55. **Length.** Sections 6-8 run about 2.6, 3.6 and 1.4 pages of prose (see the log)
+      against the outline's 2, 2.5 and 1, a 1.35x overrun, mostly from the per-exemplar
+      maturity tags and verification notes that the Decisions require. The whole draft is now
+      about 20 pages of prose plus 1.5 of tables against the 15-page guide. Per DA51 (a),
+      trimming is left to prompt #8; if you would rather Sections 6-8 were cut now, say which
+      exemplars can go (candidates: Samudra 2, GraphDOP, Hatfield, Martin 2023, all optional in
+      `sources.md`).
+>A.
 
 ## Logs
 

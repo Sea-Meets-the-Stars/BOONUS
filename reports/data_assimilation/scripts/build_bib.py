@@ -22,7 +22,12 @@ sources.md header prints it.
 History: first run 2026-09-22 (prompts #2-#3, 61 entries); rerun 2026-09-23 (prompt #3
 completion, --no-cache) after JXP's answers DA40-DA44: PDFs of bonavita2020machine,
 zanna2020data and the published fablet2021learning added, their AI notes rewritten
-from the full text, FuXi-DA's note fixed to the Methods split (DA43).
+from the full text, FuXi-DA's note fixed to the Methods split (DA43).  Rerun 2026-09-23
+(prompt #5) after DA48: JXP's `moore2011.pdf` turned out to be Part II of the ROMS 4D-Var
+trilogy (doi 10.1016/j.pocean.2011.05.003, the California Current application), not
+Part I, so Part II was added as `moore2011romsII` (62 entries; JXP to confirm, Q&A DA52);
+`neveu2016.pdf` and `shulman2009.pdf` recorded as in hand and the Neveu note corrected
+(the assimilated in situ streams are EN3 profiles; gliders are not named).
 
 Usage (ocean14):
     conda run -n ocean14 python reports/data_assimilation/scripts/build_bib.py [--no-cache]
@@ -169,15 +174,32 @@ ENTRIES = [
          'cites this repository and Liu et al. (2023).'),
     # ---- D. Regional and coastal systems -------------------------------------------
     dict(key='moore2011roms', group='D', kind='article', doi='10.1016/j.pocean.2011.05.004',
-         sections='5 (UCSC ROMS)', supports='The formulation of ROMS 4D-Var (primal and dual, '
-         'strong and weak constraint) that assimilates CUGN. This is Part I of the trilogy '
-         '(the Crossref and OpenAlex titles omit the printed "Part I" subtitle); Parts II '
-         '(doi:10.1016/j.pocean.2011.05.003) and III (doi:10.1016/j.pocean.2011.05.005) are '
-         'named in the text but not separate entries (DA33a).'),
+         sections='5 (UCSC ROMS)', supports='The formulation of ROMS 4D-Var: three incremental '
+         'systems, I4D-Var (primal, strong constraint), 4D-PSAS and R4D-Var (dual; strong or '
+         'weak constraint), with the TLM, adjoint and diagnostic tools. This is Part I of the '
+         'trilogy (the Crossref and OpenAlex titles omit the printed "Part I" subtitle); its '
+         'content is cited through Part II (moore2011romsII), which is the PDF in hand; Part '
+         'III (doi:10.1016/j.pocean.2011.05.005, observation impact and sensitivity) is named '
+         'in the text but not an entry (DA33a).'),
+    dict(key='moore2011romsII', group='D', kind='article', doi='10.1016/j.pocean.2011.05.003',
+         pdf='moore2011.pdf', pdf_kind='publisher PDF, downloaded by JXP 2026-09-23 (DA48), '
+         'read in full; the file is Part II although DA48 asked for Part I',
+         sections='3, 5 (UCSC ROMS), 9', supports='Part II of the trilogy: performance and '
+         'application of ROMS 4D-Var to the California Current (WC30 and WC10 configurations, '
+         '2002-2004 sequential cycles): equivalence and convergence of the primal and dual '
+         'algorithms, weak-constraint example, control-vector impacts (initial conditions '
+         'dominate), posterior error estimates from the Lanczos vectors, Desroziers consistency '
+         'checks, degrees of freedom (more than 90% of the assimilated observations redundant) '
+         'and array modes. Added in prompt #5 because it is the paper JXP downloaded as '
+         'moore2011.pdf (DA48); JXP to confirm (DA52).'),
     dict(key='neveu2016historical', group='D', kind='article', doi='10.1016/j.ocemod.2015.11.012',
-         sections='5 (UCSC ROMS)', supports='The 31-year California Current ROMS 4D-Var '
-         'reanalysis, its observation streams (gliders included) and diagnostics; the '
-         'reanalysis side of the regional split.'),
+         pdf='neveu2016.pdf', pdf_kind='publisher PDF, downloaded by JXP 2026-09-23 (DA48), read in full',
+         sections='5 (UCSC ROMS)', supports='The 31-year (WCRA31, 1980-2010) and 14-year '
+         '(WCRA14, 1999-2012) California Current ROMS 4D-Var analyses: 1/10 degree, 8-day '
+         'overlapping windows, dual strong-constraint 4D-Var, gridded AVISO SSH, satellite SST '
+         'and EN3 hydrographic profiles (XBT, MBT, CTD, Argo, tagged mammals; gliders are not '
+         'named and no velocity data were assimilated); performance, innovation diagnostics '
+         'and the EKE and CalCOFI comparisons; the reanalysis side of the regional split.'),
     dict(key='todd2011poleward', group='D', kind='article', doi='10.1029/2010JC006536',
          sections='5 (Scripps state estimate), 9', supports='CUGN Line 90 and 80 data in a '
          'MITgcm adjoint California Current state estimate; the brief cites it as '
@@ -215,9 +237,12 @@ ENTRIES = [
          '(representativeness) error, the dominant term in R for a glider profile in a '
          'several-km grid.'),
     dict(key='shulman2009impact', group='E', kind='article', doi='10.1016/j.dsr2.2008.08.003',
+         pdf='shulman2009.pdf', pdf_kind='publisher PDF, downloaded by JXP 2026-09-23 (DA48); '
+         'for Section 9, prompt #6',
          sections='9', supports='An early U.S. West Coast glider assimilation study '
-         '(NCOM/NCODA, Monterey Bay); the profile-versus-model impact used in the '
-         'profile-vs-binned discussion.'),
+         '(NCOM/NCODA, Monterey Bay, AOSN-II 2003); each glider descent or ascent is treated '
+         'as a vertical profile, with "threaded" (slanted) profiles named as future work; the '
+         'profile-versus-model impact used in the profile-vs-binned discussion.'),
     dict(key='rudnick2016ocean', group='E', kind='article', doi='10.1146/annurev-marine-122414-033913',
          sections='9', supports='Section 7 of the review covers gliders in assimilating models '
          'and depth-average velocity as an absolutely referenced observation; digested in '

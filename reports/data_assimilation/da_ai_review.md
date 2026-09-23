@@ -8,6 +8,7 @@ keys), `scripts/` (this directory). A review, not a BOONUS document.
 | Version | Date | Author | Change |
 |---|---|---|---|
 | v0.1 draft | 2026-09-23 | JXP and Claude (Fable 5.1) | Skeleton from `outline.md`; drafted the primer (Section 2), classical methods (3), global systems (4), regional and coastal systems with the systems table (5); placeholders for 0 and 6-11 (prompts 5-6). |
+| v0.1 draft | 2026-09-23 | JXP and Claude (Fable 5.1) | Prompt 5. Section 3 (4D-Var), 5.1 and the California Current row of Table 1 rewritten from the full text of Moore et al. (2011, Part II) and Neveu et al. (2016): the "[not read]" flags replaced by the WC30/WC10 and WCRA31/WCRA14 configurations and diagnostics; Part II added as `moore2011romsII` (JXP's `moore2011.pdf` is Part II, Q&A DA52); the earlier "gliders included" statement about the Neveu reanalysis corrected (EN3 profiles; gliders not named; no velocity data). Drafted Section 6 (NWP), Section 7 with 7.1-7.4 (ocean AI by taxonomy, circularity caveat stated in the Section 7 opening), Section 8 (BGC); Figure 1 and 2 placeholders; candidate questions for Section 11 from Q&A DA49, DA50, DA53. |
 
 **Citation convention.** Author-year in the text followed by the BibTeX key in brackets,
 e.g. Moore et al. (2019) [@moore2019synthesis]; the bare bracketed key is used on repeat
@@ -19,8 +20,10 @@ mark the evidential basis of a statement, per `outline.md` (DA44): **[abstract o
 means the paper's full text was not in hand and the statement rests on its abstract;
 **[not read; via `key`]** means neither the text nor an abstract was available and the
 statement rests on what the named source says about the paper. Both flags are collected
-by the verification pass (prompt 8). Every quantitative statement in Sections 2-5 traces
-to a source read in this session unless so flagged.
+by the verification pass (prompt 8). Every quantitative statement in Sections 2-8 traces
+to a source read in the drafting sessions unless so flagged; the maturity tags and
+verification notes of Sections 6-8 are those of `sources.md`, which rest on the full text
+of every AI paper cited.
 
 ---
 
@@ -245,9 +248,13 @@ computation, the development and maintenance of the TLM and adjoint, and the fac
 parallelizable in time" [@moore2019synthesis]. Whether 4D-Var beats 3D-Var for the ocean as
 it has in NWP is, in the community's own assessment, "still an open question"
 [@moore2019synthesis]. Both strong- and weak-constraint forms exist; the ROMS 4D-Var
-system of Section 5.1 provides both, in primal (state-space) and dual (observation-space)
-formulations (Moore et al. 2011 [@moore2011roms]) [not read; via `reading_list.md` and
-Edwards et al. 2015 [@edwards2015regional], abstract only].
+system of Section 5.1 offers three incremental algorithms: I4D-Var, a primal (control-space)
+strong-constraint scheme, and two dual (observation-space) schemes, 4D-PSAS and the indirect
+representer R4D-Var, which alone support the weak constraint (Moore et al. 2011, Part I
+[@moore2011roms] [not read; via Part II, Moore et al. 2011 [@moore2011romsII]]). In the
+California Current all three converge to the same analysis for a single outer loop, but the
+dual schemes "converge to the minimum of J more slowly" and visit unphysical states on the
+way, so they must be run to convergence [@moore2011romsII].
 
 **EnKF, stochastic and deterministic.** The EnKF needs only the nonlinear model and
 parallelizes across members, and it delivers a flow-dependent $\mathbf{B}$ and a forecast
@@ -405,28 +412,63 @@ Table 1 to the rest.
 ### 5.1 The UCSC California Current ROMS 4D-Var
 
 The Regional Ocean Modeling System (ROMS) carries a 4D-Var system built by the UCSC and
-Rutgers groups with the TLM and adjoint of the full model. Its formulation paper (Moore et
-al. 2011 [@moore2011roms]) is Part I of a trilogy whose Parts II and III cover the California
-Current application and the observation-impact and sensitivity tools; the reading list
-describes it as offering strong- and weak-constraint 4D-Var in both primal and dual form
-[not read; via `reading_list.md`; the paper has no abstract in Crossref, OpenAlex or
-Semantic Scholar, and the Elsevier host refuses scripted fetches]. Two products of that
-system frame the California Current: a multi-decade historical analysis (Neveu et al. 2016
-[@neveu2016historical]) whose configuration and diagnostics paper the reading list records
-as a 31-year reanalysis assimilating satellite SST and SSH and in situ profiles, gliders
-included [not read; same access problem as Moore et al. 2011], and the near-real-time
-analyses that the brief cites as the demonstrated assimilation of CUGN data (Section 5 of
-`context/initial_context_for_claude.md`). What the ROMS 4D-Var adjoint adds beyond the
-analysis is the observation-impact and array-mode machinery: the impact of each platform on
-a chosen circulation index can be computed directly, and the reduced-rank array modes of the
-California Current observing system (gliders, HF radar, satellites) have been derived in this
-way (Moore et al. 2018 [@moore2018reduced]) [abstract only; AGU host refuses scripted
-fetches]. Rudnick (2016) [@rudnick2016ocean] sums up the observing side: "in coastal
+Rutgers groups with the TLM and adjoint of the full model. Its formulation is Part I of a
+2011 trilogy (Moore et al. 2011 [@moore2011roms]) [not read; via Part II]; Part II (Moore et
+al. 2011 [@moore2011romsII]) is the California Current application and Part III covers
+observation impact and sensitivity. Part II fixes what the system does in this region. The
+domain spans 134-116 W and 31-48 N in two configurations, WC30 (30 km, 30 levels) and WC10
+(10 km, 42 levels), forced by the Navy's COAMPS and bounded by ECCO; the control vector holds
+increments to the initial state, surface forcing and open boundaries; the observations were
+Aviso dynamic topography, a 5-day blended GOES/AVHRR/MODIS SST at 10 km, EN3 in situ T/S
+(XBT, Argo, and CTD from the CalCOFI, GLOBEC and LTOP cruises) and tagged elephant-seal
+temperatures; gliders are not named. All observations in a grid cell within 6 h are merged
+into a "super observation" whose scatter is taken as the representativeness error, added to
+instrument errors of 0.02 m, 0.4 C (SST), 0.1 C and 0.01 (in situ T, S). Run sequentially
+with 7-day windows over July 2002-December 2004, the system showed that "by far the largest
+decrease in" the cost function "is always associated with adjustments in the initial
+conditions", wind stress next, heat and freshwater fluxes and boundaries least, and that "more
+than 90% of the observations assimilated into the model provide redundant information" (the
+observations' degrees of freedom are 4-6% of their number in WC30 and 1-2% in WC10),
+because satellite SST dominates the count. Part II also introduced the diagnostics the later
+work relies on: posterior error variances from the Lanczos vectors of the minimization,
+Desroziers consistency checks that showed the prior weights too confident in the observations,
+and array modes, the observation-independent patterns through which an observing array can
+move the analysis, which in the California Current are set "primarily by a combination of the
+satellite data locations and the priors" [@moore2011romsII].
+
+The historical analyses (Neveu et al. 2016 [@neveu2016historical]) apply that system at 1/10
+degree (42 levels) over 30-48 N: WCRA31 covers 1980-2010 with ERA-40 (2.5 degree, 1980-2001),
+ERA-Interim (0.7 degree, 2002-2010) and CCMP winds (25 km, 1988-2010) as forcing, WCRA14 covers
+1999-2012 with COAMPS at 3-9 km, both with SODA boundaries,
+8-day windows overlapping by 4 days so that each cycle starts from the mid-point of the last
+(where a smoother's error is smallest), the dual algorithm under the strong constraint with one
+outer and 15 inner loops, and a static, non-flow-dependent $\mathbf{B}$ with the multivariate
+balance operator disabled. Assimilated: gridded 1/4 degree AVISO SSH (1993 onward, more than
+50 km from the coast, because the system could not yet use along-track data with
+time-correlated errors), Pathfinder, AMSR-E and MODIS SST, and EN3 profiles from XBT, MBT, CTD,
+Argo and tagged mammals; "no velocity observations were assimilated", and gliders are again not
+named, so whether CUGN profiles reached these analyses through the GTSPP stream inside EN3 is
+not stated. The posterior cost is 2-5 times below the prior every cycle, less than 1% of
+observations fail the background check, and the innovation statistics are diagnosed as
+non-Gaussian with prior variances too high for T and SSH and too low for S. What the
+assimilation buys: 4D-Var adjusts the wind stress by 5-10% of its mean and weakens the
+upwelling-favourable alongshore wind; surface EKE off Cape Mendocino rises 10% over the free
+run (95 vs 85 cm$^2$ s$^{-2}$, against 113 from AVISO and 235 from drifters), depth-averaged
+EKE in the upper 500 m rises 50%, the eddy count rises 50% and decays back within 40-60 days
+when assimilation stops; against CalCOFI profiles (not independent, since some are in EN3) the
+free run's 0.7 C warm bias above 150 m falls to near zero in the top 50 m and 0.2 C at 50-150 m.
+The authors list the limits of that version, homogeneous correlation lengths, no temporal
+error correlations, no weak constraint, and a reanalysis that "consistently under estimate[s]
+the level of EKE based on observational estimates" at 1/10 degree [@neveu2016historical]. The
+near-real-time UCSC analyses that the brief cites as the demonstrated assimilation of CUGN data
+(Section 5 of `context/initial_context_for_claude.md`) are not described by either paper and
+have no source in this list (Q&A DA53). Beyond the analysis, the adjoint gives observation
+impacts and the reduced-rank array modes of the California Current observing system (gliders,
+HF radar, satellites) (Moore et al. 2018 [@moore2018reduced]) [abstract only; AGU host refuses
+scripted fetches]; Rudnick (2016) [@rudnick2016ocean] sums up the observing side: "in coastal
 regions, where Argo yields fewer profiles, a sustained glider program can be the dominant
-source of in situ data". The ROMS-specific treatment of glider profiles and depth-average
-velocity is deferred to Section 9. *Flag for JXP:* Moore et al. (2011) and Neveu et al.
-(2016) are the two papers for which the abstract is not enough for this paragraph (Q&A
-DA48).
+source of in situ data". The treatment of glider profiles and depth-average velocity is deferred
+to Section 9.
 
 ### 5.2 The Scripps California Current state estimate
 
@@ -537,7 +579,7 @@ the GTS or Coriolis carry). Resolution is horizontal; levels are vertical.
 | Bluelink | Bureau of Meteorology (Australia) | MOM4, 1/10 deg Australian region, 51 levels | EnOI (static ensemble), adaptive nudging | daily; 1 d SST, 7 d in situ, 11 d altimetry windows; 4 staggered members | yes | operational forecast (2015 configuration) | [@martin2015status] |
 | FOAM | Met Office (UK) | NEMO ORCA025, 1/4 deg, 75 levels | NEMOVAR 3D-Var FGAT + bias correction, IAU 1 d | daily, 2 d catch-up | yes | operational forecast (2015 configuration) | [@martin2015status] |
 | TOPAZ | MET Norway | HYCOM, 1/8 deg North Atlantic and Arctic, 28 hybrid layers | EnKF (DEnKF), 100 members, 300 km localization | weekly, 7 d window, 3 d delay | not listed (Argo, XBT, moorings, ITP) | operational forecast (2015 configuration) | [@martin2015status] [@carrassi2018data] |
-| California Current ROMS 4D-Var | UC Santa Cruz | ROMS, several km | ROMS 4D-Var (strong/weak, primal/dual), TLM and adjoint | multi-day windows (not confirmed this session) | yes (CUGN) per the brief and [@rudnick2016ocean]; system papers not read | reanalysis (1980-2010) and near-real-time analysis | [@moore2011roms] [@neveu2016historical] [not read] |
+| California Current ROMS 4D-Var (WCRA31, WCRA14) | UC Santa Cruz | ROMS, 1/10 deg, 42 levels (WC30/WC10 in the 2011 tests) | ROMS 4D-Var, dual (R4D-Var/4D-PSAS) strong constraint; primal I4D-Var and weak constraint available | 8 d windows overlapping 4 d (7 d in 2011) | not named (EN3 profiles: XBT, MBT, CTD, Argo, mammals; no velocity) | reanalysis 1980-2010 and 1999-2012 | [@moore2011romsII] [@neveu2016historical] |
 | CASE | Scripps | MITgcm regional, adjoint | ECCO-type adjoint state estimate | multi-year windows (not stated in abstracts) | yes (CUGN Lines 90, 80, 66.7) | state estimate, 2007-2017 | [@todd2011poleward] [@zaba2018annual] [abstract only] |
 | doppio | Rutgers | ROMS, nested 7 km to 0.8 km | ROMS 4D-Var, adjoint observation impacts | not stated in abstract | "mobile platforms" (gliders implied, Section 9) | state estimates / analysis | [@levin2020observation] [abstract only] |
 | WCOFS | NOAA NOS (CO-OPS, OCS, NCO) | ROMS, U.S. West Coast | not stated on the page | 3 d window, daily | not stated | operational nowcast/forecast | [@wcofs2026coops] (grey) |
@@ -552,45 +594,414 @@ Shelf) have no row; FOAM and TOPAZ stand as the European comparators (Q&A DA47).
 
 ## 6. AI in numerical weather prediction: the leading indicator
 
-*[Placeholder: prompt 5. About 2 pages; Fig. 2 (timeline) at the top. One paragraph per
-family with two or three exemplars, each with a maturity tag and verification note:
-emulators (Pangu-Weather, GraphCast, AIFS, GenCast); learned components inside DA (Bonavita
-and Laloyaux 2020; neural TLM/adjoint); end-to-end observation-to-forecast (Aardvark,
-GraphDOP); generative DA (Manshausen et al.; FuXi-DA with the DA43 data split).]*
+*[Figure 2 placeholder: prompt 7. `figs/ai_da_timeline.png` from `scripts/make_timeline.py`:
+2018-2026 milestones on an NWP track and an ocean track, each dated from a key in
+`sources.bib`; referred to again in Section 7.]*
+
+ML entered NWP before it entered ocean DA, and it entered in a fixed order: first emulators
+that replace the forecast model but are still started from a 4D-Var analysis, then learned
+components inside the assimilation, then systems that learn the whole map from observations
+to forecast, and, in parallel, generative methods that replace the analysis step itself. The
+reason NWP went first is the training set: ERA5 is a DA product with four decades of hourly
+global fields constrained by a dense observing system, and every emulator below is trained on
+it. Geer (2021) [@geer2021learning] gives the frame the rest of this report uses: "the cost
+function in variational DA is equivalent to the loss function for training a neural network",
+gradient descent serves both, and "the adjoint method for calculating gradients in DA is
+mathematically identical to the standard approach in ML known as backpropagation", so that a
+learned component inside DA means replacing one of $\mathbf{B}$, $\mathcal{H}$, $\mathbf{M}$
+or the model-error term by a fitted function while the Bayesian update of Box 1 stays.
+Every system in this section carries the maturity tag and verification note of Section 1;
+the question that Section 7 inherits, whether skill is measured against the reanalysis the
+system was trained on or against observations, was raised in NWP first.
+
+**Emulators.** Pangu-Weather (Bi et al. 2023 [@bi2023accurate]) is a 3D Earth-specific
+transformer at 0.25 degree trained on ERA5 for 1979-2017, validated on 2019 and tested on
+2018; its 5-day 500 hPa geopotential RMSE was 296.7 against 333.7 for the operational IFS,
+and one forecast costs 1.4 s on one GPU, "more than 10,000-times faster than the operational
+IFS". Skill is scored against ERA5 only, with cyclone tracks against IBTrACS, and the authors
+say so: the model "was trained and tested on reanalysis data, but real-world forecast systems
+work on observational data". Tag: *realistic hindcast*; verification: against the training
+reanalysis. GraphCast (Lam et al. 2023 [@lam2023learning]) is a graph neural network at
+0.25 degree with a 6 h step, ten days in "under one minute" on a TPU v4, trained on ERA5 with
+2018 onward held out; it beat HRES on 90.3% of 1,380 targets, GraphCast scored against ERA5
+and HRES against its own analyses (HRES-fc0), with no station or radiosonde verification,
+and the paper states that it "should not be regarded as a replacement for traditional weather
+forecasting methods". Tag: *realistic hindcast*; verification: against the training reanalysis.
+AIFS (Lang et al. 2024 [@lang2024aifs]) (preprint) is ECMWF's own: pre-trained on ERA5
+1979-2020, fine-tuned on IFS operational analyses for 2019-2020, initialised from the IFS
+4D-Var analysis, run in "experimental operational mode" from October 2023 and at 0.25 degree
+from February 2024; AIFS Single became operational on 25 February 2025 (ECMWF 2025
+[@ecmwf2025aifs]) (grey). It is scored for 2022 against the operational analysis and against
+radiosonde and SYNOP observations, about 10% better than IFS through the troposphere, and a
+day-1 degradation seen against analyses "is not present in verification against radiosonde
+observations", the first sign in this list that analysis-based and observation-based scores
+can disagree. Tag: *operational*; verification: against observations as well as the centre's
+own analysis. GenCast (Price et al. 2024 [@price2024probabilistic]) supplies the ensemble
+step: a diffusion model at 0.25 degree, 12 h steps to 15 days in 8 min on a TPUv5, trained on
+ERA5 1979-2018 and tested on 2019 after the model was frozen; it has better CRPS than ENS on
+97.2% of 1,320 targets, each system against its own analysis and no observations, and the
+authors underscore "the importance ... of traditional NWP-based data assimilation for
+providing training and initialization data". Tag: *realistic hindcast*; verification: against
+the training reanalysis. All four depend on 4D-Var twice, for the training set and for every
+initial condition; they replace the model, not the assimilation.
+
+**Learned components inside DA.** Bonavita and Laloyaux (2020) [@bonavita2020machine] trained
+an artificial neural network on the operational 12 h analysis increments of 2018, averaged to
+T21 (about 900 km), to predict model-error tendencies from the background column; the best
+network explained about 14% of the increment variance for mass variables and about 5% for
+wind, none for humidity. The tendencies were then used inside cycled 4D-Var at the
+operational configuration (Cycle 47R1, TCo1279, about 9 km, 16 July-24 August 2019), as a
+forcing in strong-constraint 4D-Var and as the first guess of the weak-constraint forcing,
+and those experiments are verified against observations: background departures for
+radiosondes, GPS-RO, conventional winds, AMVs and surface pressure, and 72 h temperature
+forecast error against GPS-RO. They reproduce the stratospheric bias reduction of
+weak-constraint 4D-Var, extend it to the troposphere and roughly halve surface-pressure
+biases, though most differences are not significant over five to six weeks and the authors
+call the hybrid "not yet fully in place for reliable operational use". Tag: *realistic
+hindcast* (cycled at the operational configuration); verification: trained on a DA product,
+verified against observations, which makes it, with AIFS, one of the two exemplars in this
+section scored against observations rather than a reanalysis. Hatfield et al. (2021)
+[@hatfield2021building] attack the adjoint instead: a neural-network emulator of the IFS
+non-orographic gravity-wave drag scheme, trained on the scheme's inputs and outputs from
+2015 with 2016 for validation and 2017 for testing, whose tangent-linear and adjoint are
+obtained by differentiating the network and replace the hand-coded linear models inside
+4D-Var; in a cycled run over December 2018-February 2019 with 177 ten-day forecasts the RMSE
+differences from the reference were "no more than 4%" and not significant, with departures
+also checked against ATMS and GPS-RO observations that are themselves assimilated. Tag:
+*realistic hindcast* (one parametrization, the nonlinear scheme unchanged); verification:
+against the experiment's own analysis and assimilated observations. Both are the pattern
+Section 7.2 looks for in the ocean: the Bayesian update untouched, one ingredient learned.
+
+**End-to-end observation-to-forecast.** Aardvark Weather (Allen et al. 2025
+[@allen2025endtoend]) replaces the whole pipeline: an encoder maps raw observations (about 8%
+of those conventional NWP ingests) to a gridded state, a processor forecasts, a decoder
+produces station forecasts, and the three are fine-tuned end to end; the encoder and
+processor are pre-trained with ERA5 as target and the station decoder on HadISD
+observations, with 2018 held out. Gridded fields are scored against ERA5 (HRES and GFS
+baselines at 1.5 degrees) and station forecasts against held-out HadISD, where end-to-end
+fine-tuning cut MAE by 6% over Europe, West Africa, the Pacific and globally; no NWP product
+enters at test time, but ERA5 is the pre-training target, so "end-to-end from observations"
+holds for deployment, not for training. Tag: *realistic hindcast* (research prototype);
+verification: against the reanalysis for fields, against withheld observations for stations.
+GraphDOP (Alexe et al. 2024 [@alexe2024graphdop]) (preprint), from ECMWF, goes further:
+trained on observations alone for 2004-2021 with 2022 for validation, the target being the
+next 12 h of observations, no reanalysis in training except an ERA5-departure quality-control
+step the authors flag as a partial dependence. It is verified in observation space (SYNOP 2 m
+temperature, AMSU-A and SSMIS brightness temperatures) against the operational IFS and on a
+grid against ERA5, "employed exclusively for verification": 15% better than IFS for 2 m
+temperature at day 1, mixed at days 3-5, worse for AMSU-A, and in the authors' words "not yet
+close to matching state-of-the-art NWP performance". Tag: *realistic hindcast*; verification:
+against withheld observations. It is the first system in this list in which no physics-based
+analysis sits anywhere in the loop.
+
+**Generative DA and learned assimilation.** Manshausen et al. (2025)
+[@manshausen2025generative] use score-based DA: a diffusion prior trained on HRRR analyses of
+10 m wind and precipitation at 3 km over the central United States (128 x 128 patches,
+2018-2021), with observations entering only at inference to guide the denoising. Tested on
+2017 with 40 ISD stations assimilated and 10 held out, the analyses have about 10% lower RMSE
+than HRRR at the held-out stations; the authors note that those stations belong to the METAR
+data HRRR itself assimilates, that the ensembles are underdispersive, and that the work is a
+"proof of concept, and the first at km-scale". Tag: *realistic hindcast*; verification:
+against withheld stations that are not independent of the baseline. FuXi-DA (Xu et al. 2025
+[@xu2025fuxida]) is learned assimilation into an ML model: FY-4B AGRI brightness
+temperatures (channels 8-15, super-obbed to 0.25 degree) are combined with a background from
+a 6 h FuXi forecast started from ERA5, the training target being ERA5. Per the Methods
+section, training spans June 2022-May 2023, validation June-July 2023 and testing
+August-December 2023 (the Results section states the training span as June 2022-June 2024,
+which would overlap the test period; the Methods split is used here, Q&A DA43). Analysis RMSE
+falls by 2-4.5% against a bias-corrected background (Z500 by 2.02%, 300 hPa humidity by
+4.47%) and the day-1 Z500 forecast error by 0.67%, shrinking to 0.34% by day 7; the study is
+offline and non-cycled and all-sky assimilation is not demonstrated. Tag: *realistic
+hindcast, offline and non-cycled*; verification: against ERA5 only. Both belong to category
+3 of Section 7 (ML replacing the analysis step); Cheng et al. (2023) [@cheng2023machine]
+survey this "end-to-end learning of DA systems" strand as the youngest in the field.
+
+**What NWP tells the ocean.** The sequence was emulate the model, learn pieces of the
+assimilation, learn the whole map; the ocean is at the first step (Section 7.1) with
+isolated cases of the second (7.2) and third (7.3). Two of the ten NWP systems above are
+scored against observations in their own right (AIFS, GraphDOP) and two more partly
+(Bonavita and Laloyaux, Aardvark); the rest are scored against the reanalysis or analysis
+they learned from. The ocean lacks the three things that made the NWP path short: a training
+reanalysis whose subsurface is as well constrained as ERA5's troposphere (Section 4.1), a
+40-year hourly record at eddy-resolving resolution, and an observing system dense enough to
+verify a 1/12 degree forecast independently of the analysis.
 
 ## 7. AI in ocean DA, by where ML enters the pipeline
 
-*[Placeholder: prompt 5. Fig. 1 (taxonomy over one DA cycle) at the top; the
-trained-on-reanalysis circularity stated once here and referred back to; the XiHe
-training/test overlap stated as implied but not explicit (DA34).]*
+*[Figure 1 placeholder: prompt 7. Mermaid: the four ML entry points (1 emulator of the
+model; 2 inside the analysis: $\mathbf{B}$, $\mathcal{H}$, adjoint, model error; 3 replacing
+the analysis; 4 around it: QC, downscaling, anomaly detection, sampling design) laid over one
+DA cycle: background, observations, QC, analysis, forecast.]*
+
+The ocean literature is organized by where ML enters the cycle of Box 1: (1) emulators of
+the forecast model $\mathcal{M}$; (2) learned pieces inside a classical analysis
+($\mathbf{B}$, $\mathcal{H}$, the adjoint or the model-error term), the Bayesian update
+kept; (3) ML that replaces the analysis step; (4) ML around the cycle (quality control,
+downscaling, anomaly detection, observing-system design).
+
+**The circularity caveat, stated once.** The ocean emulators of Section 7.1 are trained on
+GLORYS12 (Section 4.1) or on a free model run. GLORYS12 is itself a DA product: its authors
+state that its "performance ... shows a clear dependency on the time-dependent in situ
+observation system", its 0-2000 m departures halved when Argo arrived (0.75 C and 0.2 psu
+before, 0.45 C and 0.1 psu after), its pre-2004 salinity bias could not be corrected, and its
+eddy-kinetic-energy record is discontinuous (Lellouche et al. 2021
+[@lellouche2021copernicus]). An emulator that reproduces GLORYS12 reproduces these
+properties, and a score computed against GLORYS12 fields measures how well the training
+product is reproduced, not how well the ocean is forecast. WenHai's authors put it plainly:
+"the AI-based GOFSs, including WenHai, are trained based on high-quality ocean reanalysis
+datasets produced via numerical GOFSs in combination with data assimilation. It is more
+appropriate to think that AI-based GOFSs stand on the shoulders of numerical GOFSs" (Cui et
+al. 2025 [@cui2025forecasting]). The same dependence holds in NWP (Section 6), where Pangu's
+authors made the equivalent statement about ERA5. This report therefore treats skill as
+established only against withheld observations, for the global systems the GODAE OceanView
+IV-TT Class 4 sets (Argo temperature and salinity profiles, drifter SST and 15 m currents,
+along-track sea-level anomaly), and records "verified against the training reanalysis" where
+that is all a paper offers. A second, weaker dependence is shared by every emulator: each
+forecast starts from an operational analysis (GLO12 or GLORYS12), so DA supplies the initial
+condition as well as the training set. Later paragraphs refer to this as *the circularity
+caveat*.
 
 ### 7.1 Emulators and surrogates
 
-*[Placeholder: prompt 5. Samudra, XiHe, WenHai, GLONET, OceanNet, Samudra 2; GLORYS12 from
-Section 4.1 as the training set.]*
+**Emulators of a model.** Samudra (Dheeshjith et al. 2025 [@dheeshjith2025samudra]) is a
+ConvNeXt UNet that emulates GFDL's OM4: the native 1/4 degree output is interpolated to a
+1 x 1 degree grid and 19 fixed depth levels, the state is potential temperature, salinity,
+SSH and the two velocity components, the step is 5 days, and the training data are a 65-year
+OM4 run (1958-2022). The emulator "is stable for centuries and 150 times faster than the
+original ocean model", but "struggles to capture the correct magnitude of the forcing trends
+and simultaneously remain stable": over the 8-year test rollout (2014-2022) "for most depths
+the trained models underestimate trends by 20% to 50% relative to OM4". Tag: *realistic
+hindcast*; verification: against held-out OM4 output, no observations; here the circularity is by design, since the target is the
+model, not the ocean. Samudra 2 (Yuan et al. 2026 [@yuan2026samudra2]) (preprint) scales the
+same architecture to 1, 1/2 and 1/4 degree, trained on OM4 1975-2013 with 8-year rollouts
+over 2014-2022 scored against OM4; it names two failure modes of long rollouts, "variance
+collapse" and "imprinting artifacts, in which velocity patterns leak into deep-ocean
+fields", and raises upper-ocean temperature $R^2$ at 1 degree from 0.56 to 0.87. Tag:
+*realistic hindcast*; verification: against the parent model only.
+
+**Emulators of GLORYS12.** XiHe (Wang et al. 2024 [@wang2024xihe]) (preprint) is "the first
+data-driven 1/12 degree resolution global ocean eddy-resolving forecasting model", a
+hierarchical transformer whose training set is GLORYS12; the data section gives the GLORYS12
+span as January 1993-December 2020 while the abstract calls the training data "25-year", and
+the evaluation runs from January 2019 to December 2020 in the IV-TT Class 4 framework against
+Argo, drifter and along-track altimeter observations, where XiHe outperforms PSY4 (GLO12),
+GIOPS, FOAM and Bluelink on all evaluated variables at 10 days (15 m currents by 10.16% and
+11.21% over PSY4), though at 1 and 5 days "GIOPS and PSY4 achieve comparable or slightly
+better" scores for some variables, and it produces a forecast in 0.35 s.
+Whether the test years were withheld from training is implied by "25-year" but never stated
+(Q&A DA34). Tag: *realistic hindcast*; verification: withheld observations (Class 4), with the
+training/test overlap unresolved. WenHai (Cui et al. 2025 [@cui2025forecasting]) builds the
+bulk formulae for air-sea momentum, heat and freshwater fluxes into the network and predicts
+daily tendencies of the upper 643 m; it is trained on GLORYS12 with ERA5 forcing for
+1993-2018 and validated on 2019, and its April-November 2024 forecasts start from the
+operational GLO12v4 analyses and use the same atmospheric forecast as GLO12v4, the fairest
+comparison in this list. Against Class 4 observations at a 10-day lead its RMSE is 6.02%
+(temperature profile) and 5.64% (salinity profile) below GLO12v4, and 8.94%, 10.67%, 6.95%
+and 10.33% below for SST, SLA and the 15 m zonal and meridional currents; CRPS gives the same
+ordering. Tag: *realistic hindcast bordering on pre-operational* (run from operational
+analyses, not by the centre); verification: withheld observations (Class 4). GLONET (El Aouni
+et al. 2025 [@elaouni2025glonet]) is Mercator Ocean's own emulator, a Fourier neural
+operator with a CNN branch at 1/4 degree on interpolated GLORYS12 fields, predicting
+temperature, salinity and currents on a set of levels from 0.49 to 1684 m plus SSH; trained
+on 1993-2019 with 2020 "reserved for validation", forecasting January-July 2024 from the
+operational GLO12 analyses in "a few seconds (GPU)" against "1h (HPC)" for GLO12. It is
+scored in the Class 4 framework against Argo profiles and drifters, point-wise against
+GLORYS12 "which serve as the reference", and with process-oriented checks (mixed-layer depth,
+geostrophic currents). On Class 4 it "surpasses XIHE in SLA and surface currents,
+consistently outperforming GLO12 for forecasts ranging from 5 to 9 days", while "for SST,
+GLO12 demonstrates superior performance across all forecast horizons, except for the
+one-day forecast", which the authors attribute to GLONET being "trained on historical
+outputs of physical systems, without direct assimilation of real-time observations",
+whereas GLO12 assimilates satellite SST directly. They report that "MOI has established
+robust pre-operational pipelines", and experimental daily forecasts are served on the EDITO
+platform. Tag: *pre-operational*; verification: withheld observations (Class 4) plus the
+training reanalysis, of which only the former counts here.
+
+**A regional emulator.** OceanNet (Chattopadhyay et al. 2024 [@chattopadhyay2024oceannet])
+is a Fourier neural operator for sea-surface height in the northwest Atlantic, trained on a
+4 km ROMS-EnKF regional reanalysis for 1993-2018 and tested on 2019-2020 against the same
+reanalysis, for 120-day forecasts of Loop Current eddy shedding and the Gulf Stream meander,
+at a cost "500,000" times below ROMS; it matches the ROMS forecast in the Gulf of Mexico and
+beats it in the Gulf Stream region, and the authors call the work "initial steps". Tag:
+*realistic hindcast*; verification: against the training reanalysis only, so the circularity
+caveat applies in full. It is the only regional emulator in this list, and none exists for
+the California Current.
+
+What the GLORYS12-trained emulators show is that a network can match or beat the operational
+system it learned from on 1-10 day Class 4 scores at a fraction of the cost; what they
+inherit is everything Section 4.1 lists for GLORYS12, and what none of them has been tested
+on is a region where the Class 4 profile set is sparse.
 
 ### 7.2 ML inside classical DA
 
-*[Placeholder: prompt 5. Learned model-error correction from increments (Gregory et al.
-2023; the ECMWF pattern from Section 6), adjoint surrogates, the near absence of ocean work
-on learned B and H; the learned-parameterization boundary case in one sentence (DA36c).]*
+Published ocean work on category 2 is thin. The clearest case is model-error learning from
+increments, the ocean-side counterpart of Bonavita and Laloyaux (Section 6): Gregory et al.
+(2023) [@gregory2023deep] trained a convolutional network on the GFDL SPEAR ice-ocean
+system (nominal 1 degree), which "assimilates satellite observations of sea ice
+concentration every 5 days between 1982-2017", to predict the sea-ice-concentration
+increments from the model state; with 5-fold cross-validation on contiguous chunks and an
+untouched 2018-2021 extension, the daily spatial pattern correlations with the true
+increments run from 0.62 to 0.80 by season and hemisphere, and the seasonal climatologies
+of predicted and true increments correlate at 0.96-0.98, consistently better than a
+climatological-increment baseline. The study is offline; online bias correction is proposed,
+not shown. Tag: *realistic hindcast* (offline feasibility); verification: against the DA
+increments, a DA product, not independent observations. On the BGC side, Gloege et al.
+(2022) [@gloege2022improved] learn the misfit between SOCAT pCO2 observations and nine
+global biogeochemical models with gradient-boosted trees and add it back (Section 8); the
+authors frame the result as "a hybrid observation-based data product", not as DA. Tag:
+*realistic hindcast* (released product); verification: seven withheld years plus independent
+GLODAPv2, BATS and HOT data. The adjoint-surrogate idea of Hatfield et al. (Section 6) has
+no ocean counterpart in this list, and no published ocean system in this list learns
+$\mathbf{B}$ or the observation operator; Cheng et al. (2023) [@cheng2023machine] list
+learned error covariances and model-error correction as active strands of the general
+literature. Both absences are on the list for Matt (Section 11). One boundary case is named
+because the decisions ask for it (Q&A DA36c): Zanna and Bolton (2020) [@zanna2020data]
+discover closed-form mesoscale eddy closures with relevance vector machines and a CNN from
+idealized MITgcm double-gyre runs at 3.75 and 7.5 km coarse-grained to 30 km, and test them
+online in an idealized 30 km model; this changes the model, not the assimilation, uses no
+observations, and is tagged *idealized*.
 
 ### 7.3 ML replacing DA
 
-*[Placeholder: prompt 5. 4DVarNet from Lorenz systems to the SSH-mapping data challenges
-(OSSE on NATL60 vs OSE on real altimetry); what "verified" means in each case.]*
+**Neural variational interpolation.** 4DVarNet (Fablet et al. 2021 [@fablet2021learning])
+learns both the prior operator inside a 4D-Var-like cost and the iterative solver (an LSTM
+gradient scheme) end to end, so the analysis becomes one trained network. On Lorenz-63 the
+reconstruction error is 1.34 against 3.55 for fixed-step gradient descent on the 4D-Var cost
+with the true equations, and on Lorenz-96 0.38 against 1.06; the paper closes by asking
+whether the findings "generalize to other systems, especially higher-dimensional ones". Tag:
+*idealized*; verification: against the simulated truth of the toy systems. 4DVarNet-SSH
+(Beauchamp et al. 2023 [@beauchamp2023fourdvarnet]) is that generalization for sea-surface
+height: trained and tested in the NATL60 observing-system simulation experiment of the
+SSH-mapping data challenge (ocean-data-challenges 2026 [@oceandatachallenges2026]) (grey),
+with pseudo-observations along four nadir tracks and a simulated SWOT swath, and scored on
+22 October-2 December 2012 against the simulated truth: 30-60% lower reconstruction error
+than the operational optimal interpolation, with resolved scales of 0.83 degree and 8.0 days
+against 1.42 degree and 12.0 days for DUACS with four nadirs; application to real altimetry
+is named as future work. Tag: *realistic OSSE* (a simulation-based hindcast); verification:
+against simulated truth, not observations. Martin et al. (2023) [@martin2023synthesizing]
+supply the observing-system-experiment half of the pair: a network trained on real altimetry
+and SST in the Gulf Stream Extension for 2010-2020, with 2017 withheld for testing, CryoSat-2
+withheld as ground truth and AOML drifters as an independent set; the map has 17% lower RMSE
+and resolves scales 30% smaller than the DUACS optimal interpolation, and its geostrophic
+currents have 24% and 27% lower RMSE against the drifters. Tag: *realistic hindcast*;
+verification: against withheld and independent observations, the cleanest verification in
+Section 7. The data challenges define what "verified" means in this strand: the 2020a NATL60
+challenge is an OSSE with a known truth, the 2021a challenge scores against withheld real
+altimetry, and a method's rank can differ between the two.
+
+**End-to-end and generative assimilation.** No ocean counterpart of FuXi-DA, Aardvark or
+GraphDOP (Section 6) is in this list: no published system learns to assimilate ocean
+observations into an ML ocean model, cycled or not, and no generative reconstruction of the
+ocean state from sparse in situ profiles at the maturity of Manshausen et al. was found among
+the approved references. The ocean's category 3 is, so far, surface interpolation from
+satellite tracks; the subsurface mapping problem that profiles pose, sparse in space and
+slanted in time, is open in this literature.
 
 ### 7.4 ML around DA
 
-*[Placeholder: prompt 5. ML QC of Argo profiles; the thin literature on anomaly detection
-and adaptive sampling; adjoint array modes (Section 5.1) as the classical counterpart;
-derived BGC variables cross-referenced to Section 8.]*
+**Quality control.** Sugiura and Hosoda (2020) [@sugiura2020machine] classify Argo
+temperature and salinity profiles with features from the signature method (iterated
+integrals of the profile path) against the JAMSTEC delayed-mode QC flags: $M = 8.2 \times
+10^4$ profiles, 40% for training and 60% for cross-validation (a random split; whether it is
+by float is not stated), scored with ROC curves. The method "never misidentifies negative
+(normal) profiles if the appropriate cutoff ... is used, but it may accept positive (bad)
+profiles with a probability 0.6" at the default cutoff, because part of the delayed-mode
+criterion "cannot be decided only by the shape" of the profile; it is a screening tool, not a
+replacement for delayed-mode QC. Tag: *realistic*, offline
+method demonstration; verification: against human QC labels, not against the ocean. It is the
+only QC paper in this list and there is none for glider streams.
+
+**Anomaly detection, downscaling, adaptive sampling.** No approved reference addresses ML
+anomaly detection on ocean data streams, ML downscaling of ocean analyses, or ML-driven
+adaptive sampling; the report records the gap rather than fill it from memory. The classical
+counterpart of sampling design is adjoint-based observing-system analysis: Moore et al.
+(2018) [@moore2018reduced] derive the reduced-rank array modes of the California Current
+observing system (gliders, HF radar, satellites) in ROMS 4D-Var [abstract only], the machinery
+introduced in Part II of the 2011 trilogy (Section 5.1), and OSSEs value observation types by
+fraternal-twin experiments (Sections 8 and 9). Neural estimation of derived BGC variables from
+the T, S and oxygen a glider carries (CANYON-B) is the one category-4 case with an
+independent verification and is treated in Section 8.
 
 ## 8. Biogeochemical DA
 
-*[Placeholder: prompt 5. Physics-BGC coupling and initialization shock; what is
-assimilated (ocean colour, BGC-Argo); non-Gaussian increments; ROMS 4D-Var with two
-ecosystem models, B-SOSE and ECCO-Darwin; the BGC OSSE; where ML is being tried.]*
+**Coupling.** The GODAE OceanView task team's OceanObs'19 statement (Fennel et al. 2019
+[@fennel2019advancing]) is the reference for the state of the field. Its central warning is
+that "assimilation of physical observations in coupled models often does not improve but
+degrades the biogeochemical state", a degradation that "appears to arise at least partly when
+physical and biogeochemical variables are updated independently in violation of
+property-property relationships"; the remedies in use are multivariate balancing of the BGC
+increments (the Met Office updates surface $\log_{10}$ chlorophyll and derives increments
+for the other variables through a balancing scheme; Mercator's SEEK filter projects surface
+corrections of phytoplankton groups and nutrients through the mixed layer). BGC increments
+are not Gaussian: the authors name "the non-Gaussian characteristics of biogeochemical
+observations, the strong non-linearity of biogeochemical models and the frequent lack of
+direct correspondence between convenient observables and model variables" as the reasons the
+physical schemes do not transfer unchanged, and the California Current system uses "a
+lognormal form of 4D-Var" for that reason.
+
+**What is assimilated, and by whom.** "Currently, the main biogeochemical data stream used
+in assimilation is satellite ocean color, but this measurement is limited to the surface
+ocean and provides an imperfect proxy of phytoplankton biomass." The systems table of Fennel
+et al. gives the methods in use in 2019: the Met Office FOAM with HadOCC or MEDUSA
+(NEMOVAR 3D-Var, pre-operational, with the capability to assimilate chlorophyll, nitrate,
+oxygen and pH profiles), the North-West Shelf NEMO-ERSEM (3D-Var, operational, glider and
+float assimilation "under development"), Mercator's PISCES run offline at 1/4 degree with a
+SEEK-filter chlorophyll assimilation "being implemented", the Mediterranean OGSTM-BFM
+(3D-Var; BGC-Argo chlorophyll and nitrate "in pre-operational mode"), the Black Sea system
+(SEEK filter, Argo oxygen), the Great Barrier Reef eReefs system (a 100-member EnKF of
+spectral ocean colour, with forecast errors "reduced by up to 50%" and withheld glider
+fluorescence improved by 45%), and the UCSC ROMS-NEMURO California Current system (4D-Var,
+"quasi-operationally", satellite chlorophyll only). The team's own assessment: schemes for
+"data types other than surface observations (e.g., from floats and gliders)" exist "but thus
+far they have mostly been used in OSSE-type twin experiments", and "biogeochemical/ecological
+operational systems are still in their infancy compared to physical ocean forecasting". For
+the California Current the two-ecosystem-model 4D-Var study of Mattern et al. (2017)
+[@mattern2017data] is the relevant paper [not read; no abstract in Crossref, OpenAlex or
+Semantic Scholar; described via `reading_list.md` as showing the model dependence of the
+chlorophyll assimilation]. The state-estimation route is the adjoint one of Section 4.1:
+B-SOSE (Verdy and Mazloff 2017 [@verdy2017data]) adds carbon, oxygen and nutrient cycles to
+the Southern Ocean state estimate, constrained by "profiling floats, shipboard data, underway
+measurements, and satellites" over 2008-2012, and captures 44% of the surface pCO2 variance
+in Drake Passage and "over 60% of the variance" of oxygen profiles at 200 and 1000 m, with
+the adjoint method "shown to be mature and ready to synthesize in situ biogeochemical
+observations as they become more available" [abstract only]. ECCO-Darwin (Carroll et al.
+2020 [@carroll2020ecco]) couples the Darwin ecosystem model to the ECCO physics and
+optimizes initial conditions and six BGC parameters by a Green's function approach over
+1995-2017, giving a global CO2 sink of 2.47 +/- 0.50 Pg C per year [abstract only]; the brief
+names both ECCO and Darwin as planned components.
+
+**Valuing in situ BGC profiles.** Ford (2021) [@ford2021assimilating] is the OSSE the field
+points to: FOAM-MEDUSA with NEMOVAR 3D-Var FGAT in a fraternal-twin design over 2009,
+assimilating ocean colour alone or with synthetic BGC-Argo chlorophyll, nitrate, oxygen and pH
+profiles from a quarter of the Argo array (comparable to the planned 1000 floats) or from all
+of it, and no physical observations, "reflecting the way state-of-the-art biogeochemical
+reanalyses are run". Ocean colour cut the surface chlorophyll error by 72% and BGC-Argo added
+nothing at the surface, but ocean colour alone degraded surface nitrate "almost everywhere"
+and degraded DIC, alkalinity and pH, while the profiles gave "an almost universal
+improvement" for nitrate, oxygen and pH through the water column, largest for pH, and
+improved the unassimilated pCO2; the author notes that "alternative in situ observing
+technologies such as gliders may be able to play a role".
+
+**Where ML is being tried.** Fennel et al. (2019) contain no mention of machine learning;
+the ML in this section sits around the assimilation (category 4), not inside it. CANYON-B
+(Bittig et al. 2018 [@bittig2018canyonb]) is a committee of Bayesian multilayer perceptrons
+that maps pressure, temperature, salinity, oxygen and position (and year for the carbonate
+variables) to nitrate, phosphate, silicate, alkalinity, DIC, pH and pCO2, trained on GLODAPv2
+bottle data (521 cruises, 1972-2013, 20% set aside) and validated against 19 later GO-SHIP
+cruises (2012-2017) and float data: RMSE 0.68 (nitrate), 0.051 (phosphate), 2.3 (silicate),
+6.3 (alkalinity) and 7.1 (DIC) umol/kg, 0.013 in pH and 20 uatm in pCO2. The authors present
+it as a "transfer function between components of the ocean observing system", warn that it
+"can only reproduce the variability that is present in the training data", and note that
+of the derived variables "only pH can be measured on those platforms operationally" for
+gliders and floats at the time of writing. Tag: *realistic*, released method; verification:
+independent cruises. LDEO-HPD (Gloege et al. 2022 [@gloege2022improved]; Section 7.2) is the
+other case: gradient-boosted trees learn the SOCAT-minus-model pCO2 misfit for nine global
+models, with seven withheld years and independent GLODAPv2, BATS and HOT data, and reach an
+RMSE of 15.4 uatm against GLODAP in the 2010s versus 15.7-17.7 for other products. Tag:
+*realistic hindcast*, released product; verification: withheld and independent
+observations. No approved reference puts ML inside a BGC assimilation step, and the
+Southern Ocean and California Current state estimates above use the adjoint, not a learned
+component.
 
 ## 9. Gliders in DA
 
@@ -613,14 +1024,40 @@ CASE treats depth-average velocity and representativeness error (5.2); the WCOFS
 configuration (5.4); the operational status of SOCA-MOM6 in HAFS (5.5); whether any
 operational ocean centre runs an ML component inside its DA.]*
 
+*Candidate questions carried from Q&A (for prompt 6 to work into the list):*
+
+- *WCOFS (Q&A DA49): no public source states its DA method or the observation types it
+  assimilates, only "real-time observations in a three-day window ... once a day"; does
+  Matt know the configuration, and whether glider profiles have ever entered it?*
+- *HAFS ocean DA (Q&A DA50a): has the operational HAFS ocean component moved from
+  RTOFS-initialized HYCOM with no ocean DA (Kim et al. 2024) to MOM6 with Marine JEDI/SOCA
+  (Liu et al. 2023, a case study), and if so since which HAFS version?*
+- *SOCA solvers (Q&A DA50b): the solver list recorded in `sources.md` from the JEDI
+  documentation (3D-Var FGAT, hybrid 3DEnVar, LETKF) and the GFSv17/GEFSv13 plan could not
+  be re-found on 2026-09-23; which solvers does SOCA run today, and what is the
+  operational timeline?*
+- *Near-real-time UCSC ROMS 4D-Var (Q&A DA53): the brief cites the assimilation of CUGN
+  profiles into the UCSC California Current analyses as demonstrated, but neither Moore
+  et al. (2011, Part II) nor Neveu et al. (2016) name gliders among the assimilated
+  platforms; which product and which paper document the CUGN assimilation?*
+
 ## References
 
 See `sources.md` for the annotated list with access dates and `sources.bib` for BibTeX;
 `scripts/check_citations.py` lists the keys cited here against `sources.bib`. Keys cited so
 far: [@moore2019synthesis] [@carrassi2018data] [@bannister2017review] [@geer2021learning]
-[@evensen2003ensemble] [@forget2015ecco] [@martin2015status] [@moore2011roms]
+[@evensen2003ensemble] [@forget2015ecco] [@martin2015status] [@moore2011roms] [@moore2011romsII]
 [@edwards2015regional] [@oke2008representation] [@stammer2016ocean] [@zuo2019ecmwf]
 [@lellouche2021copernicus] [@lellouche2018recent] [@kim2024ocean]
 [@cummings2013variational] [@rtofs2026ncep] [@soca2026jcsda] [@liu2023impact]
 [@neveu2016historical] [@moore2018reduced] [@rudnick2016ocean] [@todd2011poleward]
-[@zaba2018annual] [@levin2020observation] [@wcofs2026coops] [@dong2017impact].
+[@zaba2018annual] [@levin2020observation] [@wcofs2026coops] [@dong2017impact]
+[@bi2023accurate] [@lam2023learning] [@lang2024aifs] [@ecmwf2025aifs]
+[@price2024probabilistic] [@bonavita2020machine] [@hatfield2021building]
+[@allen2025endtoend] [@alexe2024graphdop] [@manshausen2025generative] [@xu2025fuxida]
+[@cheng2023machine] [@dheeshjith2025samudra] [@yuan2026samudra2] [@wang2024xihe]
+[@cui2025forecasting] [@elaouni2025glonet] [@chattopadhyay2024oceannet]
+[@gregory2023deep] [@gloege2022improved] [@zanna2020data] [@fablet2021learning]
+[@beauchamp2023fourdvarnet] [@oceandatachallenges2026] [@martin2023synthesizing]
+[@sugiura2020machine] [@fennel2019advancing] [@mattern2017data] [@verdy2017data]
+[@carroll2020ecco] [@ford2021assimilating] [@bittig2018canyonb].
