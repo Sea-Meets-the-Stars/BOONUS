@@ -845,12 +845,10 @@ increments run from 0.62 to 0.80 by season and hemisphere, and the seasonal clim
 of predicted and true increments correlate at 0.96-0.98, consistently better than a
 climatological-increment baseline. The study is offline; online bias correction is proposed,
 not shown. Tag: *realistic hindcast* (offline feasibility); verification: against the DA
-increments, a DA product, not independent observations. On the BGC side, Gloege et al.
-(2022) [@gloege2022improved] learn the misfit between SOCAT pCO2 observations and nine
-global biogeochemical models with gradient-boosted trees and add it back (Section 8); the
-authors frame the result as "a hybrid observation-based data product", not as DA. Tag:
-*realistic hindcast* (released product); verification: seven withheld years plus independent
-GLODAPv2, BATS and HOT data. The adjoint-surrogate idea of Hatfield et al. (Section 6) has
+increments, a DA product, not independent observations. The BGC counterpart, learning the
+model-minus-observation pCO2 misfit (Gloege et al. 2022 [@gloege2022improved]), is treated
+in Section 8; its authors frame it as an observation-based product, not as DA. The
+adjoint-surrogate idea of Hatfield et al. (Section 6) has
 no ocean counterpart in this list, and no published ocean system in this list learns
 $\mathbf{B}$ or the observation operator; Cheng et al. (2023) [@cheng2023machine] list
 learned error covariances and model-error correction as active strands of the general
