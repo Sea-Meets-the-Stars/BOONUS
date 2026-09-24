@@ -486,5 +486,9 @@ Counts: 64 entries; 6 `grey`, 4 `preprint`, 54 `verified`; 12 optional; 24 AI pa
 ## Last `check_sources.py` run
 
 <!-- check_sources:begin -->
-Not yet run on this version of `sources.bib`; run `conda run -n ocean14 python reports/data_assimilation/scripts/check_sources.py --record`.
+Output of `scripts/check_sources.py --record`:
+
+- 58 DOIs and 10 URLs checked on 2026-09-24; 0 failed; 0 blocked (403, not counted as broken).
+- Europe PMC: 5 indexed open access, 5 indexed not open access (geer2021learning, edwards2015regional, stammer2016ocean, rudnick2016ocean, lam2023learning), 48 not indexed (most earth-science journals are not).
+- All DOIs and URLs resolve.
 <!-- check_sources:end -->

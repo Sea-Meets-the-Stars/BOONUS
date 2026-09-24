@@ -637,7 +637,203 @@ DA62. **The Mermaid figures could not be rendered here.** No `mmdc`, `npx`, `nod
       renderers). Recommendation: preview once before v0.1 goes to Matt.
 >A. I will do
 
+### Verification and v0.1 (prompt #8, 2026-09-24)
+
+DA60-DA62 were answered: DA60 was acted on (option b: `sources.bib` carries months, the
+nine year-only milestones are on the month basis, Figure 2 regenerated), DA61 and DA62
+needed no action. The verification pass is done and the report is stamped v0.1 (every
+check and its result is in the log). Six items need you; none blocks prompt #9.
+
+DA63. **Length: 24.95 pp of prose plus 2.62 pp of tables** (500 words per page;
+      `check_citations.py`) against the 10-15 page guide. It was 29.22 + 2.30 at prompt 7
+      and 26.29 after the first, interrupted run of this prompt. What went: per-system
+      configuration detail that Table 1 already holds (Sections 3-5), the ROMS Part I/Neveu
+      configuration lists in 5.1, the super-observation and instrument-error numbers now
+      stated once in Section 9, the hurricane-model layer counts and pressure values, the
+      Section 6 exemplar dates and grid details that the tags repeat, three caption
+      sentences, and the Section 9 impact list's duplicate of 5.1's redundancy statement.
+      Nothing quantified that carries an argument, no tag, note, flag or the circularity
+      caveat was cut; the thirteen questions and the executive summary (578 words, 1.16 pp;
+      DA58) stand. Cuts that would lose no argument, with savings: (a) Section 4 to two
+      sentences per system, the table carrying the rest, 1.0 pp; (b) Section 7 without
+      OceanNet and the Zanna boundary case, both present only "so the list is complete",
+      0.4 pp; (c) Section 10 without the AI-vocabulary and estimation-problem groups, which
+      Sections 5-7 and 9 define, 0.5 pp; (d) Section 2 without the four analogy paragraphs,
+      0.5 pp; (e) Section 3's OI/EnOI and 3D-Var/FGAT paragraphs merged, 0.3 pp; (f)
+      Section 9's Monterey Bay numbers to one sentence and the depth-average-velocity source
+      list to one clause, 0.4 pp; (g) Section 6 without GenCast and its closing paragraph,
+      0.3 pp; (h) 5.1 without the Part I formulation sentence, 0.3 pp. Together about 3.7
+      pp, to about 21 pp. Reaching 15 pp would need, in addition, Section 2 at half a page
+      (no EnKF sampling-error formula, no incremental form), Section 5 as the table plus one
+      paragraph per system, Section 9 at 1.5 pp and the tags in Section 7 reduced to
+      maturity plus one clause, about 4.5 pp more, which would remove the numbers that make
+      Sections 5 and 9 specific. Recommendation: keep v0.1 at 25 pp as the outline's DA38
+      allows ("clarity over brevity"); after your read, take (a), (b) and (c) at v0.2 (1.9
+      pp) and any of (d)-(h) you mark.
+
+DA64. **Cross-references to this file inside the report.** The text still points at
+      decisions here: "(Q&A DA30)", DA34, DA35, DA36c, DA43, DA47, DA49, DA50, plus the
+      path `claude_prompts/data_assimilation_prompts.md` in Section 1 and
+      `context/initial_context_for_claude.md` in 5.1. They were kept for your v0.1 review
+      (they say which choice each sentence rests on); they mean nothing to Matt.
+      Recommendation: strip them at v0.2 in prompt #9, with the `[JXP: ...]` comments,
+      keeping the sentence each qualifies; say if you want them out now.
+
+DA65. **Pangu-Weather's date on Figure 2.** It plots at July 2023 (Crossref) because
+      `bi2023accurate` carries no arXiv ID, so it follows GraphCast (December 2022 preprint)
+      although its own preprint (arXiv:2211.02556, November 2022; from memory, not verified
+      here) came first. Adding `arxiv='2211.02556'` to the entry in `build_bib.py`,
+      rerunning it, and switching the milestone to the `arxiv` basis moves it ahead of
+      GraphCast; the caption states the current basis. Recommendation: do it in prompt #9
+      if the order matters to you; otherwise leave.
+
+DA66. **What could not be verified.** (i) The two Mermaid figures (DA62; the blocks are
+      byte-identical to prompt 7, so your preview stands). (ii) The SOCA solver list and
+      GFSv17/GEFSv13 plan, still "[not re-verified]" (Section 4.2, Table 1). (iii) The three
+      "[not read]" items rest on what the anchors say: Evensen (2003) via Carrassi, Cummings
+      and Smedstad (2013) via Kim and Martin, Mattern et al. (2017) via Fennel. (iv) 23
+      "[abstract only]" flags on eleven keys (Stammer 2016, Edwards 2015, Todd 2011, Zaba
+      2018, Levin 2020, Liu 2023, Halliwell 2017, Oke and Sakov 2008, Moore 2018, Verdy and
+      Mazloff 2017, Carroll 2020); DA59 said no downloads for v0.1. (v) The `dataviz`
+      palette validator (needs `node`) still could not run on Figure 2. Recommendation: no
+      action for v0.1; the flags are the apparatus, and prompt #10's digest can carry them.
+
+DA67. **Tags outside Sections 6-8.** The executive summary names Pangu-Weather, GraphCast,
+      GenCast, AIFS, XiHe, WenHai, GLONET and CANYON-B and states their maturity in words
+      (scored against the reanalysis they were trained on; operational since 25 February
+      2025; pre-operational; Class 4 against withheld observations); Sections 4, 10 and 11
+      name XiHe, WenHai, GLONET, 4DVarNet and Hatfield et al. as pointers only. The
+      bracketed tags sit at each approach's principal mention in Sections 6-8, which the
+      script checks (24 of 24). Recommendation: accept as satisfying "every AI approach";
+      if you want the bracketed tags repeated in the summary, that is one clause per name.
+
+DA68. **Flags the script does not check.** `check_citations.py` verifies the
+      `(preprint)`/`(grey)` flags at every mention, the maturity tags in 6-8 and the Table
+      1 sources; the `[abstract only]` and `[not read]` flags were checked by reading
+      every mention of the fourteen keys concerned, which found four gaps, now closed:
+      the Figure 3 caption (Oke and Sakov; Moore 2018 with Levin 2020), the JEDI/SOCA row
+      (Liu 2023) and the GOFS row (Cummings and Smedstad). Recommendation: none; if you
+      would rather the script enforce these two flags as well, it is a ten-line addition
+      for prompt #9.
+
 ## Logs
+
+### 2026-09-24 (Execute prompt #8: verification pass, stamp v0.1)
+
+Read `CLAUDE.md`, this prompt doc (Goals, Context, Decisions, prompt #8, Q&A DA52-DA62 and
+the prompt #7, #6 and #5 log entries), Sections 5 and 6 of the brief, `da_ai_review.md` in
+full, `outline.md`, `sources.md` (conventions and the AI-notes entries) and the six scripts
+in `scripts/`. Model: Claude Fable 5.1 as a subagent of the main session, across two runs;
+the first was interrupted (laptop sleep) after doing part of the work, the second (this
+entry) established the state from `git log`, `git show c29e4b7:<path>` and `git diff`,
+and finished. DA60 was answered "(b)" and acted on; DA61 and DA62 needed no action.
+
+**State found.** JXP's commit c29e4b7 ("close", 07:22) holds the prompt-7 report (29.22
+pp of prose + 2.30 pp of tables) together with the first run's `build_bib.py` (`month`
+field from Crossref `published-online`, with `issued`/`published-print` as fallbacks when
+the year agrees, and the arXiv v1 month for preprints; `--no-cache` rerun), its extended
+`check_citations.py` (preprint/grey flag check at every mention, maturity/verification tag
+check for AI papers in Sections 6-8, Table 1 source check; any failure exits 1) and the
+regenerated `sources.bib` (59 `month` fields). The working tree held the first run's
+uncommitted work: header stamped v0.1 / 2026-09-24, citation-convention paragraph revised,
+the report trimmed to 26.29 pp, `make_timeline.py` with the nine year-only milestones on
+the `month` basis (Bonavita 2020-11, Hatfield 2021-09, Pangu-Weather 2023-07, GenCast
+2024-12, Aardvark 2025-03, CANYON-B 2018-09, LDEO-HPD 2022-01, Martin 2023-05, WenHai
+2025-03; the year-only legend entry now conditional), `figs/ai_da_timeline.png`
+regenerated, and `sources.md` carrying a `check_sources.py --record` result of today. No
+v0.1 change-log row, Q&A or log entry existed; nothing of the first run was redone or
+reverted.
+
+**Checks, each with its result.**
+- `check_sources.py --record` (ocean14, exit 0): 58 DOIs and 10 URLs checked 2026-09-24, 0
+  failed, 0 blocked; Europe PMC 5 open access, 5 indexed closed, 48 not indexed; summary
+  written to `sources.md`. `sources.bib` was not touched afterwards.
+- `check_citations.py --strict` (exit 0, final): 64 keys, 64 cited, 0 missing, 0 uncited;
+  preprint/grey mentions 19, unflagged 0; AI papers cited in Sections 6-8: 24 of 24 tagged
+  with maturity and verification; Table 1 rows 18, all sourced. Flag counts: [abstract only]
+  x23 (was 21), [not read x7 (was 6), [not re-verified] x2, (preprint) x9, (grey) x12.
+- DA60 (Figure 2): `make_timeline.py` exits 0 with 24 milestones, bases arXiv 14, month 10,
+  year 0; the PNG was viewed (no overlapping labels or leaders; the regenerated file is
+  byte-identical to the first run's); the caption states the three bases and counts.
+- Spot-check of the script's checks by reading: the flag check looks for `(preprint)` or
+  `(grey)` within 40 characters after each citation bracket outside the References list,
+  which every mention satisfies (the References list is excluded on purpose); the tag check
+  requires "maturity:" and "verified against:" between a key and the next AI key or the
+  paragraph end, outside captions, and all 24 tags were confirmed by eye to sit at the end
+  of the sentence describing that paper (the two reviews, `cheng2023machine` and
+  `geer2021learning`, are not in the AI list, so a neighbouring tag cannot satisfy them by
+  accident); the Table 1 check counts 18 data rows. The `[abstract only]` and `[not read]`
+  flags, which the script does not check, were checked by listing every mention of the
+  fourteen keys concerned: four gaps found and closed (Figure 3 caption: Oke and Sakov,
+  Moore 2018 with Levin 2020; JEDI/SOCA row: Liu 2023; GOFS row: Cummings and Smedstad).
+- AI approaches outside Sections 6-8: the executive summary states each named system's
+  maturity in words; Sections 4, 10 and 11 name systems as pointers; tags stay at the
+  principal mention (Q&A DA67).
+- Style: grep for hype vocabulary (revolution, unprecedented, breakthrough, transform,
+  remarkable, powerful, state-of-the-art, paradigm, ...) found two hits, both inside
+  quotations from sources (Levin et al.'s "remarkably robust"; GraphDOP's "not yet close to
+  matching state-of-the-art"); no "ROMs", "UAV", "drone" or "heatwave"; "marine heat wave"
+  does not occur; units are m, km, m/s, C and psu as in the sources. Section 5 of the brief:
+  5.1 gives the two sources plus JXP's confirmation for CUGN in ROMS `[demonstrated]`; the
+  report says nothing about a BOONUS AI component (three BOONUS mentions, all "not a BOONUS
+  document" or the brief's ECCO boundary conditions). Mermaid blocks are byte-identical to
+  prompt 7 (DA62 stands).
+- Scaffolding: no placeholder, TODO or "prompt N" text remains outside the change-log
+  table; the Q&A pointers in the text are kept for JXP's review and listed in DA64.
+
+**Trims** (prose pages at 500 words/page, prompt-7 state -> v0.1): front matter 0.46 ->
+0.44; 0: 1.18 -> 1.16; 1: 0.56 -> 0.46; 2: 2.08 -> 1.90; 3: 1.64 -> 1.46; 4: 2.58 -> 2.23;
+5: 5.10 -> 3.93; 6: 3.31 -> 2.82; 7: 3.86 -> 3.51; 8: 1.77 -> 1.64; 9: 3.63 -> 3.02; 10:
+1.67 -> 1.05; 11: 1.31 -> 1.27; total 29.22 -> 24.95 pp of prose (14,610 -> 12,476 words)
+plus 2.62 pp of tables (the v0.1 change-log row added 156 table words). The first run took
+29.22 -> 26.29 (glossary shortened from 835 to 525 words; Sections 0-9 lightly, Section 5
+most: 5.10 -> 4.35); the second 26.29 -> 24.95: Section 3 lost the second dual-scheme quotation and the TOPAZ
+configuration (Table 1 has it); Section 4 the ORAS5 deficiencies sentence, GLORYS12's
+resolution-at-latitude, EKE-discontinuity and cycle details, the OCEAN5-RT dates and one
+GODAE quotation; Section 5 the Part I covariance-model detail, Part II's domain and
+observation-product lists, the 2011 instrument errors (now only in Section 9), Neveu's
+forcing products and loop counts, the CASE metric list, the doppio "performance indicator"
+clause, Dong's layer counts, pressures and glider errors (kept in Section 9) and the HAFS
+configuration names; Section 6 GraphCast's timing, GenCast's grid and runtime, AIFS
+training years, Bonavita's T21 and dates, Hatfield's training years and resolution,
+FuXi-DA's channel list, and one caption sentence; Section 7 4DVarNet-SSH's training and
+test dates, the Sugiura depth criterion, one caption sentence and the 7.4 closing
+sentence's duplicate of 5.1; Section 8 two clauses; Section 9 the Shulman "treated as
+vertical profiles" quotation (paraphrased), the Argo count duplicate of 5.5, the salinity
+and 48 h forecast numbers of the impact paragraph, the Oke method clause, the array-modes
+quotation duplicate of 5.1 and the advected-increment clause. Kept in full: every maturity
+tag and verification note, every evidence flag, the circularity caveat and its quotations,
+every number that a conclusion rests on, the thirteen questions, the executive summary
+(DA58) and every key (64 cited). Reaching 15 pp would remove substance; the specific
+further cuts and their savings are in DA63.
+
+**Other edits.** v0.1 change-log row added (verification pass, DA60, trims). The three
+flag additions above. `sources.md`: check record rewritten by the script (same result).
+
+**Choices made.** (i) Trimming stopped at 24.95 pp rather than cutting the per-system
+numbers of Sections 5 and 9 or the analogies of Section 2, per the outline's DA38 note and
+JXP's DA58 answers; the remaining options are itemized with savings in DA63. (ii) The Q&A
+pointers and file paths in the text were kept for the v0.1 review and proposed for removal
+at v0.2 (DA64). (iii) The Section 3 citation of Oke and Sakov (2008) inside Moore et al.'s
+statement stays unflagged, since the claim is Moore et al.'s (full text). (iv) Pangu-Weather
+stays at July 2023 (no arXiv ID in the record); DA65 offers the one-line fix.
+
+**What I learned.** A commit made between two runs can mix the previous prompt's state
+with the interrupted run's work; `git show <commit>:<path>` run through
+`check_citations.py` on a copy is the fastest way to recover a "before" length table. The
+`check_citations.py` flag check covers only `(preprint)`/`(grey)`; the `[abstract only]`
+and `[not read]` flags are visible only by listing mentions per key, and captions and
+table rows are where they go missing. `conda run` needs scripts on disk; Python one-liners
+with `-c` work for imports of the report's own scripts.
+
+Files modified (second run): `reports/data_assimilation/da_ai_review.md`, `sources.md`
+(check record), `figs/ai_da_timeline.png` (regenerated, identical), this prompt doc (Q&A
+DA63-DA68, this entry). Modified by the first run and left as found: `scripts/make_timeline.py`
+(uncommitted), and, already committed in c29e4b7, `scripts/build_bib.py`,
+`scripts/check_citations.py`, `sources.bib`. Not touched: the prompt text above `## Q&A`,
+`outline.md`, `reading_list.md`, `check_sources.py`, `fetch_pdfs.py`, the brief,
+`context/da/README.md`, `.claude/settings.json`. No git commands that change repository
+state were run (`git status`, `git log`, `git diff`, `git show` only). Nothing was shared.
 
 ### 2026-09-24 (Execute prompt #7: figures)
 
