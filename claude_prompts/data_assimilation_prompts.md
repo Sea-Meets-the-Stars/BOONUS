@@ -501,7 +501,7 @@ DA52. **`moore2011.pdf` is Part II, not Part I.** DA48 asked for Moore et al. (2
       entries as they are; (b) also download Part I as `moore2011_partI.pdf` so the flag can go;
       (c) drop Part I and cite Part II alone. Recommendation: (a); (b) only if you want the
       "[not read]" count at zero before v0.1.
->A.
+>A. My mistake; I have moved Part II to `moore2011b.pdf`
 
 DA53. **No source for the near-real-time UCSC assimilation of CUGN.** The brief (Section 5)
       records ROMS 4D-Var assimilation of CUGN as `[demonstrated]`, but neither Moore et al.
@@ -517,7 +517,7 @@ DA53. **No source for the near-real-time UCSC assimilation of CUGN.** The brief 
       it through `build_bib.py` in prompt #6; if not, the brief's `[demonstrated]` tag should
       cite Todd et al. (2011) and Zaba et al. (2018) (the Scripps state estimate) rather than the
       UCSC ROMS system when the brief goes to v0.2 (prompt #10).
->A.
+>A.  I am confident that Chris Edwards' ROM assimilates glider data.  And they are now working on pH as well.
 
 DA54. **The ocean-side gaps in Section 7 are stated as gaps.** The approved list has no ocean
       counterpart of the NWP end-to-end systems (FuXi-DA, Aardvark, GraphDOP), no ML anomaly
@@ -528,18 +528,242 @@ DA54. **The ocean-side gaps in Section 7 are stated as gaps.** The approved list
       Option: name candidates for prompt #6 or #8 to verify and add (I have none I would
       vouch for without reading them). Recommendation: leave the gaps stated; revisit after
       Matt's comments.
->A.
+>A.  Le's follow your recommendation
 
-DA55. **Length.** Sections 6-8 run about 2.6, 3.6 and 1.4 pages of prose (see the log)
-      against the outline's 2, 2.5 and 1, a 1.35x overrun, mostly from the per-exemplar
-      maturity tags and verification notes that the Decisions require. The whole draft is now
-      about 20 pages of prose plus 1.5 of tables against the 15-page guide. Per DA51 (a),
-      trimming is left to prompt #8; if you would rather Sections 6-8 were cut now, say which
-      exemplars can go (candidates: Samudra 2, GraphDOP, Hatfield, Martin 2023, all optional in
-      `sources.md`).
->A.
+DA55. **Length.** Sections 6-8 as kept run 1,340, 1,731 and 705 words of prose (2.7, 3.5
+      and 1.4 pages at 500 words per page, `check_citations.py`) against the outline's 2, 2.5
+      and 1, a 1.35x overrun, mostly from the per-exemplar maturity tags, verification notes
+      and the one or two numbers each that the Decisions require. The whole draft is now
+      19.8 pages of prose plus 1.8 of tables against the 15-page guide, with Sections 0, 9
+      and 10 still to come. (A longer version of Sections 6-8, 4,922 words, is in commit
+      abfc04e; JXP chose the shorter one, see the log.) Per DA51 (a), trimming is left to
+      prompt #8; if you would rather Sections 6-8 were cut now, say which exemplars can go
+      (candidates: Samudra 2, GraphDOP, Hatfield 2021, Martin 2023, Zanna and Bolton, all
+      marked optional in `sources.md`; each costs about 100-150 words).
+>A.  If you run longer than anticipated, that is fine
+
+### Draft completed (prompt #6, 2026-09-23)
+
+DA52-DA55 were acted on as answered (details in the log). The draft is complete except for
+the figures (prompt #7). Four items need you; none blocks prompt #7.
+
+DA56. **DA53 has sources now; confirm the two additions.** Searching for a citable record of
+      glider assimilation in Chris Edwards' system found (a) Mattern, Takeshita, Rocha and
+      Edwards (2026), *Biogeosciences* 23, 2621-2639, doi:10.5194/bg-23-2621-2026 (DOI 302,
+      open access, PDF fetched as `context/da/mattern2026.pdf` and read in full): the UCSC
+      1/10 degree ROMS-NEMUCSC 4D-Var over 2019 assimilates CUGN and IOOS glider T/S in its
+      reference configuration and then glider pH (MBARI Line 67 Spray) plus pH and
+      alkalinity estimated from CUGN T, S and O2; this is also the "pH work" you mention.
+      (b) The UCSC near-real-time page `https://oceanmodeling.ucsc.edu/ccsnrt/` (HTTP 200;
+      its TLS chain is incomplete for some clients), which lists SCCOOS/CeNCOOS glider lines
+      among the inputs of the daily 4-day-cycle analysis but carries a 2011 footer and no
+      system paper; added as `grey` (`ucsc2026ccsnrt`). Both are cited in 5.1, 8 (Mattern),
+      9 and Table 1, and 5.1 also records your confirmation as "pers. comm., 2026". The list
+      is now 64 entries (54 verified, 4 preprint, 6 grey; 33 PDFs in hand). Recommendation:
+      keep both, and when the brief goes to v0.2 (prompt #10) cite Mattern et al. (2026) for
+      the `[demonstrated]` CUGN-in-ROMS tag alongside Todd et al. (2011) and Zaba et al.
+      (2018); strike the grey page if you would rather not cite a web page with a 2011
+      footer.
+>A. Use your recommendation
+
+DA57. **Glider operating numbers in Section 9.** The section quotes Rudnick (2016) for a
+      1000 m Spray dive (about 6 h, about 6 km, 0.25 m/s), which is what the source says;
+      the brief's canonical CUGN values (Section 1) are 500 m, about 3 h, about 3 km.
+      Recommendation: keep Rudnick's numbers, since Section 9 describes gliders in general
+      and cites its source; say so if you want the CUGN values substituted with a pointer
+      to the brief.
+
+DA58. **Length.** As drafted: executive summary 588 words (1.2 pp against the one-page
+      target), Section 9 1,608 words (3.2 pp against 1.25), glossary 835 (1.7 against 0.5,
+      49 terms because the report uses more undefined terms than the placeholder listed),
+      questions 657 (1.3 against 0.5, thirteen questions), whole report 27.8 pp of prose plus
+      2.1 pp of tables against the 15-page guide (`check_citations.py`). Per DA51/DA55,
+      trimming is left to prompt #8; the executive summary is the one section I would cut
+      further now if you want it at 500 words. Recommendation: leave it; tell me if the
+      thirteen questions should be cut to the outline's six before Matt sees them.
+
+DA59. **Section 9 rests on seven abstracts.** Oke and Sakov (2008), Halliwell et al. (2017),
+      Levin et al. (2020), Todd et al. (2011), Zaba et al. (2018), Liu et al. (2023) and
+      Moore et al. (2018) are cited "[abstract only]" (the report-wide count rose from 14 to
+      21). The full texts of Shulman, Dong, Mattern and the two Moore 2011 papers carry the
+      quantified claims, so nothing rests on an abstract alone that a number depends on,
+      except Halliwell's OSSE ranking (altimetry, then Argo, then SST; gliders "modest").
+      Recommendation: no downloads needed for v0.1; if you want Section 9 on full text for
+      Matt, `halliwell2017north` (T&F, closed) and `oke2008representation` (AMS) are the two
+      to fetch as `halliwell2017.pdf` and `oke2008.pdf`.
 
 ## Logs
+
+### 2026-09-23 (Execute prompt #6: act on DA52-DA55, finish the draft)
+
+Read `CLAUDE.md`, this prompt doc (Decisions, all Q&A through DA55, the two most recent log
+entries), `da_ai_review.md` in full, `outline.md` (Sections 0, 9-11 and the drafting
+guidance), `sources.md`, `sources.bib` (keys), `context/da/README.md`,
+`context/sources/rudnick2016.md`, and Sections 5-6 of the brief. Model: Claude Fable 5.1,
+single session, no subagents. Sources read via `pdftotext`: Moore et al. (2011) Part I in
+full (new), Shulman et al. (2009) in full, Mattern et al. (2026) in full (new), the relevant
+sections of Moore et al. (2011) Part II, Neveu et al. (2016), Dong et al. (2017), Moore et
+al. (2019), Martin et al. (2015), Ford (2021) and Fennel et al. (2019), and the OpenAlex,
+Semantic Scholar and Crossref abstracts of Halliwell 2017, Levin 2020, Todd 2011, Zaba 2018,
+Oke 2008, Liu 2023 and Moore 2018. Every quotation and number written today was grep-checked
+against a reading-order `pdftotext` extraction (the `-layout` extraction interleaves the two
+columns and hides phrases that span a line break; the check script in the session used both).
+
+**Step A.** DA52: `context/da/moore2011a.pdf` is Part I (page-1 title "Part I - System
+overview and formulation", *Prog. Oceanogr.* 91, 34-49, 16 pp.) and `moore2011b.pdf` Part II
+(91, 50-73), both `file` = PDF 1.7. `build_bib.py`: `moore2011roms` now has
+`pdf='moore2011a.pdf'` and a "supports" note written from Part I; `moore2011romsII` points
+at `moore2011b.pdf`. The two "[not read; via Part II]" flags on `moore2011roms` (Sections 3
+and 5.1) are gone: Section 3 now states from Part I why I4D-Var is strong-constraint in
+practice and why the dual schemes admit the weak constraint (observation-space dimension
+independent of the constraint), the Lanczos machinery and the 4D-PSAS/R4D-Var outer-loop
+difference; Section 5.1 opens with Part I's system description (TLROMS/ADROMS coverage and
+exclusions, control vector, diffusion-operator covariances, balance operator, no time
+correlations, the Lanczos-based diagnostics, the unfinished items). DA53: JXP's answer led to
+a search (WebSearch, the UCSC site, Crossref, Semantic Scholar, OpenAlex). Found and verified:
+Mattern, Takeshita, Rocha and Edwards (2026), *Biogeosciences* 23, 2621-2639,
+doi:10.5194/bg-23-2621-2026 (DOI HTTP 302; Copernicus open access; fetched by
+`fetch_pdfs.py`, title match 1.00; read in full), which documents CUGN and IOOS glider T/S in
+the reference assimilation of the UCSC 1/10 degree ROMS 4D-Var (91 four-day cycles, 2019)
+and the glider-pH assimilation JXP referred to; and the UCSC near-real-time page
+(`https://oceanmodeling.ucsc.edu/ccsnrt/`, HTTP 200 via `curl -k`; WebFetch fails on its
+certificate chain), which names SCCOOS/CeNCOOS and NANOOS glider lines among the inputs,
+added as `grey`. Both were added through `build_bib.py` (64 entries; regenerated
+`sources.md`/`sources.bib`; `check_sources.py --record`: 58 DOIs and 10 URLs, 0 failed).
+Also checked and not used: the NOAA IR document noaa/61871 (Amaya et al. 2023, a reanalysis
+evaluation, silent on the UCSC inputs) and the Springer chapter Moore et al. (2013,
+doi:10.1007/978-3-642-35088-7_14, no abstract served). Section 5.1's "no source in this
+list" paragraph was replaced by the two sources plus "J. X. Prochaska (pers. comm., 2026)";
+the Table 1 California Current row and Section 8 (the one glider-BGC assimilation in the
+list, with its numbers and limits) were revised to match; the Section 11 question now asks
+for a citable near-real-time system paper, the treatment of glider profiles and velocity, and
+the status of the pH work. DA54: gaps left stated. DA55: no trimming; nothing padded.
+
+**Step B.** Section 9 (1,608 words, 3.2 pp): Figure 3 placeholder; what a glider delivers
+(Rudnick); profile vs binned (Shulman's vertical-profile treatment and 26-degree paths, the
+6 h grid-cell super-observations of Moore Part II, Mattern's one-per-cell rule and the
+super-observation vs original-observation fit, Dong's 0000 UTC thinning); depth-average
+velocity (every source negative or silent; no documented system assimilates it);
+representativeness error (Oke and Sakov's definition and estimate, the 2011 scatter-based
+and 2019 tuned R values, 0.1 C/0.01 vs 0.28 C/0.15, Dong's 0.01 C/0.02, Rudnick's 30 km
+sampling limit, Moore 2019's judgement); impacts, OSEs and OSSEs (Shulman's mooring numbers
+and the 1-1.5 day memory; Dong's TCHP 59/81/92/81 against 86 kJ cm-2 and the intensity
+null; Liu; Halliwell's OSSE ranking; Moore Part II redundancy and array modes; Moore 2018
+RAMs; Mattern's cross-validation; CASE; doppio; Ford); a closing paragraph of what the record
+establishes, without the "AI makes gliders more valuable" thesis. `shulman2009impact` and
+`halliwell2017north` are now cited. Section 10 (835 words, 1.7 pp): 49 terms in five groups
+(estimation problem; algorithms; observations and experiments; evaluation; AI vocabulary),
+the placeholder's list plus every term the report uses without defining it (primal/dual,
+super-observation, array modes, balance operator, Lanczos vectors, Class 4, Desroziers,
+fraternal twin, barrier layer/TCHP, threaded profile, the maturity tags, the circularity
+caveat). Section 11 (657 words, 1.3 pp): thirteen numbered questions, each naming its
+section, built from the placeholder, the five candidate bullets (rewritten; DA53's now
+reflects the new sources) and the open points flagged in Sections 3, 5.2, 7.1, 7.2, 7.4, 8
+and 9; the candidate scaffolding is removed. Section 0 (588 words, 1.2 pp; written
+last): classical DA, the global and coastal systems, the NWP sequence, the four ocean
+categories with maturity, the circularity caveat, BGC, gliders; quantified, no BOONUS pitch.
+All "[Placeholder: prompt 5/6 ...]" text removed; Figure 1-3 placeholders kept for prompt 7.
+Change-log row added.
+
+**Citation check** (`scripts/check_citations.py`, ocean14, exit 0): 64 keys in
+`sources.bib`, 64 cited, 0 missing, 0 uncited (every key is cited). Flags: [abstract only]
+x21, [not read x6, [not re-verified] x2, (preprint) x5, (grey) x11. Length by section: 0:
+1.2 pp, 3: 1.6, 5: 5.1 (+622 table words), 8: 1.8, 9: 3.2, 10: 1.7, 11: 1.3; total 27.8 pp
+of prose plus 2.1 pp of tables (DA58).
+
+**Choices made.** (i) Mattern et al. (2026) placed in bibliography group E (glider-specific
+DA), serving 5.1, 8 and 9; the UCSC page in group D. (ii) The grey UCSC page is cited with
+its 2011 footer stated in the text, and the report says the page "has no system paper"
+rather than inferring one. (iii) JXP's confirmation is recorded as "(pers. comm., 2026)"
+next to the two sources, not in place of them. (iv) Depth-average velocity is reported as
+"documented by no system in this list" rather than "not assimilated anywhere", since the
+CASE abstracts are silent (Section 11, question 1). (v) Rudnick's 1000 m dive numbers were
+kept over the brief's canonical CUGN values (DA57). (vi) The executive summary was trimmed
+three times (685 to 588 words) and left slightly over the 550-word target rather than lose
+the numbers (DA58). (vii) The glossary is grouped, not alphabetical, so that related terms
+sit together; each entry is one or two lines.
+
+**What I learned.** Copernicus journals serve their PDFs to `curl` and the Crossref record
+carries the abstract, so a Biogeosciences paper can be verified, fetched and read in one
+pass; `oceanmodeling.ucsc.edu` serves an incomplete TLS chain, so WebFetch fails and `curl
+-k` is needed. Two-column Elsevier PDFs need a reading-order `pdftotext` (no `-layout`) for
+phrase checks; `-layout` is better for tables. Moore et al. (2011) Part I is where the
+strong/weak and primal/dual reasoning lives; Part II has the configuration numbers. The
+Section 9 sources agree that no published system assimilates glider depth-average velocity,
+which is a stronger statement than the outline anticipated and is now a question for Matt.
+
+Files created: `context/da/mattern2026.pdf` (gitignored). Files modified:
+`reports/data_assimilation/da_ai_review.md`, `scripts/build_bib.py` (two entries added, two
+edited, docstring history), `scripts/fetch_pdfs.py` (one entry), `sources.md` and
+`sources.bib` (regenerated), `context/da/README.md` (count line, Part I/II rows, Mattern
+table, "not in hand" list), this prompt doc (Q&A DA56-DA59, this entry). Not touched: the
+prompt text above `## Q&A`, `outline.md`, `reading_list.md`, `check_sources.py`,
+`check_citations.py`, the brief, `.claude/settings.json`. No git commands that change
+repository state were run (`git status` only, at the start).
+
+
+
+### 2026-09-23 (Execute prompt #5: act on DA47-DA51, draft the second third)
+
+Model: Claude Fable 5.1 subagents, orchestrated by the main session (Claude Opus 5.5).
+The work ran in three pieces, which is why this entry is written by the main session.
+
+**Step A (DA47-DA51), by a prompt-5 subagent.** DA47: the Table 1 note says FOAM and TOPAZ
+stand as the European comparators. DA48: `moore2011.pdf`, `neveu2016.pdf` and
+`shulman2009.pdf` checked (`file`, page-1 title) and listed in `context/da/README.md`;
+`moore2011.pdf` turned out to be Part II, so Part II was added to `build_bib.py` as
+`moore2011romsII` (62 entries, 53 verified; `sources.md`/`sources.bib` regenerated;
+`check_sources.py`: 57 DOIs and 9 URLs, 0 failed) and Part I kept as "[not read; via Part
+II]" (DA52). Section 3 (4D-Var), Section 5.1 and the California Current row of Table 1 were
+rewritten from the full text of Part II and Neveu et al. (2016), every number grep-checked;
+two errors fixed on the way (WCRA31 forcing is ERA-40 2.5 deg / ERA-Interim 0.7 deg / CCMP
+25 km, not "25-200 km"; WC10 degrees of freedom are 1-2%, not "as little as 2%"). The earlier
+statement that the Neveu reanalysis assimilated gliders was wrong (EN3 profiles; gliders not
+named; no velocity data) and is corrected, which leaves the brief's `[demonstrated]` UCSC
+CUGN assimilation without a source in the list (DA53). Shulman et al. (2009), for Section 9:
+NCOM/NCODA in Monterey Bay during AOSN-II 2003, each glider descent/ascent assimilated as a
+vertical profile, slanted ("threaded") profiles named as future work. DA49, DA50 and DA53
+became candidate bullets under the Section 11 placeholder. DA51 (a): no trimming.
+
+**Step B (Sections 6-8).** The prompt-5 subagent drafted Sections 6-8 (4,922 words of
+prose) and wrote Q&A DA52-DA55. Its hand-back reached the main session before the drafting
+was visible in the file, so the main session also had three Fable subagents draft Sections
+6, 7 and 8 in parallel into scratch files (every number grep-checked against `pdftotext`
+output of the PDFs; the circularity caveat stated once, in the Section 7 opening, with the
+explicit "stand on the shoulders of numerical GOFSs" statement attributed to WenHai (Cui et
+al. 2025) only; Section 6's framing sentence edited to refer forward to it) and merged them.
+That merge replaced the subagent's version, which JXP had meanwhile committed (abfc04e).
+Asked which to keep, JXP chose the shorter parallel drafts (3,776 words). The committed
+version stays in git history. Lesson: a subagent's completion notice is not proof it has
+stopped writing; check the file and `git log` before a second pass on the same text.
+
+**As kept.** Section 6 (NWP): framing paragraph plus emulators (Pangu-Weather, GraphCast,
+GenCast, AIFS), learned components inside DA (Bonavita and Laloyaux 2020; Hatfield et al.
+2021), end-to-end (Aardvark; GraphDOP), generative and learned DA (Manshausen et al. 2025;
+FuXi-DA with the DA43 split), Fig. 2 placeholder; only AIFS is tagged operational. Section 7:
+intro with Fig. 1 placeholder and the circularity caveat; 7.1 Samudra, Samudra 2, XiHe (split
+implied, not stated, DA34), WenHai, GLONET (pre-operational), OceanNet; 7.2 Gregory et al.
+2023 offline, the absence of ocean learned B/H or adjoint surrogates, Zanna and Bolton as the
+one-sentence boundary case; 7.3 4DVarNet (Fablet 2021 idealized; Beauchamp 2023 OSSE) and
+Martin et al. 2023 as the OSE verified against withheld CryoSat-2 and drifters; 7.4 Sugiura
+and Hosoda 2020 Argo QC, CANYON-B, the missing glider-QC/anomaly/sampling literature stated as
+a gap, adjoint array modes as the classical counterpart. Section 8: coupling and
+initialization shock, log-space increments, what is assimilated, ROMS-NEMURO/Mattern 2017
+[not read; via Fennel], B-SOSE and ECCO-Darwin [abstract only], the Ford 2021 BGC-Argo OSSE,
+CANYON-B (cat. 4) and LDEO-HPD (cat. 2); the Gloege RMSE figure in `sources.md` was not used
+because it is not in the extracted text (from a figure). Change-log row added.
+
+**Citation check** (`scripts/check_citations.py`, ocean14): 62 keys, 60 cited, 0 missing,
+uncited `shulman2009impact` and `halliwell2017north` (Section 9); flags [abstract only] x14,
+[not read x7, [not re-verified] x2, (preprint) x5, (grey) x9. Length by section: 6: 2.68 pp,
+7: 3.46 pp, 8: 1.41 pp; total 19.8 pp prose plus 1.8 pp tables. No new references beyond
+`moore2011romsII`; references the drafters wanted but did not cite (not in the list): Keisler
+2022, Pathak et al. 2022, Hersbach et al. 2020 (ERA5); Song et al. 2012, Yu et al. 2018,
+Wood et al. 2018, Cossarini et al. 2019, Hemmings et al. 2008, Jones et al. 2016 (BGC).
+
+Files modified: `reports/data_assimilation/da_ai_review.md`, `scripts/build_bib.py`,
+`sources.md`, `sources.bib`, `context/da/README.md`, this prompt doc (Q&A DA52-DA55, this
+entry). No git commands that change state were run.
 
 ### 2026-09-23 (Execute prompt #4: start `da_ai_review.md`, draft the first third)
 

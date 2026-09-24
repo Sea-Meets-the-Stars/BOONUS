@@ -142,6 +142,11 @@ PDFS = [
      'https://repository.library.noaa.gov/view/noaa/59204/noaa_59204_DS1.pdf',
      'Improved Quantification of Ocean Carbon Uptake by Using Machine Learning to Merge Global Models and pCO2 Data',
      'publisher PDF via the NOAA Institutional Repository (AGU host returns 403)'),
+    # ---- added for the glider section (prompt #6, DA53)
+    ('mattern2026.pdf', 'mattern2026improving',
+     'https://bg.copernicus.org/articles/23/2621/2026/bg-23-2621-2026.pdf',
+     'Improving coastal ocean pH estimates through assimilation of glider observations and hybrid statistical methods',
+     'publisher PDF (Copernicus, CC BY 4.0)'),
 ]
 
 

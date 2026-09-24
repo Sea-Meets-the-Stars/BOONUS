@@ -11,9 +11,11 @@ were downloaded by JXP on 2026-09-23 (DA40) and checked the same way by hand. Wi
 them every AI entry of the reading list (8 anchors plus 20 others, 28 files) is in hand.
 Per DA44 the Draft sessions (prompts #4-#6) add the open-access non-AI PDFs they need
 to the `PDFS` list of `fetch_pdfs.py`, fetch them and list them here; the first Draft
-session (prompt #4, 2026-09-23) fetched 10, and JXP downloaded three paywalled Elsevier
-papers for the second (prompt #5, 2026-09-23, DA48; last two tables below), for 42 files
-in all (41 papers; `fablet2021learning` is present twice).
+session (prompt #4, 2026-09-23) fetched 10, JXP downloaded three paywalled Elsevier
+papers for the second (prompt #5, 2026-09-23, DA48) and a fourth, Part I of the ROMS
+4D-Var trilogy, for the third (prompt #6, DA52), which also fetched one open-access
+Copernicus paper (DA53; last two tables below), for 44 files in all (43 papers;
+`fablet2021learning` is present twice).
 
 ## Tracked in git
 
@@ -85,8 +87,7 @@ Fetched by `fetch_pdfs.py` (each checked with `file` and by title match 1.00) fo
 primer, classical-methods and systems sections of the draft. Where a publisher host refused
 `curl`, a repository copy of the publisher PDF found through Unpaywall or OpenAlex was used.
 Still not in hand and written from abstracts or from what the reviews say (the draft flags
-each use): `moore2011roms` (Part I; Elsevier, no abstract in Crossref, OpenAlex or Semantic
-Scholar; its content is cited through Part II, below), `cummings2013variational`, `evensen2003ensemble`
+each use): `cummings2013variational`, `evensen2003ensemble`
 (Springer, no abstract served), `edwards2015regional`, `stammer2016ocean`, `rudnick2016ocean`
 (Annual Reviews, 403; Stammer's Zenodo record 31969 returns 403 on its files),
 `todd2011poleward`, `moore2018reduced` (AGU/Wiley, 403), `zaba2018annual`, `liu2023impact`,
@@ -107,22 +108,33 @@ closed).
 | `fennel2019.pdf` | Fennel, K., et al., "Advancing Marine Biogeochemical and Ecosystem Reanalyses and Forecasts as Tools for Monitoring and Managing Ecosystem Health," *Front. Mar. Sci.* 6, 89 (2019). | doi:10.3389/fmars.2019.00089 | Open access (CC BY 4.0) | Present (publisher PDF, 9 pp.; read for Section 8 in prompt #5) | `fennel2019advancing` |
 | `ford2021.pdf` | Ford, D., "Assimilating synthetic Biogeochemical-Argo and ocean colour observations into a global ocean model to inform observing system design," *Biogeosciences* 18, 509-534 (2021). | doi:10.5194/bg-18-509-2021 | Open access (CC BY 4.0) | Present (publisher PDF, 26 pp.; read for Section 8 in prompt #5; Section 9 in prompt #6) | `ford2021assimilating` |
 
-### Downloaded by JXP on 2026-09-23 (Q&A DA48; read in prompt #5)
+### Downloaded by JXP on 2026-09-23 (Q&A DA48 and DA52; read in prompts #5 and #6)
 
 Each file was checked with `file` (PDF 1.7) and by `pdftotext` of its first page against the
-Crossref title. Two match their `sources.bib` entries. The third does not: `moore2011.pdf` is
-**Part II** of the ROMS 4D-Var trilogy (*Prog. Oceanogr.* 91, 50-73, doi:10.1016/j.pocean.2011.05.003,
-"Performance and application to the California Current System"), not Part I (91, 34-49,
-doi:10.1016/j.pocean.2011.05.004, `moore2011roms`) that DA48 asked for. Part II is the paper
-Section 5.1 needs (the California Current configuration and diagnostics), so it was added to
-`build_bib.py` as `moore2011romsII` and Part I stays as the formulation reference, cited through
-Part II and flagged "[not read]"; JXP to confirm or download Part I (Q&A DA52).
+Crossref title. The file JXP first saved as `moore2011.pdf` (DA48) turned out to be **Part II**
+of the ROMS 4D-Var trilogy rather than Part I (Q&A DA52); Part II was added to `build_bib.py`
+as `moore2011romsII`, and after DA52 JXP renamed it `moore2011b.pdf` and downloaded Part I as
+`moore2011a.pdf` (page-1 title "Part I - System overview and formulation", 16 pp.), which
+prompt #6 read in full, so no "[not read]" flag remains on `moore2011roms`.
 
 | File | Citation | DOI | Access | Status | Key |
 |---|---|---|---|---|---|
-| `moore2011.pdf` | Moore, A. M., Arango, H. G., Broquet, G., Edwards, C., Veneziani, M., Powell, B., Foley, D., Doyle, J. D., Costa, D., and Robinson, P., "The Regional Ocean Modeling System (ROMS) 4-dimensional variational data assimilation systems. Part II - Performance and application to the California Current System," *Prog. Oceanogr.* 91, 50-73 (2011). | doi:10.1016/j.pocean.2011.05.003 | Elsevier, paywalled; JXP's institutional copy | Present (publisher PDF, 24 pp.; read in full for Sections 3, 5.1 and 9) | `moore2011romsII` |
+| `moore2011a.pdf` | Moore, A. M., Arango, H. G., Broquet, G., Powell, B. S., Weaver, A. T., and Zavala-Garay, J., "The Regional Ocean Modeling System (ROMS) 4-dimensional variational data assimilation systems. Part I - System overview and formulation," *Prog. Oceanogr.* 91, 34-49 (2011). | doi:10.1016/j.pocean.2011.05.004 | Elsevier, paywalled; JXP's institutional copy | Present (publisher PDF, 16 pp.; read in full in prompt #6 for Sections 3, 5.1 and 9) | `moore2011roms` |
+| `moore2011b.pdf` | Moore, A. M., Arango, H. G., Broquet, G., Edwards, C., Veneziani, M., Powell, B., Foley, D., Doyle, J. D., Costa, D., and Robinson, P., "The Regional Ocean Modeling System (ROMS) 4-dimensional variational data assimilation systems. Part II - Performance and application to the California Current System," *Prog. Oceanogr.* 91, 50-73 (2011). | doi:10.1016/j.pocean.2011.05.003 | Elsevier, paywalled; JXP's institutional copy | Present (publisher PDF, 24 pp.; read in full for Sections 3, 5.1 and 9; was `moore2011.pdf` until DA52) | `moore2011romsII` |
 | `neveu2016.pdf` | Neveu, E., Moore, A. M., Edwards, C. A., Fiechter, J., Drake, P., Crawford, W. J., Jacox, M. G., and Nuss, E., "An historical analysis of the California Current circulation using ROMS 4D-Var: System configuration and diagnostics," *Ocean Modelling* 99, 133-151 (2016). | doi:10.1016/j.ocemod.2015.11.012 | Elsevier, paywalled; JXP's institutional copy | Present (publisher PDF, 19 pp.; read in full for Section 5.1) | `neveu2016historical` |
 | `shulman2009.pdf` | Shulman, I., Rowley, C., Anderson, S., DeRada, S., Kindle, J., Martin, P., Doyle, J., Cummings, J., Ramp, S., Chavez, F., Fratantoni, D., and Davis, R., "Impact of glider data assimilation on the Monterey Bay model," *Deep-Sea Res. II* 56, 188-198 (2009). | doi:10.1016/j.dsr2.2008.08.003 | Elsevier, paywalled; JXP's institutional copy | Present (publisher PDF, 11 pp.; read in full, for Section 9 in prompt #6) | `shulman2009impact` |
+
+### Fetched 2026-09-23 (prompt #6, Q&A DA53; read in full)
+
+Found while looking for a citable record of glider assimilation in the UCSC California Current
+ROMS 4D-Var system (DA53); fetched by `fetch_pdfs.py` (`file` = PDF 1.5, title match 1.00).
+The companion grey source, the UCSC near-real-time page
+`https://oceanmodeling.ucsc.edu/ccsnrt/` (`ucsc2026ccsnrt`, HTTP 200), is a web page and has
+no file here; its TLS certificate chain is incomplete for some clients (`curl -k` needed).
+
+| File | Citation | DOI | Access | Status | Key |
+|---|---|---|---|---|---|
+| `mattern2026.pdf` | Mattern, J. P., Takeshita, Y., Rocha, C., and Edwards, C. A., "Improving coastal ocean pH estimates through assimilation of glider observations and hybrid statistical methods," *Biogeosciences* 23, 2621-2639 (2026). | doi:10.5194/bg-23-2621-2026 | Open access (Copernicus, CC BY 4.0) | Present (publisher PDF, 19 pp.; read in full for Sections 5.1, 8 and 9) | `mattern2026improving` |
 
 Also checked and not added: Kurapov et al. (2017, *Ocean Dyn.* 67, 23-36,
 doi:10.1007/s10236-016-1013-4), the WCOFS paper named as a fallback in `reading_list.md`;

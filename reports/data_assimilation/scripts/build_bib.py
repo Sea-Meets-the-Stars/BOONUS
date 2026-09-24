@@ -27,7 +27,11 @@ from the full text, FuXi-DA's note fixed to the Methods split (DA43).  Rerun 202
 trilogy (doi 10.1016/j.pocean.2011.05.003, the California Current application), not
 Part I, so Part II was added as `moore2011romsII` (62 entries; JXP to confirm, Q&A DA52);
 `neveu2016.pdf` and `shulman2009.pdf` recorded as in hand and the Neveu note corrected
-(the assimilated in situ streams are EN3 profiles; gliders are not named).
+(the assimilated in situ streams are EN3 profiles; gliders are not named).  Rerun
+2026-09-23 (prompt #6) after DA52-DA53: JXP renamed the files, so Part I is
+`moore2011a.pdf` (read in full) and Part II `moore2011b.pdf`; two entries added for the
+UCSC glider assimilation (64 entries): `mattern2026improving` (Biogeosciences, open
+access, fetched and read) and the grey `ucsc2026ccsnrt` near-real-time page.
 
 Usage (ocean14):
     conda run -n ocean14 python reports/data_assimilation/scripts/build_bib.py [--no-cache]
@@ -174,24 +178,43 @@ ENTRIES = [
          'cites this repository and Liu et al. (2023).'),
     # ---- D. Regional and coastal systems -------------------------------------------
     dict(key='moore2011roms', group='D', kind='article', doi='10.1016/j.pocean.2011.05.004',
-         sections='5 (UCSC ROMS)', supports='The formulation of ROMS 4D-Var: three incremental '
-         'systems, I4D-Var (primal, strong constraint), 4D-PSAS and R4D-Var (dual; strong or '
-         'weak constraint), with the TLM, adjoint and diagnostic tools. This is Part I of the '
-         'trilogy (the Crossref and OpenAlex titles omit the printed "Part I" subtitle); its '
-         'content is cited through Part II (moore2011romsII), which is the PDF in hand; Part '
-         'III (doi:10.1016/j.pocean.2011.05.005, observation impact and sensitivity) is named '
-         'in the text but not an entry (DA33a).'),
+         pdf='moore2011a.pdf', pdf_kind='publisher PDF, downloaded by JXP 2026-09-23 (DA52), '
+         'read in full in prompt #6',
+         sections='3, 5 (UCSC ROMS), 9', supports='Part I of the trilogy, the formulation of '
+         'ROMS 4D-Var: three incremental algorithms, I4D-Var (primal, control-vector space, '
+         'strong constraint only in practice), 4D-PSAS and R4D-Var (dual, observation space; '
+         'strong or weak constraint), all solved by a preconditioned Lanczos conjugate-gradient '
+         'method; TLROMS, ADROMS and the finite-amplitude RPROMS; diffusion-operator error '
+         'covariances with a multivariate balance operator; posterior error estimates from the '
+         'Lanczos vectors, observation impact and observation sensitivity. The Crossref and '
+         'OpenAlex titles omit the printed "Part I" subtitle. Part III '
+         '(doi:10.1016/j.pocean.2011.05.005, observation impact and sensitivity) is named in '
+         'the text but not an entry (DA33a).'),
     dict(key='moore2011romsII', group='D', kind='article', doi='10.1016/j.pocean.2011.05.003',
-         pdf='moore2011.pdf', pdf_kind='publisher PDF, downloaded by JXP 2026-09-23 (DA48), '
-         'read in full; the file is Part II although DA48 asked for Part I',
+         pdf='moore2011b.pdf', pdf_kind='publisher PDF, downloaded by JXP 2026-09-23 (DA48) as '
+         'moore2011.pdf and renamed moore2011b.pdf (DA52), read in full',
          sections='3, 5 (UCSC ROMS), 9', supports='Part II of the trilogy: performance and '
          'application of ROMS 4D-Var to the California Current (WC30 and WC10 configurations, '
          '2002-2004 sequential cycles): equivalence and convergence of the primal and dual '
          'algorithms, weak-constraint example, control-vector impacts (initial conditions '
          'dominate), posterior error estimates from the Lanczos vectors, Desroziers consistency '
          'checks, degrees of freedom (more than 90% of the assimilated observations redundant) '
-         'and array modes. Added in prompt #5 because it is the paper JXP downloaded as '
-         'moore2011.pdf (DA48); JXP to confirm (DA52).'),
+         'and array modes; the 6 h grid-cell super-observations whose scatter is the '
+         'representativeness error. Added in prompt #5 (DA48, DA52).'),
+    dict(key='ucsc2026ccsnrt', group='D', kind='grey', flags={'grey'},
+         url='https://oceanmodeling.ucsc.edu/ccsnrt/',
+         author='{UC Santa Cruz Ocean Modeling and Data Assimilation group}',
+         title='Near Real-time, 4-Dimensional Variational Data Assimilative Physical Modeling of '
+         'the California Current System (experimental)',
+         year='2026', sections='5.1, 9',
+         supports='The public page of the UCSC near-real-time California Current ROMS 4D-Var '
+         'analysis (1/10 degree, 42 levels, COAMPS forcing, HYCOM boundaries, incremental '
+         'strong-constraint 4D-Var over 4-day cycles run daily) listing the assimilated data: '
+         'AVISO SLA, NOAA tide gauges, OSTIA SST, Aquarius SSS, Argo, and "glider lines in the '
+         'central and southern California regions ... supported by SCCOOS and CeNCOOS" plus '
+         'NANOOS gliders off Washington, with thanks to D. Rudnick and C. Lee for the glider '
+         'data. Page footer dated 2011; content as served on the access date (the TLS '
+         'certificate chain is incomplete for some clients). Added in prompt #6 (DA53).'),
     dict(key='neveu2016historical', group='D', kind='article', doi='10.1016/j.ocemod.2015.11.012',
          pdf='neveu2016.pdf', pdf_kind='publisher PDF, downloaded by JXP 2026-09-23 (DA48), read in full',
          sections='5 (UCSC ROMS)', supports='The 31-year (WCRA31, 1980-2010) and 14-year '
@@ -251,6 +274,18 @@ ENTRIES = [
          flags={'optional'}, sections='9', supports='The fraternal-twin OSSE methodology '
          '(HYCOM) used to value hurricane-season ocean observations; the template for OSSE '
          'claims in the glider section.'),
+    dict(key='mattern2026improving', group='E', kind='article', doi='10.5194/bg-23-2621-2026',
+         pdf='mattern2026.pdf', pdf_kind='publisher PDF (Copernicus, open access), fetched '
+         '2026-09-23 in prompt #6 and read in full',
+         sections='5.1, 8, 9', supports='The citable record that the UCSC California Current '
+         'ROMS 4D-Var system assimilates glider observations: CUGN and IOOS glider T/S enter '
+         'the reference DA alongside Argo, satellite SST, SLA and chlorophyll (1/10 degree, 42 '
+         'levels, NEMUCSC biogeochemistry, 91 four-day cycles over 2019), as grid-cell '
+         'super-observations; glider pH (MBARI Line 67 Spray) and statistically estimated pH '
+         'and alkalinity from CUGN T, S and O2 are then assimilated into the coupled model, '
+         'with cross-validation on withheld CUGN Line 67 transects. Also the pH work JXP '
+         'refers to in Q&A DA53 and a category-4 statistical estimator (ESPER/CANYON-B) in use '
+         'inside a DA system.'),
     dict(key='moore2018reduced', group='E', kind='article', doi='10.1002/2017JC013172',
          flags={'optional'}, sections='7.4, 9', supports='Adjoint-based observing-system '
          'analysis of the California Current array (gliders, HF radar, satellites) in ROMS '
