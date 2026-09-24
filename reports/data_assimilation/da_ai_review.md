@@ -3,13 +3,14 @@
 **Version:** v0.1 draft · **Date:** 2026-09-23 · **Authors:** J. Xavier Prochaska and Claude ·
 **Audience:** JXP; to be shared with Matt Mazloff at v0.2 ·
 **Apparatus:** `outline.md`, `reading_list.md`, `sources.md` / `sources.bib` (shared BibTeX
-keys), `scripts/` (this directory). A review, not a BOONUS document.
+keys), `figs/`, `scripts/` (this directory). A review, not a BOONUS document.
 
 | Version | Date | Author | Change |
 |---|---|---|---|
 | v0.1 draft | 2026-09-23 | JXP and Claude (Fable 5.1) | Skeleton from `outline.md`; drafted the primer (Section 2), classical methods (3), global systems (4), regional and coastal systems with the systems table (5); placeholders for 0 and 6-11 (prompts 5-6). |
 | v0.1 draft | 2026-09-23 | JXP and Claude (Fable 5.1) | Prompt 5. Section 3 (4D-Var), 5.1 and the California Current row of Table 1 rewritten from the full text of Moore et al. (2011, Part II) and Neveu et al. (2016): the "[not read]" flags replaced by the WC30/WC10 and WCRA31/WCRA14 configurations and diagnostics; Part II added as `moore2011romsII` (JXP's `moore2011.pdf` is Part II, Q&A DA52); the earlier "gliders included" statement about the Neveu reanalysis corrected (EN3 profiles; gliders not named; no velocity data). Drafted Section 6 (NWP), Section 7 with 7.1-7.4 (ocean AI by taxonomy, circularity caveat stated in the Section 7 opening), Section 8 (BGC); Figure 1 and 2 placeholders; candidate questions for Section 11 from Q&A DA49, DA50, DA53. |
 | v0.1 draft | 2026-09-23 | JXP and Claude (Fable 5.1) | Prompt 6. DA52: Part I read (`moore2011a.pdf`), every "[not read; via Part II]" flag on `moore2011roms` replaced by Part I content in Sections 3 and 5.1. DA53: the UCSC glider assimilation now has sources, Mattern et al. (2026, `mattern2026improving`, Biogeosciences, open access, read in full) and the UCSC near-real-time page (`ucsc2026ccsnrt`, grey); Section 5.1, the California Current row of Table 1 and Section 8 (glider-pH assimilation) revised accordingly, the "no source in this list" wording removed. Drafted Section 9 (gliders in DA: profile vs binned, depth-average velocity, representativeness error, impacts and OSEs/OSSEs; Figure 3 placeholder), Section 10 (glossary), Section 11 (thirteen numbered questions, candidate scaffolding removed) and Section 0 (executive summary, written last). All prompt-5/6 placeholders removed; figure placeholders kept for prompt 7. |
+| v0.1 draft | 2026-09-24 | JXP and Claude (Fable 5.1) | Prompt 7. Figures placed with captions: Figure 1 (Mermaid, the four ML entry points over one DA cycle, Section 7 opening), Figure 2 (`figs/ai_da_timeline.png` from `scripts/make_timeline.py`, 24 milestones dated and keyed from `sources.bib`, Section 6 opening), Figure 3 (Mermaid, one cycle with the glider profile, super-observation, depth-average-velocity and representativeness-error paths, Section 9 opening); Table 1 (Fig. 4) checked for completeness against Sections 4-5 and the Decisions' systems list (no change needed). Placeholders removed. DA57-DA59 answered by accepting the recommendations; no text changes followed. |
 
 **Citation convention.** Author-year in the text followed by the BibTeX key in brackets,
 e.g. Moore et al. (2019) [@moore2019synthesis]; the bare bracketed key is used on repeat
@@ -678,7 +679,38 @@ Shelf) have no row; FOAM and TOPAZ stand as the European comparators (Q&A DA47).
 
 ## 6. AI in numerical weather prediction: the leading indicator
 
-*[Figure 2: 2018-2026 timeline of AI-in-DA milestones, NWP and ocean tracks; made in prompt 7.]*
+![Figure 2: 2018-2026 timeline of AI-in-DA milestones on an NWP and an ocean track](figs/ai_da_timeline.png)
+
+**Figure 2.** Milestones of AI in data assimilation, 2018-2026, on a numerical weather
+prediction track (above) and an ocean track (below); marker shape gives the taxonomy
+category of Section 7 and every milestone is one of the exemplars cited in Sections 6-8.
+Dates are the month of the first arXiv version where `sources.bib` records one, the
+month stated by the source for the one operational date, and otherwise the publication
+year, plotted at mid-year with a bar spanning the year (so the order of milestones within
+one year is not resolved by the figure). NWP track: learned model-error correction inside
+4D-Var (Bonavita and Laloyaux 2020 [@bonavita2020machine]); neural tangent-linear and
+adjoint models (Hatfield et al. 2021 [@hatfield2021building]); GraphCast (Lam et al. 2023
+[@lam2023learning], preprint December 2022); Pangu-Weather (Bi et al. 2023
+[@bi2023accurate]); FuXi-DA (Xu et al. 2025 [@xu2025fuxida], preprint April 2024); the
+AIFS system paper (Lang et al. 2024 [@lang2024aifs] (preprint), June 2024); generative DA
+of surface stations (Manshausen et al. 2025 [@manshausen2025generative], preprint June
+2024); GenCast (Price et al. 2024 [@price2024probabilistic]); GraphDOP (Alexe et al. 2024
+[@alexe2024graphdop] (preprint), December 2024); AIFS Single operational on 25 February
+2025 (ECMWF 2025 [@ecmwf2025aifs] (grey)); Aardvark Weather (Allen et al. 2025
+[@allen2025endtoend]). Ocean track: CANYON-B (Bittig et al. 2018 [@bittig2018canyonb]);
+Argo ML quality control (Sugiura and Hosoda 2020 [@sugiura2020machine], preprint July
+2019); 4DVarNet on Lorenz systems (Fablet et al. 2021 [@fablet2021learning], preprint July
+2020); LDEO-HPD (Gloege et al. 2022 [@gloege2022improved]); 4DVarNet-SSH (Beauchamp et al.
+2023 [@beauchamp2023fourdvarnet], preprint November 2022); learned sea-ice increments
+(Gregory et al. 2023 [@gregory2023deep], preprint April 2023); SSH mapping verified on
+withheld CryoSat-2 (Martin et al. 2023 [@martin2023synthesizing]); OceanNet (Chattopadhyay
+et al. 2024 [@chattopadhyay2024oceannet], preprint October 2023); XiHe (Wang et al. 2024
+[@wang2024xihe] (preprint), February 2024); Samudra (Dheeshjith et al. 2025
+[@dheeshjith2025samudra], preprint December 2024); GLONET (El Aouni et al. 2025
+[@elaouni2025glonet], preprint December 2024); WenHai (Cui et al. 2025
+[@cui2025forecasting]); Samudra 2 (Yuan et al. 2026 [@yuan2026samudra2] (preprint), June
+2026). Made by `scripts/make_timeline.py`, which checks every key and date against
+`sources.bib`.
 
 Machine learning entered weather prediction before ocean prediction, and in a fixed
 order: emulators of the forecast model first, then learned pieces of the assimilation
@@ -795,7 +827,51 @@ inherits of the atmosphere.
 
 ## 7. AI in ocean DA, by where ML enters the pipeline
 
-*[Figure 1: the four ML entry points over one DA cycle (Mermaid); made in prompt 7.]*
+```mermaid
+flowchart TD
+    subgraph cycle["One assimilation cycle (Box 1, Section 2)"]
+        Y["Observations y"] --> QC["Quality control"]
+        QC --> H["Observation operator H(x_b)<br/>innovation d = y - H(x_b)"]
+        H --> A["Analysis step<br/>minimize J or apply the gain K<br/>(B, R, localization, inflation, adjoint)"]
+        A --> XA["Analysis x_a"]
+        XA --> M["Forecast model M"]
+        M --> XB["Background x_b (next cycle)"]
+        XB --> H
+        M --> F["Forecast product"]
+    end
+    C1["(1) Emulators and surrogates<br/>replace M; initialised from a classical analysis<br/>(Section 7.1)"] -.-> M
+    C2["(2) ML inside classical DA<br/>learned B, bias correction, learned H,<br/>inflation and localization, adjoint surrogates<br/>(Section 7.2)"] -.-> A
+    C2 -.-> H
+    C3["(3) ML replacing DA<br/>end-to-end observation-to-forecast,<br/>generative reconstruction, neural interpolation<br/>(Section 7.3)"]
+    QC ==> C3
+    C3 ==> XA
+    C3 ==> F
+    C4["(4) ML around DA<br/>QC, downscaling, anomaly detection,<br/>adaptive sampling and OSSE design<br/>(Section 7.4)"] -.-> QC
+    C4 -.-> F
+    C4 -.-> Y
+    classDef ml fill:#fff3e0,stroke:#d55e00,stroke-width:1px,color:#222222;
+    classDef cyc fill:#eef4fb,stroke:#0072b2,stroke-width:1px,color:#222222;
+    class C1,C2,C3,C4 ml;
+    class Y,QC,H,A,XA,M,XB,F cyc;
+```
+
+**Figure 1 (schematic).** The four entry points of machine learning laid over one
+assimilation cycle. Blue boxes are the classical cycle of Box 1: observations are quality
+controlled, mapped to observation space by $\mathcal{H}$ to form the innovations, combined
+with the background in the analysis step, and the analysis is integrated by the forecast
+model to give the next background and the forecast product. Orange boxes are the four
+categories of the taxonomy (Q&A DA30; the survey of categories 2 and 3 is Cheng et al. 2023
+[@cheng2023machine]), attached where they enter (dotted arrows): (1) emulators replace the
+forecast model and are initialised from a classical analysis, so no assimilation step is
+removed (XiHe, WenHai, GLONET, Samudra, Section 7.1); (2) learned components replace one
+piece of the analysis or the observation operator with the rest unchanged (Bonavita and
+Laloyaux 2020 [@bonavita2020machine]; Hatfield et al. 2021 [@hatfield2021building];
+Gregory et al. 2023 [@gregory2023deep]); (3) a learned map takes the quality-controlled
+observations directly to an analysis or a forecast, bypassing the observation operator
+and the analysis step (thick arrows; 4DVarNet and the SSH mappers of Section 7.3, Aardvark
+and GraphDOP of Section 6); (4) sits before the cycle (quality control, sampling and OSSE
+design) or after it (downscaling, anomaly detection), as in Sugiura and Hosoda (2020)
+[@sugiura2020machine] and CANYON-B [@bittig2018canyonb]. Schematic only; no data.
 
 The ocean literature is organized by where ML enters the cycle of Section 2 (Fig. 1): as a
 surrogate for the forecast model (category 1, Section 7.1), as a learned component inside the
@@ -1019,8 +1095,56 @@ sparse observations that Fennel et al. call the binding constraint.
 
 ## 9. Gliders in DA
 
-*[Figure 3: one assimilation cycle marking where glider profiles and depth-average velocity
-enter and where representativeness error arises (Mermaid); made in prompt 7.]*
+```mermaid
+flowchart TD
+    G["Glider dive: T and S (also O2, chlorophyll) along a slanted path,<br/>about 6 km and 6 h for a 1000 m dive"]
+    G --> P["Vertical T/S profile per descent or ascent,<br/>placed at one position"]
+    G --> V["Depth-average velocity over the dive<br/>(GPS fixes and dead reckoning, 0.01 m/s)"]
+    G -.-> T["Threaded profile (position changing with depth):<br/>named as future work, not implemented"]
+    P --> QC["Quality control and archive<br/>(GTS, IOOS glider DAC, CUGN)"]
+    QC --> RAW["Individual profiles<br/>NCOM/NCODA, Monterey Bay, every 12 h;<br/>HWRF-HYCOM, 0000 UTC profiles only"]
+    QC --> SO["Grid-cell super-observations<br/>ROMS 4D-Var: all data in a cell within 6 h;<br/>2019 system: at most one per cell and time step"]
+    RAW --> H
+    SO --> H
+    H["Observation operator: model sampled at the observation's<br/>position and time; innovation d = y - H(x_b)"]
+    H --> R["R = instrument error + representativeness error<br/>REPRESENTATIVENESS ERROR ARISES HERE:<br/>a point or thinned profile is compared with a grid-cell mean;<br/>set from the super-observation scatter, or tuned (0.28 C, 0.15 in S)"]
+    R --> A["Analysis (4D-Var, 3D-Var or OI, EnKF)"]
+    A --> M["Forecast model"]
+    M --> XB["Background x_b, next cycle"]
+    XB --> H
+    A --> I["Adjoint observation impacts, array modes,<br/>OSEs and OSSEs (Section 9)"]
+    V -.-> NA["Not assimilated by any system documented in this list<br/>(Section 9; question 1 of Section 11)"]
+    NA -.-> H
+    T -.-> H
+    classDef obs fill:#fff3e0,stroke:#d55e00,stroke-width:1px,color:#222222;
+    classDef cyc fill:#eef4fb,stroke:#0072b2,stroke-width:1px,color:#222222;
+    classDef off fill:#ffffff,stroke:#888888,stroke-width:1px,stroke-dasharray:5 5,color:#444444;
+    classDef err fill:#fde8e8,stroke:#b00020,stroke-width:1.5px,color:#222222;
+    class G,P,V,QC,RAW,SO obs;
+    class H,A,M,XB,I cyc;
+    class T,NA off;
+    class R err;
+```
+
+**Figure 3 (schematic).** One assimilation cycle marking where glider observations enter
+and where representativeness error arises. A dive yields a T/S profile and a depth-average
+velocity (Rudnick 2016 [@rudnick2016ocean]). The profile is assimilated as a vertical
+profile at one position, either individually (NCOM/NCODA in Monterey Bay, Shulman et al.
+2009 [@shulman2009impact]; HWRF-HYCOM with the 0000 UTC profiles only, Dong et al. 2017
+[@dong2017impact]) or after binning into grid-cell super-observations (ROMS 4D-Var, all
+observations in a cell within 6 h, Moore et al. 2011 [@moore2011romsII]; at most one per
+cell and time step in the 2019 system, Mattern et al. 2026 [@mattern2026improving]);
+the threaded profile is named as future work by Shulman et al. and implemented nowhere in
+this list (dashed). Representativeness error, the part of the observation the model
+cannot represent at its resolution (Oke and Sakov 2008 [@oke2008representation]), arises
+at the observation operator, where a point or thinned profile is compared with a grid-cell
+mean, and is carried in $\mathbf{R}$: from the super-observation scatter added to
+instrument errors in 2011 [@moore2011romsII], or tuned to 0.28 C and 0.15 in salinity in
+2019 [@mattern2026improving]. Depth-average velocity is available but is assimilated by no
+system documented here (dashed path; the reanalyses took "no velocity observations", Neveu
+et al. 2016 [@neveu2016historical]). The adjoint diagnostics fed by the analysis (Moore et
+al. 2018 [@moore2018reduced]; Levin et al. 2020 [@levin2020observation]) are the
+observation-impact tools of Section 9. Schematic only; no data.
 
 A glider delivers two kinds of observation. The first is a T/S profile from each descent or
 ascent: a Spray dive to 1000 m takes about 6 h and covers about 6 km at a forward speed near

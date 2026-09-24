@@ -572,6 +572,7 @@ DA57. **Glider operating numbers in Section 9.** The section quotes Rudnick (201
       Recommendation: keep Rudnick's numbers, since Section 9 describes gliders in general
       and cites its source; say so if you want the CUGN values substituted with a pointer
       to the brief.
+>A. Use your recommendation
 
 DA58. **Length.** As drafted: executive summary 588 words (1.2 pp against the one-page
       target), Section 9 1,608 words (3.2 pp against 1.25), glossary 835 (1.7 against 0.5,
@@ -581,6 +582,7 @@ DA58. **Length.** As drafted: executive summary 588 words (1.2 pp against the on
       trimming is left to prompt #8; the executive summary is the one section I would cut
       further now if you want it at 500 words. Recommendation: leave it; tell me if the
       thirteen questions should be cut to the outline's six before Matt sees them.
+>A. Ok, leave it.  And 13 questions are fine
 
 DA59. **Section 9 rests on seven abstracts.** Oke and Sakov (2008), Halliwell et al. (2017),
       Levin et al. (2020), Todd et al. (2011), Zaba et al. (2018), Liu et al. (2023) and
@@ -591,8 +593,147 @@ DA59. **Section 9 rests on seven abstracts.** Oke and Sakov (2008), Halliwell et
       Recommendation: no downloads needed for v0.1; if you want Section 9 on full text for
       Matt, `halliwell2017north` (T&F, closed) and `oke2008representation` (AMS) are the two
       to fetch as `halliwell2017.pdf` and `oke2008.pdf`.
+>A. Go with your recommendation
+
+### Figures (prompt #7, 2026-09-24)
+
+DA56-DA59 were answered by accepting the recommendations and required no changes. The
+three figures are placed with captions and Table 1 is confirmed (details in the log).
+Three items need you; none blocks prompt #8.
+
+DA60. **Nine of the 24 timeline milestones are dated to the year only.** `sources.bib`
+      carries `year` for journal articles and no month, so Bonavita 2020, Hatfield 2021,
+      Pangu-Weather 2023, GenCast 2024, Aardvark 2025, CANYON-B 2018, LDEO-HPD 2022, Martin
+      2023 and WenHai 2025 sit at mid-year with a bar over the year, while the 14 entries
+      with an arXiv ID sit at the month of their first preprint and AIFS-operational at its
+      stated date. Within a year the order is therefore not resolved (Pangu-Weather, whose
+      preprint of November 2022 is not in the list, plots after GraphCast's December 2022
+      preprint). Options: (a) leave as is, with the caption saying so; (b) extend
+      `build_bib.py` to record the Crossref `published-online` month (and, for the arXiv
+      entries, the v1 date from the API) as a `month` field, rerun it `--no-cache`, and
+      switch those nine to the `month` basis in `make_timeline.py`. Recommendation: (b), but
+      in prompt #8 when `build_bib.py` and `check_sources.py` are rerun anyway; the figure
+      regenerates in one command.
+
+>A. Use your recommendation
+
+DA61. **Milestones left off the timeline.** Kept off: Geer (2021) and Cheng et al. (2023)
+      (reviews, not systems), Zanna and Bolton (2020) (the DA36c boundary case), Mattern et
+      al. (2026) (hybrid statistical pH estimation inside 4D-Var, not ML by the report's
+      definition), Liu et al. (2023) and the other glider OSEs (no ML). The figure carries
+      the 24 exemplars cited with a maturity tag in Sections 6-8 except OceanNet-adjacent
+      duplicates. Recommendation: as drawn; name any of the five you want added and it goes
+      into the milestone list with its key.
+>A. Use your recommendation
+
+DA62. **The Mermaid figures could not be rendered here.** No `mmdc`, `npx`, `node` or
+      `docker` is on this Mac and nothing was installed, so Figures 1 and 3 were checked
+      only structurally (fences and quotes balanced, every node id defined and used) and
+      written in the conservative subset GitHub renders (`flowchart TD`, one `subgraph`,
+      quoted labels with `<br/>`, `-->`, `-.->`, `==>`, `classDef`/`class`). Please preview
+      the report on GitHub or in VS Code's Markdown preview; if either diagram fails, paste
+      the error into Q&A and I will simplify it (the `<br/>` line breaks and the
+      `stroke-dasharray` style are the two features most likely to differ between
+      renderers). Recommendation: preview once before v0.1 goes to Matt.
+>A. I will do
 
 ## Logs
+
+### 2026-09-24 (Execute prompt #7: figures)
+
+Read `CLAUDE.md`, this prompt doc (Goals, Context, Decisions, prompt #7, Q&A DA56-DA59 and
+the prompt #6 and #5 log entries), `da_ai_review.md` in full, `sources.md` and the key,
+year, month and eprint fields of `sources.bib`, Section 6 of the brief, and the docstrings
+of `build_bib.py`, `fetch_pdfs.py` and `check_citations.py` for conventions. Model: Claude
+Fable 5.1, single session, no subagents. DA56-DA59 were answered "use your recommendation"
+and required no changes (Mattern and the UCSC page stay; Rudnick's dive numbers stay;
+length and the thirteen questions stay; no Section 9 downloads).
+
+**Figure 1** (Section 7 opening, replaces the placeholder): a Mermaid `flowchart TD` with
+the cycle (observations, QC, observation operator and innovation, analysis step, analysis,
+forecast model, background, forecast product) in a subgraph and the four categories as
+orange nodes attached by dotted arrows where they enter: (1) at the forecast model, (2) at
+the analysis step and the observation operator, (3) as thick arrows from QC straight to
+the analysis and the forecast product, bypassing H and the analysis step, (4) at QC, the
+forecast product and the observations (sampling design). Caption cites Cheng et al. (2023)
+for the taxonomy and one or two exemplars per category with keys; marked schematic.
+
+**Figure 2** (Section 6 opening): `scripts/make_timeline.py` (docstring "Generated by JXP
+and Claude", history line) writes `figs/ai_da_timeline.png` (13 x 8 in, 200 dpi, white).
+`MILESTONES` at the top of the script is the editable list: date, track, category, label,
+key, dating basis. The script parses `sources.bib` itself and exits with an error if a key
+is missing or if the date disagrees with the record (basis `arxiv`: YYMM of the `eprint`
+field; `month`: the `month`/`year` fields; `year`: must be 1 July of the record's year);
+the checks were exercised with wrong dates and a bogus key. 24 milestones: NWP 11
+(Bonavita and Laloyaux 2020, Hatfield 2021, GraphCast 2022-12, Pangu-Weather 2023,
+FuXi-DA 2024-04, AIFS paper 2024-06, Manshausen 2024-06, GenCast 2024, GraphDOP 2024-12,
+AIFS Single operational 2025-02-25, Aardvark 2025) and ocean 13 (CANYON-B 2018, Sugiura
+and Hosoda 2019-07, Fablet 2020-07, Gloege 2022, Beauchamp 2022-11, Gregory 2023-04, Martin
+2023, OceanNet 2023-10, XiHe 2024-02, Samudra 2024-12, GLONET 2024-12, WenHai 2025, Samudra
+2 2026-06); 14 dated by arXiv month, 1 by month field, 9 by year only (mid-year, with a
+translucent bar over the year, DA60). Colour = track (Okabe-Ito blue and vermillion),
+marker shape = taxonomy category, legend below the axis. Label placement took five
+iterations: vertical leaders with greedy levels crossed other labels; a pure left-hung
+staircase ran out of levels on the ocean track; the version kept alternates labels between
+the two sides of each track, measures every rendered label, tries increasing levels and a
+short list of anchorings with slanted leaders, and accepts the first position where no box
+overlaps and no leader crosses a box (Liang-Barsky segment test), with same-date markers
+nudged 32 days apart for drawing only; the axes are then trimmed to the used extent with
+the figure height scaled so the checked layout stays valid. The PNG was inspected after
+each run; the final one has no overlaps. The `dataviz` skill's palette validator needs
+`node` and could not run; the two hues are from the Okabe-Ito set and identity is carried
+by shape and text as well as colour.
+
+**Figure 3** (Section 9 opening): Mermaid `flowchart TD` from the dive to the cycle: the
+vertical profile at one position (Shulman) and the depth-average velocity (Rudnick) leave
+the dive node; the profile goes through QC to either individual profiles (NCOM/NCODA every
+12 h; HWRF-HYCOM 0000 UTC only) or grid-cell super-observations (ROMS 4D-Var 6 h cells;
+one per cell and time step in 2019), then to the observation operator, then to an R node
+in red marked "representativeness error arises here" (point or thinned profile against a
+grid-cell mean; super-observation scatter or tuned 0.28 C / 0.15), then analysis, model,
+background and back. Depth-average velocity and the threaded profile are dashed nodes
+("not assimilated by any system documented in this list"; "named as future work"), which
+agrees with Section 9's text. Caption cites Rudnick, Shulman, Dong, Moore 2011 II, Mattern
+2026, Oke and Sakov, Neveu, Moore 2018 and Levin with keys; marked schematic.
+
+**Table 1 (Fig. 4)** confirmed complete: the 18 rows cover every system named in Sections
+4-5 (ORAS5, OCEAN5-RT, GLORYS12, GLO12, ECCO v4, Global RTOFS, GOFS, JEDI/SOCA, Bluelink,
+FOAM, TOPAZ, UCSC ROMS 4D-Var, CASE, doppio, WCOFS, HWRF-HYCOM, HAFS v1, HAFS-MOM6/SOCA) and
+the Decisions' systems list; the two omissions carry a stated reason in the text (the
+other NOS OFS, Section 5.4, out of scope; the Copernicus regional systems, table note, DA47).
+Every row cites at least one key that exists in `sources.bib`; the table is referenced
+from Sections 4 (opening), 5 (opening) and its own heading. No change made.
+
+**Other edits.** Change-log row added (prompt 7); `figs/` added to the apparatus line; the
+three "made in prompt 7" placeholders are gone and no other text said so. `build_bib.py`:
+the `bi2023accurate` note no longer calls Pangu-Weather "the opening milestone of the NWP
+track" (Bonavita 2020 opens it); noted in its history, `sources.md` not regenerated (it
+would refetch; the prompt-8 rerun picks it up). `check_citations.py` now drops fenced code
+blocks from the prose count so the Mermaid sources do not inflate the length (docstring
+updated). Mermaid validation: no `mmdc`, `npx`, `node` or `docker` on this machine and
+nothing installed (DA62); a structural check (fences, quotes, node ids) passed.
+
+**Citation check** (`scripts/check_citations.py`, ocean14, exit 0): 64 keys, 64 cited, 0
+missing, 0 uncited. Flags: [abstract only] x21, [not read x6, [not re-verified] x2,
+(preprint) x9 (was 5; the Figure 2 caption flags its four preprint milestones), (grey) x12
+(was 11; `ecmwf2025aifs` in the caption). Length: 29.2 pp of prose plus 2.3 pp of tables
+(was 27.8 + 2.1; the three captions add about 700 words).
+
+**What I learned.** `conda run` does not pass a heredoc on stdin to Python, so patch
+scripts must be files. Matplotlib label placement is only reliable when the rendered
+extents are measured (`get_window_extent` after `fig.canvas.draw()`); estimating widths
+from character counts undercounted by a factor of two. `sources.bib` carries months only
+for grey items and the arXiv YYMM prefix is the one dated field for preprints, which is
+what forced the three-basis dating rule (DA60).
+
+Files created: `reports/data_assimilation/scripts/make_timeline.py`,
+`reports/data_assimilation/figs/ai_da_timeline.png`. Files modified:
+`reports/data_assimilation/da_ai_review.md`, `scripts/build_bib.py` (one note, history
+line), `scripts/check_citations.py` (fenced blocks excluded, docstring), this prompt doc
+(Q&A DA60-DA62, this entry). Not touched: the prompt text above `## Q&A`, `sources.md`,
+`sources.bib`, `outline.md`, `reading_list.md`, `check_sources.py`, `fetch_pdfs.py`, the
+brief, `.claude/settings.json`. No git commands that change repository state were run
+(`git status` only).
 
 ### 2026-09-23 (Execute prompt #6: act on DA52-DA55, finish the draft)
 
