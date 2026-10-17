@@ -219,4 +219,4 @@ __marimo__/
 
 # BOONUS: source PDFs in context/ are private (copyrighted or unpublished); never commit them.
 # The Markdown brief and digests in context/ are tracked.
-context/*.pdf
+context/**/*.pdf
