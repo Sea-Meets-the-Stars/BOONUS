@@ -1,0 +1,32 @@
+### scientific_question (249/300)
+Can the three-dimensional state and evolution of a coastal ocean be learned directly from sparse, sustained observations, without a numerical model of the physics as intermediary, and what does that reveal about how predictable the coastal ocean is?
+
+### potential_impact_1 (477/600)
+Ocean state estimation would no longer require a numerical model and its adjoint. Any coast with sustained observation could be mapped below the surface, including polar seas and the biogeochemical fields (oxygen, pH) where physical models are weakest. It would also make the design of observing networks empirical: a learned system reports how much each measurement constrains the state, so where and how often to observe becomes a measured quantity rather than a modeled one.
+
+### potential_impact_2 (560/600)
+The predictability of the coastal ocean would become a measured property. How far and for how long the information in one subsurface section travels tells us which processes (upwelling, boundary currents, remote forcing such as El Nino) govern coastal variability from days to years, and whether marine heat waves and low-oxygen events have subsurface precursors that are invisible at the surface. A learned representation of twenty years of one coastal ocean is also a new kind of climatology, one that can be queried for anomalies as new observations arrive.
+
+### risks (300/300)
+The observations may be too sparse to learn subsurface dynamics; a learned system may not match established model-based methods; skill may not transfer beyond California; and training on model reanalyses would make any test circular. A bounded negative result would still fix the information content.
+
+### enabling_advances (294/300)
+Twenty years of repeated subsurface sections off California, with absolute velocity on every dive and oxygen since 2017, dense enough to train on and still withhold from; 2024-25 proofs in the atmosphere that forecasts can be learned from observations alone; differentiable learning frameworks.
+
+### new_area (591/600)
+Yes. The PI's machine learning has been applied to satellite images of the sea surface (unsupervised detection of extremes) and to astrophysical spectra; co-PI Edwards co-developed the variational assimilation system that ingests these gliders today; collaborators Rudnick and Mazloff built the glider record and the adjoint state estimates it feeds. Learning the subsurface state directly from in situ observations, with no numerical model in the loop and the glider's own observables (slanted dive paths, depth-average velocity) treated natively, is new to the whole team and to the field.
+
+### peer_group_1 (290/300)
+Mercator Ocean (GLONET) and the GLORYS-trained emulators XiHe and WenHai: neural forecasters trained on a global model reanalysis, started from a classical analysis, with surface-dominated skill. We learn from the observations, on a coast, below the surface, with no reanalysis in the loop.
+
+### peer_group_2 (297/300)
+ECMWF (GraphDOP) and the Alan Turing Institute and Cambridge (Aardvark Weather): end-to-end learning from observations to forecast in the atmosphere, which is observed roughly a thousand times more densely than the ocean. We ask whether that route survives ocean sparsity, which no one has tested.
+
+### peer_group_3 (299/300)
+IMT Atlantique (4DVarNet, Fablet) and M2LInES (Zanna; the Samudra emulator): learned assimilation solvers and ocean emulators developed and scored on simulations. We score only against withheld real observations: glider lines, years, and independent ship surveys, never a simulation or a reanalysis.
+
+### prior_support (436/600)
+No preliminary data from the proposed work are included. Related results cited: the California Underwater Glider Network record and climatology (NOAA Climate Observation Division and NOAA IOOS, through SCCOOS and CeNCOOS); the UC Santa Cruz California Current ROMS 4D-Var analyses [funding sources to be supplied by C. Edwards]; the PI's machine-learning work on satellite sea-surface temperature [funding source to be supplied by JXP].
+
+### ai_use (255/300)
+Claude (Anthropic) was used under the PI's direction to survey the data-assimilation and machine-learning literature, draft and edit text, and check citations. All scientific claims, framing and decisions are the authors', who verified every cited result.
